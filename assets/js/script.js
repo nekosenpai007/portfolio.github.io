@@ -60,11 +60,11 @@ document.addEventListener('visibilitychange',
     function () {
         if (document.visibilityState === "visible") {
             document.title = "Portfolio | Neko";
-            $("#favicon").attr("href", ".assets/images/cropped_image.png");
+            $("#favicon").attr("href", "assets\images\cropped_image.png");
         }
         else {
             document.title = "Come Back To Portfolio";
-            $("#favicon").attr("href", ".assets/images/cropped_image.png");
+            $("#favicon").attr("href", "assets\images\cropped_image.png");
         }
     });
 
@@ -84,7 +84,7 @@ async function fetchData(type = "skills") {
     type === "skills" ?
         response = await fetch("skills.json")
         :
-        response = await fetch("./projects/projects.json")
+        response = await fetch("projects\projects.json")
     const data = await response.json();
     return data;
 }
@@ -105,12 +105,12 @@ function showSkills(skills) {
 }
 
 function showProjects(projects) {
-    let projectsContainer = document.querySelector("#work .box-container");
+    let projectsContainer = document.querySelector(".work .box-container");
     let projectHTML = "";
     projects.slice(0, 10).filter(project => project.category != "android").forEach(project => {
         projectHTML += `
         <div class="box tilt">
-      <img draggable="false" src="/assets/images/projects/${project.image}.png" alt="project" />
+      <img draggable="false" src="assets\images\projects\${project.image}.png" alt="project" />
       <div class="content">
         <div class="tag">
         <h3 style="color: white;">${project.name}</h3>
