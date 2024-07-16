@@ -60,11 +60,11 @@ document.addEventListener('visibilitychange',
     function () {
         if (document.visibilityState === "visible") {
             document.title = "Portfolio | Neko";
-            $("#favicon").attr("href", ".assets/images/cropped_image.png");
+            $("#favicon").attr("href", "/assets/images/cropped_image.png");
         }
         else {
             document.title = "Come Back To Portfolio";
-            $("#favicon").attr("href", ".assets/images/cropped_image.png");
+            $("#favicon").attr("href", "/assets/images/cropped_image.png");
         }
     });
 
@@ -84,7 +84,7 @@ async function fetchData(type = "skills") {
     type === "skills" ?
         response = await fetch("skills.json")
         :
-        response = await fetch("./projects/projects.json")
+        response = await fetch("/projects/projects.json")
     const data = await response.json();
     return data;
 }
