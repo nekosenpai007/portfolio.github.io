@@ -60,11 +60,11 @@ document.addEventListener('visibilitychange',
     function () {
         if (document.visibilityState === "visible") {
             document.title = "Portfolio | Neko";
-            $("#favicon").attr("href", ".assets/images/cropped_image.png");
+            $("#favicon").attr("href", "assets\images\01.png");
         }
         else {
             document.title = "Come Back To Portfolio";
-            $("#favicon").attr("href", ".assets/images/cropped_image.png");
+            $("#favicon").attr("href", "assets\images\02.png");
         }
     });
 
@@ -239,7 +239,7 @@ srtop.reveal('.skills .container .bar', { delay: 400 });
 /* SCROLL EDUCATION */
 srtop.reveal('.education .box', { interval: 200 });
 
-/* SCROLL PROJECTS */
+/* SCROLL cert */
 srtop.reveal('.cert .box', { interval: 200 });
 
 /* SCROLL EXPERIENCE */
@@ -249,3 +249,7 @@ srtop.reveal('.experience .timeline .container', { interval: 400 });
 /* SCROLL CONTACT */
 srtop.reveal('.contact .container', { delay: 400 });
 srtop.reveal('.contact .container .form-group', { delay: 400 });
+
+
+/* SCROLL project */
+srtop.reveal('.ol-cards', { interval: 200 });

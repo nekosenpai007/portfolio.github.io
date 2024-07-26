@@ -676,6 +676,7 @@ header .navbar ul li a:hover {
   position: relative;
   overflow: hidden;
   height: 30rem;
+  transition: 0.3s;
 }
 .cert .box-container .box img {
   height: 100%;
@@ -702,6 +703,7 @@ header .navbar ul li a:hover {
   width: 100%;
   padding-left: 1rem;
   background: rgb(126, 31, 204);
+  transition: 0.3s;
 }
 .cert .box-container .box .content .tag h3 {
   font-size: 2rem;
@@ -771,6 +773,182 @@ header .navbar ul li a:hover {
   transform: translateX(5px);
 }
 /* work section ends */
+
+/* project section start*/
+.ol-cards,
+.ol-cards *,
+.ol-cards *::before,
+.ol-cards *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.ol-cards {
+  font-size: 1.5rem;
+  color: #000000;
+  --ol-cards-color-bg: rgb(0, 0, 0);
+  list-style-type: decimal-leading-zero;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 100%; /* Full width of the screen */
+  padding: 2em;
+  gap: 2em;
+  counter-reset: ol-cards-counter;
+}
+
+.ol-cards li {
+  display: grid;
+  grid-template-areas:
+    "step title"
+    "step content"
+    "step link";
+  padding: 1em 2em 1em 0;
+  row-gap: 0.5em;
+  column-gap: 2em;
+  box-shadow: 0.5em 0.5em 1em rgba(0, 0, 0, 0.4), inset 0.05em 0.05em rgba(255, 255, 255, 1);
+  counter-increment: ol-cards-counter;
+  text-align: left;
+  background-color: rgb(255, 255, 255);
+  width: 100%; /* Full width of the card */
+}
+
+.ol-cards.alternate li:nth-child() {
+  grid-template-areas:
+    "title step"
+    "content step"
+    "link step";
+  /* padding: 1em 0 1em 2em; */
+}
+
+.ol-cards li .step {
+  grid-area: step;
+  display: flex;
+  align-self: flex-start;
+  background-color: rgb(0, 0, 0);
+  border-radius: 0 50em 50em 0;
+  padding: 1em;
+  justify-content: flex-end;
+  box-shadow: inset 0.25em 0.25em 0.5em rgba(0, 0, 0, 0.4), 0em 0.05em rgba(255, 255, 255, 1);
+  flex: 1;
+  gap: 1em;
+}
+
+.ol-cards li .step::before {
+  content: "0" counter(ol-cards-counter);
+  flex: 0;
+  align-self: center;
+  color: white;
+  font-weight: bold;
+  font-size: 2em;
+  text-shadow: 0.025em 0.025em 0.125em rgba(255, 255, 255, 0.4);
+}
+/* .ol-cards.alternate li:nth-child() .step { */
+  /* border-radius: 50em 0 0 50em; */
+  /* flex-direction: row-reverse; */
+/* } */
+
+.ol-cards li .step i {
+  color: black;
+  width: 2em;
+  height: 2em;
+  font-size: 1.8em;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background-color: white;
+  box-shadow: 0.25em 0.25em 0.5em rgba(0, 0, 0, 0.4), inset 0.05em 0.05em rgb(126, 31, 204);
+}
+
+.ol-cards li .title {
+  grid-area: title;
+  color: rgb(126, 31, 204);
+  font-weight: bold;
+}
+.ol-cards li .content {
+  grid-area: content;
+  font-size: 0.9em;
+}
+.ol-cards li .link{
+  grid-area: link;
+  color: rgb(126, 31, 204);
+  font-weight: bold;
+}
+/* Responsive adjustments */
+@media only screen and (max-width: 768px) {
+  .ol-cards {
+    padding: 1em;
+    max-width: 100%;
+  }
+  .ol-cards li {
+    column-gap: 0em;
+    grid-template-areas:
+      "step title"
+      "content content";
+    grid-template-columns: min-content auto;
+    padding: 1em 0em;
+  }
+  .ol-cards.alternate li:nth-child() {
+    column-gap: 0em;
+    grid-template-areas:
+      "title step"
+      "content content";
+    grid-template-columns: auto min-content;
+    padding: 1em 0em;
+  }
+  .ol-cards li .title {
+    padding: 0 1em;
+    align-self: center;
+    width: auto;
+  }
+  .ol-cards li .step {
+    font-size: 0.5em;
+  }
+  .ol-cards li .content {
+    padding: 0 1em;
+  }
+  .ol-cards li .link {
+    padding: 0 1em;
+    align-self: center;
+    width: auto;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .ol-cards {
+    padding: 1em;
+  }
+  .ol-cards li {
+    column-gap: 0em;
+    grid-template-areas:
+      'step title'
+      'content content';
+    grid-template-columns: min-content auto;
+    padding: 1em 0em;
+  }
+  .ol-cards.alternate li:nth-child(even) {
+    column-gap: 0em;
+    grid-template-areas:
+      'title step'
+      'content content';
+    grid-template-columns: auto min-content;
+    padding: 1em 0em;
+  }
+  .ol-cards li .title {
+    padding: 0 1em;
+    align-self: center;
+    width: auto;
+  }
+  .ol-cards li .step {
+    font-size: .5em;
+  }
+  .ol-cards li .content {
+    padding: 0 1em;
+  }
+}
+
+/* project section ends*/
+
 
 /* experience section starts */
 .experience .timeline {
