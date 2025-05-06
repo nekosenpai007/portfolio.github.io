@@ -39,9 +39,9 @@ $(document).ready(function () {
 
     // <!-- emailjs to mail contact form data -->
     $("#contact-form").submit(function (event) {
-        emailjs.init("service_te75hp7");
+        emailjs.init("service_3cv5ga3");
 
-        emailjs.sendForm('service_te75hp7', 'template_r4fp27a', '#contact-form')
+        emailjs.sendForm('service_3cv5ga3', 'template_r4fp27a', '#contact-form')
             .then(function (response) {
                 console.log('SUCCESS!', response.status, response.text);
                 document.getElementById("contact-form").reset();
@@ -243,12 +243,12 @@ srtop.reveal('.education .box', { interval: 200 });
 srtop.reveal('.cert', { interval: 200 });
 
 /* SCROLL EXPERIENCE */
-srtop.reveal('.experience .timeline', { delay: 400 });
-srtop.reveal('.experience .timeline .container', { interval: 400 });
+srtop.reveal('.experience .timeline', { delay: 200 });
+srtop.reveal('.experience .timeline .container', { interval: 200 });
 
 /* SCROLL CONTACT */
-srtop.reveal('.contact .container', { delay: 400 });
-srtop.reveal('.contact .container .form-group', { delay: 400 });
+srtop.reveal('.contact .container', { delay: 200 });
+srtop.reveal('.contact .container .form-group', { delay: 200 });
 
 
 /* SCROLL project */
