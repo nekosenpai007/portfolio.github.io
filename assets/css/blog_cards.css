@@ -1,0 +1,85 @@
+/* From Uiverse.io by SujitAdroja */ 
+.columns {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    width: 30em;
+    position: relative;
+    border-radius: 20px;
+    padding: 35px;
+    border: 2px solid  rgb(255, 255, 255);
+    transition: all 0.4s;
+  }
+  
+  .columns-container{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+
+  .columns:hover {
+    box-shadow: 4px 4px 0 1px rgb(126, 31, 204);
+  }
+  
+  .dots {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+  }
+  
+  .columns .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  
+  .offer {
+    color: rgb(0, 0, 0);
+    font-size: 17px;
+    font-weight: 900;
+    border-bottom: 2px solid black;
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+  
+  .columns .btn {
+    color: rgb(255, 255, 255);
+    padding: 7px 15px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(126, 31, 204);
+    border-radius: 10px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+  
+  .columns:hover .btn {
+    box-shadow: 2px 2px 0 1px rgb(0, 0, 0);
+  }
+  
+  .columns:hover .offer {
+    color: rgb(126, 31, 204);
+    border-color: rgb(126, 31, 204);
+  }
+  
+  .btn:focus {
+    background: transparent;
+  }
+  
+  .secondary-heading {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .card-description {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+   
