@@ -75,8 +75,8 @@ header {
   box-shadow: 0 1px 4px rgb(255, 255, 255);
 }
 section {
-  min-height: 100vh;
-  padding: 2rem 9%;
+  min-height: 60px;
+  padding: 80px;
 }
 .heading {
   font-size: 3.5rem;
@@ -1132,7 +1132,7 @@ header .navbar ul li a:hover {
   width: 100%;
   background: #1D1D1D;
   border-radius: 1.5rem;
-  margin: 2rem 5rem;
+  margin: 2rem auto;
   box-shadow: 0 1px 2px rgb(255, 255, 255);
 }
 .contact .container .content {
@@ -1143,7 +1143,7 @@ header .navbar ul li a:hover {
 }
 .contact .content .image-box {
   max-width: 60%;
-  margin-left: 4rem;
+  margin-left: 0;
 }
 .contact .content .image-box img {
   width: 100%;
@@ -1263,10 +1263,10 @@ form .button-area {
     min-height: 70vh;
   }
   .contact .container {
-    margin: 3rem 0 2rem 0;
+    margin: 3rem auto 2rem auto;
   }
   .contact .container .content {
-    padding: 18px 12px;
+    padding: 18px 18px;
   }
   .contact .content .image-box {
     display: none;
