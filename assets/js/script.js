@@ -39,16 +39,16 @@ $(document).ready(function () {
 
     // <!-- emailjs to mail contact form data -->
     $("#contact-form").submit(function (event) {
-    event.preventDefault();
-    emailjs.sendForm('service_3cv5ga3', 'template_r4fp27a', '#contact-form')
-        .then(function (response) {
-            console.log('SUCCESS!', response.status, response.text);
-            document.getElementById("contact-form").reset();
-            alert("Form Submitted Successfully");
-        }, function (error) {
-            console.log('FAILED...', error);
-            alert("Form Submission Failed! Try Again");
-        });
+        event.preventDefault();
+        emailjs.sendForm('service_3cv5ga3', 'template_r4fp27a', '#contact-form')
+            .then(function (response) {
+                console.log('SUCCESS!', response.status, response.text);
+                document.getElementById("contact-form").reset();
+                alert("Form Submitted Successfully");
+            }, function (error) {
+                console.log('FAILED...', error);
+                alert("Form Submission Failed! Try Again");
+            });
     });
     // <!-- emailjs to mail contact form data -->
 
@@ -206,7 +206,7 @@ const srtop = ScrollReveal({
     origin: 'top',
     distance: '80px',
     duration: 1000,
-    reset: true
+    reset: false
 });
 
 /* SCROLL HOME */
@@ -241,12 +241,12 @@ srtop.reveal('.education .box', { interval: 200 });
 srtop.reveal('.cert', { interval: 200 });
 
 /* SCROLL EXPERIENCE */
-srtop.reveal('.experience .timeline', { delay: 200 });
-srtop.reveal('.experience .timeline .container', { interval: 200 });
+srtop.reveal('.experience .timeline', { delay: 400 });
+srtop.reveal('.experience .timeline .container', { interval: 400 });
 
 /* SCROLL CONTACT */
-srtop.reveal('.contact .container', { delay: 200 });
-srtop.reveal('.contact .container .form-group', { delay: 200 });
+srtop.reveal('.contact .container', { delay: 400 });
+srtop.reveal('.contact .container .form-group', { delay: 400 });
 
 
 /* SCROLL project */

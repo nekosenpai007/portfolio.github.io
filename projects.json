@@ -80,22 +80,22 @@
     }
   },
   {
-    "name": "Flipkart PHP",
-    "desc": "Full-Stack Flipkart Clone Using LAMP Stack. With all major features and OTP authentication and Cashfree payment gateway.",
-    "image": "",
-    "category": "android",
+    "name": "High Performance Computing",
+    "desc": "Compeleted the Workshop of HPC at IUAC",
+    "image": "hpc",
+    "category": "mern",
     "links": {
-      "view": "https://github.com/jigar-sable/Flipkart-Clone-PHP",
+      "view": "https://drive.google.com/file/d/1tdCj0zERgulCHIKrzbahe_3nsMUYOGfZ/view?usp=drive_link",
       "code": "https://github.com/jigar-sable/Flipkart-Clone-PHP"
     }
   },
   {
-    "name": "JavaScript Projects Website",
-    "desc": "This website is specially build to showcase all major javaScript projects. All my javaScript based projects are in it.",
-    "image": "jspro",
-    "category": "android",
+    "name": "Internship at CDAC Patna",
+    "desc": "Compeleted 6 month internship at CDAC patna in Department of Cyber-Security and Cyber-Forensics",
+    "image": "internship",
+    "category": "mern",
     "links": {
-      "view": "https://jigar-sable.github.io/JavaScript-Projects",
+      "view": "https://drive.google.com/file/d/12wC4IFCJWagCUxhAOinJyvTDpUymJbc5/view?usp=drive_link",
       "code": "https://github.com/jigar-sable/JavaScript-Projects"
     }
   },

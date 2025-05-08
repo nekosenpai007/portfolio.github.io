@@ -20,7 +20,11 @@
         "icon": "https://img.icons8.com/?size=100&id=25250&format=png&color=000000"
     },
     {
-        "name": "Bash",
-        "icon": "https://img.icons8.com/?size=100&id=w8vzomb1oP2W&format=png&color=000000"
+        "name":"Bash",
+        "icon":"assets/icons/icons8-bash.svg"
+    },
+    {
+        "name":"Linux",
+        "icon":"assets/icons/icons8-kali-linux.svg"
     }
 ]
