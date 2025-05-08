@@ -353,6 +353,20 @@ header .navbar ul li a:hover {
 /* hero media queries ends*/
 /* hero section end */
 
+/* iconsvg */
+.icon-svg {
+  width: 80px;
+  height: 80px;
+  vertical-align: middle;
+  margin-right: 8px;
+  transition: filter 0.3s;
+}
+
+
+
+
+
+
 /* about section starts */
 .about {
   background: rgb(255, 255, 255);
