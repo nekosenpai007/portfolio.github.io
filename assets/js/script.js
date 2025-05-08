@@ -159,6 +159,11 @@ VanillaTilt.init(document.querySelectorAll(".tilt"), {
 // <!-- tilt js effect ends -->
 
 
+// hobbiess section start
+
+// hibbiess section ends
+
+
 // pre loader start
 // function loader() {
 //     document.querySelector('.loader-container').classList.add('fade-out');
