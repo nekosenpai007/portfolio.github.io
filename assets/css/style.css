@@ -11,13 +11,15 @@
   text-transform: capitalize;
   transition: all 0.1s linear;
 }
+
 html {
   font-size: 62.5%;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
 body {
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: hidden;
   background: #000000;
   font-family: "Poppins", sans-serif;
 }
@@ -27,10 +29,6 @@ body {
   color: rgb(255, 255, 255);
 }
 
-html {
-  font-size: 62.5%;
-  overflow-x: hidden;
-}
 html::-webkit-scrollbar {
   width: 0.8rem;
 }
