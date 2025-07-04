@@ -57,11 +57,11 @@ $(document).ready(function () {
 document.addEventListener('visibilitychange',
     function () {
         if (document.visibilityState === "visible") {
-            document.title = "Portfolio | Neko";
+            document.title = "Portfolio | Cipher";
             $("#favicon").attr("href", "assets/images/eagle.png");
         }
         else {
-            document.title = "Come Back To Portfolio";
+            document.title = "See you soon";
             $("#favicon").attr("href", "assets/images/eagle.png");
         }
     });

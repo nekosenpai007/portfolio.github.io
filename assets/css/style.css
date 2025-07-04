@@ -23,8 +23,8 @@ body {
 }
 
 *::selection {
-  background: #ffffff;
-  color: #fff;
+  background: rgb(126, 31, 204);
+  color: rgb(255, 255, 255);
 }
 
 html {
@@ -385,7 +385,7 @@ header .navbar ul li a:hover {
 .about .row .image img {
   margin: 4rem;
   width: 30rem;
-  height: auto;
+  height: 40rem;
   border-radius: 5%;
   box-shadow: 0 5px 10px rgb(255, 255, 255);
   mix-blend-mode: luminosity;
