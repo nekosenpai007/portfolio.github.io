@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./assets/css/project_card.css">
     <link rel="stylesheet" href="./assets/css/blog_cards.css">
     <link rel="stylesheet" href="./assets/css/globe.css">
+    <link rel="stylesheet" href="./modal/modal_style.css">
 
 
 
@@ -30,12 +31,34 @@
     </script>
 </head>
 <body oncontextmenu="return false">
-
 <!-- pre loader -->
 <!-- <div class="loader-container">
   <img draggable="false" src="./assets/images/preloader.gif" alt="">
 </div> -->
+<!-- Modal start -->
+<div class="modal-overlay"></div>
+    <div class="modal">
+      <div class="bg-shape"></div>
+      <div class="modal_close-btn">
+        <i class="fas fa-times"></i>
+      </div>
 
+        <div class="modal_image">
+          <img src="./modal/pngegg.png" alt="">
+        </div>
+
+
+      <div class="right">
+        <h2>
+          Oh, you came to visit <br />
+          My page
+        </h2>
+      </div>
+    </div>
+
+<!-- Modal ends -->
+
+<div class="page-content">
 <!-- navbar starts -->
 <header>
         <a href="/" class="logo"><i class="fab fa-teamspeak"></i> Cipher</a>
@@ -63,7 +86,7 @@
   <div id="particles-js"></div>
 
   <div class="content">
-  <h2>Hi There,<br/> I'm Ganendra <span>Kumar</span></h2>
+  <h2>Hi there,<br/> I'm Ganendra <span>Kumar</span></h2>
   <p>i am into <span class="typing-text"></span></p>
   <a href="#about" class="btn"><span>About Me</span>
     <i class="fas fa-arrow-circle-down"></i>
@@ -80,7 +103,7 @@
     </div>
   </div>
 <div class="image">
-  <img draggable="false" class="tilt" src=".\assets\images\image.jpeg" alt="">
+  <img draggable="false" class="tilt" src="./assets/images/image.jpeg" alt="">
 </div>
 </section>
 <!-- hero section ends -->
@@ -194,7 +217,6 @@
   <a href="/projects" class="btn"><span>View All</span>
     <i class="fas fa-arrow-right"></i> -->
 </a>
-</div> 
 
 </section>
 <!-- work project section ends -->
@@ -820,13 +842,10 @@
           </div>
       </div>
   </div>
-
   <!-- <h1 class="credit">Designed with <i class="fa fa-heart pulse"></i> by <a href="https://www.linkedin.com/in/jigar-sable"> jigar sable</a></h1> -->
-
 </section>
 <!-- footer section ends -->
-
-
+</div>
 <!-- scroll top btn -->
 <a href="#home" aria-label="ScrollTop" class="fas fa-angle-up" id="scroll-top"></a>
 <!-- scroll back to top -->
@@ -852,6 +871,7 @@
 <!-- ==== ALL MAJOR JAVASCRIPT CDNS ENDS ==== -->
 
 <script src="./assets/js/script.js"></script>
+<script src="./modal/modal_main.js"></script>
 
 </body>
 </html>

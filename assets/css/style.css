@@ -278,6 +278,7 @@ header .navbar ul li a:hover {
 .home .btn:hover i {
   transform: translateX(5px);
 }
+
 /* social icons start */
 .socials {
   position: relative;
