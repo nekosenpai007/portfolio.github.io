@@ -68,3 +68,12 @@
   .project_card:hover:after {
     content: "See Project";
   }
+
+
+  @media (max-width: 768px) {
+  .project_card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
