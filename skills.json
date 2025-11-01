@@ -1,30 +1,50 @@
 [
     {
         "name": "Python",
-        "icon": "https://img.icons8.com/?size=100&id=pIJdjOoL6KfU&format=png&color=000000"
+        "icon": "./assets/icons/1_python.svg"
     },
     {
-        "name": "ASCII C",
-        "icon": "https://img.icons8.com/?size=100&id=nBKHe4Tn9k59&format=png&color=000000"
+        "name": "C/C++",
+        "icon": "./assets/icons/1_c.svg"
     },
     {
         "name": "Fortran",
-        "icon": "https://img.icons8.com/?size=100&id=YySP2rXL2cFd&format=png&color=000000"
+        "icon": "./assets/icons/1_fortran.svg"
     },
     {
         "name": "LaTex",
-        "icon": "https://img.icons8.com/?size=100&id=WBooq2dInw0x&format=png&color=000000"
+        "icon": "./assets/icons/1_latex.svg"
     },
     {
         "name": "Burp Suite",
-        "icon": "https://img.icons8.com/?size=100&id=25250&format=png&color=000000"
+        "icon": "./assets/icons/1_burpsuite.svg"
     },
     {
         "name":"Bash",
-        "icon":"assets/icons/icons8-bash.svg"
+        "icon":"./assets/icons/1_bash.svg"
+    },
+    {
+        "name": "Metasploit",
+        "icon": "./assets/icons/1_metasploit.svg"
     },
     {
         "name":"Linux",
-        "icon":"assets/icons/icons8-kali-linux.svg"
+        "icon":"./assets/icons/1_linux.svg"
+    },
+    {
+        "name":"Docker",
+        "icon":"./assets/icons/1_docker.svg"
+    },
+    {
+        "name":"Network",
+        "icon":"./assets/icons/1_network-adapter.svg"
+    },
+    {
+        "name":"WireGuard",
+        "icon":"./assets/icons/1_wireguard.svg"
+    },
+    {
+        "name":"WireShark",
+        "icon":"./assets/icons/1_wireshark.svg"
     }
 ]

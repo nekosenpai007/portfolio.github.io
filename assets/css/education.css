@@ -7,7 +7,7 @@
   gap: 20px;
   width: 100%;
   padding: 2rem 0;
-  background-color: #ffffff;
+  background-color: #fefae8;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   box-sizing: border-box;
 }
@@ -22,9 +22,9 @@
 
         
         .comic-card {
-            --paper-white: #fefae8;
-            --primary-yellow: #ffd900;
-            --accent-red: #d92b2b;
+            --paper-white: #ffffff;
+            --primary-yellow: #ffffff;
+            --accent-red: rgb(126, 31, 204);
             --accent-blue: #2b80d9;
             --ink-black: #212121;
             --border-stroke: 0.15em;
@@ -63,7 +63,6 @@
     width: 3.5em;
     height: 3.5em;
     border-radius: 50%;
-    background-image: url('./assets/images/avatar.jpg'); /* Add your image path */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
