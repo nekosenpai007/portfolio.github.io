@@ -1,8 +1,8 @@
 /* From Uiverse.io by ElSombrero2 */ 
 .cards01{
     overflow: visible;
-    width: 190px;
-    height: 254px;
+    width: 240px;
+    height: 310px;
   }
   
   .cards01-container{
@@ -18,7 +18,7 @@
     height: 100%;
     transform-style: preserve-3d;
     transition: transform 300ms;
-    box-shadow: 0px 0px 1px 1px rgb(126, 31, 204);
+    box-shadow: 0px 0px 2px 2px rgb(126, 31, 204);
     border-radius: 5px;
   }
   
@@ -53,6 +53,7 @@
   }
   
   .cards01 .back-content {
+    font-size: 12px;
     position: absolute;
     width: 99%;
     height: 99%;
@@ -104,6 +105,7 @@
   }
   
   .cards01 .description {
+    font-size: 14px;
     box-shadow: 0px 0px 10px 5px #00000088;
     width: 100%;
     padding: 10px;
@@ -113,7 +115,7 @@
   }
   
   .cards01 .title {
-    font-size: 11px;
+    font-size: 15px;
     max-width: 100%;
     display: flex;
     justify-content: space-between;
