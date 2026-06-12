@@ -1,82 +1,65 @@
 [
   {
     "name": "App Development",
-    "desc": "compeleted the training on app development with android with java.",
+    "desc": "Completed the training on App Development with Android using Java.",
     "image": "android",
     "category": "mern",
     "links": {
-      "view": "https://drive.google.com/file/d/1kn9qk4-PQk7duxCjJOMstxkHX_NBOvmX/view?usp=drive_link",
-      "code": "https://github.com/jigar-sable/instagram-mern"
+      "view": "https://drive.google.com/file/d/1kn9qk4-PQk7duxCjJOMstxkHX_NBOvmX/view?usp=drive_link"
     }
   },
   {
     "name": "Cyber Security",
-    "desc": "Compeleted the training on Cyber security and cyber foresics.",
+    "desc": "Completed the training on Cyber Security and Cyber Forensics.",
     "image": "forensics",
     "category": "mern",
     "links": {
-      "view": "https://drive.google.com/file/d/1UNhVodr6DL4jFgZTP7_AoW6a4Oo9iorG/view?usp=drive_link",
-      "code": "https://github.com/jigar-sable/flipkart-mern"
+      "view": "https://drive.google.com/file/d/1UNhVodr6DL4jFgZTP7_AoW6a4Oo9iorG/view?usp=drive_link"
     }
   },
   {
     "name": "Firewall",
-    "desc": "Compeleted the Course on Firewall.",
+    "desc": "Completed the course on Firewall configuration and network security.",
     "image": "firewall",
     "category": "mern",
     "links": {
-      "view": "https://drive.google.com/file/d/1ebLnklWk4YnlBM7r9ndYFOg268FGjbqv/view?usp=drive_link",
-      "code": "https://github.com/jigar-sable/resumegen"
+      "view": "https://drive.google.com/file/d/1ebLnklWk4YnlBM7r9ndYFOg268FGjbqv/view?usp=drive_link"
     }
   },
   {
     "name": "Networking Essentials",
-    "desc": "Compeleted the Course on Computer Network by CISCO",
+    "desc": "Completed the course on Computer Networking by CISCO.",
     "image": "network",
     "category": "mern",
     "links": {
-      "view": "https://reactjsprojects.herokuapp.com/",
-      "code": "https://github.com/jigar-sable/React-Projects"
+      "view": "https://drive.google.com/file/d/1pJKys7-kn6tWrNZ6rZ5JyUHwb2Orh1EG/view?usp=sharing"
     }
   },
   {
     "name": "High Performance Computing",
-    "desc": "Compeleted the Workshop of HPC at IUAC",
+    "desc": "Completed the Workshop on HPC at IUAC.",
     "image": "hpc",
     "category": "mern",
     "links": {
-      "view": "https://drive.google.com/file/d/1tdCj0zERgulCHIKrzbahe_3nsMUYOGfZ/view?usp=drive_link",
-      "code": "https://github.com/jigar-sable/Flipkart-Clone-PHP"
+      "view": "https://drive.google.com/file/d/1tdCj0zERgulCHIKrzbahe_3nsMUYOGfZ/view?usp=drive_link"
     }
   },
   {
-    "name": "Internship at CDAC Patna",
-    "desc": "Compeleted 6 month internship at CDAC patna in Department of Cyber-Security and Cyber-Forensics",
-    "image": "internship",
-    "category": "mern",
-    "links": {
-      "view": "https://drive.google.com/file/d/12wC4IFCJWagCUxhAOinJyvTDpUymJbc5/view?usp=drive_link",
-      "code": "https://github.com/jigar-sable/JavaScript-Projects"
-    }
-  },
-  {
-    "name": "Data Analytics",
-    "desc": "Coming Soon...",
+    "name": "CompTIA PenTest+ (PT0-002)",
+    "desc": "Completed the course on CompTIA PenTest+ (PT0-002) Specialization.",
     "image": "network",
     "category": "mern",
     "links": {
-      "view": "Broken",
-      "code": "Broken"
+      "view": "https://drive.google.com/file/d/1SOV93IRpfsD723MH97yN1GUpOC5Ti7Cz/view?usp=sharing"
     }
   },
   {
-    "name": "Ethical Hacker",
-    "desc": "Coming Soon...",
+    "name": "Nmap for Penetration Testing",
+    "desc": "Completed the course on Nmap for Penetration Testing.",
     "image": "network",
     "category": "mern",
     "links": {
-      "view": "Broken",
-      "code": "https://github.com/jigar-sable/JavaScript-Projects"
+      "view": "https://drive.google.com/file/d/1OKtxLrK9euiakcYzEeOjLj59MddR6YIm/view?usp=sharing"
     }
   }
 ]
