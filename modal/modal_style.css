@@ -1,0 +1,121 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 300;
+  background: #fff;
+  width: 90%;
+  max-width: 400px;
+  font-family: "Roboto", sans-serif;
+  box-shadow: 0 5px 26px -8px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 400ms ease;
+}
+
+.modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal .modal_close-btn {
+  position: absolute;
+  color: #000000;
+  right: 16px;
+  top: 16px;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.modal_image {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+
+.modal .right {
+  padding: 16px;
+  text-align: center;
+}
+
+.modal .right h2 {
+  margin: 0;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #222;
+}
+
+.modal .bg-shape {
+  position: absolute;
+  height: 10px;
+  width: 40%;
+  background: linear-gradient(180deg, rgb(126, 31, 204) 0%, rgb(126, 31, 204) 100%);
+  border-radius: 20px 20px 0 0;
+  top: -10px;
+  left: 30%;
+}
+
+/* Overlay */
+.modal-overlay {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 400ms ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Optional blur effect for page content */
+.page-content.blur {
+  filter: blur(5px);
+  transition: filter 0.4s ease;
+}
+
+/* Responsive styling */
+@media (max-width: 600px) {
+  .modal {
+    max-width: 90%;
+    padding: 16px;
+  }
+
+  .modal .modal_close-btn {
+    right: 10px;
+    top: 10px;
+  }
+
+  .modal .bg-shape {
+    display: none;
+  }
+
+  .modal .right h2 {
+    font-size: 18px;
+    text-transform: none;
+  }
+}
