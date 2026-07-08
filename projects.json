@@ -60,23 +60,33 @@
     }
   },
   {
-    "name": "Data Analytics",
-    "desc": "Coming Soon...",
-    "image": "network",
+    "name": "Pentesting",
+    "desc": "Compeleted 40 hours course on the pentesting",
+    "image": "packt",
     "category": "mern",
     "links": {
-      "view": "Broken",
+      "view": "https://coursera.org/share/337a09aef848ec566b20833096bb07e8",
       "code": "Broken"
     }
   },
   {
-    "name": "Ethical Hacker",
-    "desc": "Coming Soon...",
-    "image": "network",
+    "name": "Network Mapper",
+    "desc": "Compeleted 40 hours course on the nmap",
+    "image": "packt",
     "category": "mern",
     "links": {
-      "view": "Broken",
-      "code": "https://github.com/jigar-sable/JavaScript-Projects"
+      "view": "https://coursera.org/share/135eaf0a891d028963521e6dca39fe1f",
+      "code": "Broken"
+    }
+  },
+  {
+    "name": "Cyber Security Professional",
+    "desc": "Compeleted 120 hours course on the Cyber Security Professional",
+    "image": "google",
+    "category": "mern",
+    "links": {
+      "view": "https://coursera.org/share/c6982be9c9116e6ac33420fad40319a6",
+      "code": "Broken"
     }
   }
 ]
