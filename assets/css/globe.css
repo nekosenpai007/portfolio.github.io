@@ -1,4 +1,4 @@
-/* From Uiverse.io by Lakshay-art */ 
+
 .section-banner {
     height: 250px;
     width: 250px;
@@ -22,12 +22,12 @@
       background-position: 400px 0;
     }
   }
-  
+
   .curved-corner-star {
     display: flex;
     position: relative;
   }
-  
+
   #curved-corner-bottomleft,
   #curved-corner-bottomright,
   #curved-corner-topleft,
@@ -37,7 +37,7 @@
     overflow: hidden;
     position: relative;
   }
-  
+
   #curved-corner-bottomleft:before,
   #curved-corner-bottomright:before,
   #curved-corner-topleft:before,
@@ -49,31 +49,31 @@
     position: absolute;
     border-radius: 50%;
   }
-  
+
   #curved-corner-bottomleft:before {
     bottom: 0;
     left: 0;
     box-shadow: -5px 5px 0 0 white;
   }
-  
+
   #curved-corner-bottomright:before {
     bottom: 0;
     right: 0;
     box-shadow: 5px 5px 0 0 white;
   }
-  
+
   #curved-corner-topleft:before {
     top: 0;
     left: 0;
     box-shadow: -5px -5px 0 0 white;
   }
-  
+
   #curved-corner-topright:before {
     top: 0;
     right: 0;
     box-shadow: 5px -5px 0 0 white;
   }
-  
+
   @keyframes twinkling {
     0%,
     100% {
@@ -83,13 +83,13 @@
       opacity: 1;
     }
   }
-  
+
   #star-1 {
     position: absolute;
     left: -20px;
     animation: twinkling 3s infinite;
   }
-  
+
   #star-2 {
     position: absolute;
     left: -40px;
@@ -114,7 +114,7 @@
     top: 270px;
     animation: twinkling 1.5s infinite;
   }
-  
+
   #star-6 {
     position: absolute;
     left: 250px;

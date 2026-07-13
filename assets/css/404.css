@@ -37,7 +37,7 @@ html::-webkit-scrollbar-track{
 html::-webkit-scrollbar-thumb{
   background: #420177;
 }
-/* navbar starts */
+
 header{
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -88,9 +88,7 @@ header .navbar ul li a:hover{
   border-bottom: .2rem solid #011aff;
   padding: .5rem 0;
 }
-/* navbar ends */
 
-/* hamburger icon starts*/
 #menu{
   font-size: 3rem;
   cursor: pointer;
@@ -142,11 +140,9 @@ header .navbar ul li a:hover{
     right: 0;
   }
 }
-/* hamburger icon ends */
 
-/* 404 section start */
-.page_404{ 
-    padding:40px 0; 
+.page_404{
+    padding:40px 0;
     background:rgb(255, 255, 255);
     margin-top: 6rem;
     min-height: 60vh;
@@ -176,7 +172,6 @@ header .navbar ul li a:hover{
   text-align: center;
 }
 
-/* back button */
 .backbtn{
   display: flex;
   justify-content: center;
@@ -209,9 +204,7 @@ header .navbar ul li a:hover{
 .backbtn .btn:hover i {
   transform: translateX(-8px);
 }
-/* 404 section end */
 
-/* footer section starts */
 .footer{
   min-height: auto;
   padding-top: 0;
@@ -314,9 +307,7 @@ header .navbar ul li a:hover{
     padding: 1.1rem;
   }
 }
-/* footer section ends */
 
-/* common media queries starts*/
 @media(max-width:450px){
   html{
     font-size: 55%;
@@ -328,10 +319,7 @@ header .navbar ul li a:hover{
     padding: 2rem;
   }
 }
-/* common media queries ends*/
 
-
-/* scroll top starts */
 #scroll-top{
   position: fixed;
   top: -140%;
@@ -347,4 +335,3 @@ header .navbar ul li a:hover{
 #scroll-top.active{
   top: calc(100% - 12rem);
 }
-/* scroll top ends */

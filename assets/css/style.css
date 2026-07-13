@@ -39,7 +39,6 @@ html::-webkit-scrollbar-thumb {
   background: rgb(126, 31, 204);
 }
 
-/* pre loader start */
 .loader-container {
   position: fixed;
   top: 0;
@@ -55,9 +54,7 @@ html::-webkit-scrollbar-thumb {
 .loader-container.fade-out {
   top: -120%;
 }
-/* pre loader end */
 
-/* navbar starts */
 header {
   position: fixed;
   top: auto;
@@ -74,7 +71,7 @@ header {
 }
 section {
   min-height: 60px;
-  padding: 80px;
+  padding:80px;
 }
 .heading {
   font-size: 3.5rem;
@@ -82,13 +79,7 @@ section {
   font-weight: 800;
   text-align: center;
 }
-/*card for the project section */
 
-
-
-
-
-/* color change for about */
 .heading span {
   color: rgb(0, 0, 0);
 }
@@ -127,9 +118,7 @@ header .navbar ul li a:hover {
   border-bottom: 0.2rem solid rgb(126, 31, 204);
   padding: 0.5rem 0;
 }
-/* navbar ends */
 
-/* hamburger icon starts*/
 #menu {
   font-size: 3rem;
   cursor: pointer;
@@ -182,9 +171,7 @@ header .navbar ul li a:hover {
     right: 0;
   }
 }
-/* hamburger icon ends */
 
-/* hero section starts*/
 .home {
   padding-top: 60px;
   position: relative;
@@ -279,7 +266,6 @@ header .navbar ul li a:hover {
   transform: translateX(5px);
 }
 
-/* social icons start */
 .socials {
   position: relative;
   margin-top: 9rem;
@@ -329,9 +315,7 @@ header .navbar ul li a:hover {
 .social-icons a.instagram:hover {
   background-color: rgb(126, 31, 204);
 }
-/* social icons end */
 
-/* hero media queries starts*/
 @media (max-width: 450px) {
   .home .btn {
     margin: 4rem 0;
@@ -349,10 +333,7 @@ header .navbar ul li a:hover {
     font-size: 2.2rem;
   }
 }
-/* hero media queries ends*/
-/* hero section end */
 
-/* iconsvg */
 .icon-svg {
   width: 50px;
   height: 50px;
@@ -361,12 +342,6 @@ header .navbar ul li a:hover {
   transition: filter 0.3s;
 }
 
-
-
-
-
-
-/* about section starts */
 .about {
   background: #fefae8;
 }
@@ -456,7 +431,7 @@ header .navbar ul li a:hover {
 .resumebtn .btn:hover i {
   transform: translateX(5px);
 }
-/* about media queries starts*/
+
 @media screen and (max-width: 600px) {
   .about .row .image {
     margin-top: 2rem;
@@ -477,10 +452,7 @@ header .navbar ul li a:hover {
     gap: 0;
   }
 }
-/* about media queries ends*/
-/* about section ends */
 
-/* skills section starts */
 .skills {
   min-height: 90vh;
   background: linear-gradient(to bottom, rgb(0, 0, 0), #000000);
@@ -539,7 +511,7 @@ header .navbar ul li a:hover {
   font-family: "Poppins";
   margin-left: 0.5rem;
 }
-/* skills media queries starts*/
+
 @media screen and (max-width: 600px) {
   .skills .container {
     padding: 0;
@@ -556,10 +528,7 @@ header .navbar ul li a:hover {
     width: 100%;
   }
 }
-/* skills media queries ends*/
-/* skills section ends */
 
-/* education section starts */
 .education {
   background: #fefae8;
   min-height: 100vh;
@@ -636,7 +605,6 @@ header .navbar ul li a:hover {
   font-weight: 700;
 }
 
-/* education media queries starts*/
 @media screen and (max-width: 600px) {
   .education .box-container .box {
     flex-direction: column;
@@ -664,12 +632,9 @@ header .navbar ul li a:hover {
     flex-wrap: wrap;
   }
 }
-/* education media queries ends*/
-/* education section ends */
 
-/* work section starts */
 .cert {
-  /* background: #010124; */
+
   background: linear-gradient(to bottom, #000000, #000000);
 }
 .cert h2 {
@@ -709,7 +674,7 @@ header .navbar ul li a:hover {
   display: flex;
   flex-direction: column;
 }
-/* certificate */
+
 .cert .box-container .box .content .tag {
   display: flex;
   flex-direction: row;
@@ -788,9 +753,7 @@ header .navbar ul li a:hover {
 .cert .viewall .btn:hover i {
   transform: translateX(5px);
 }
-/* work section ends */
 
-/* project section start*/
 .ol-cards,
 .ol-cards *,
 .ol-cards *::before,
@@ -807,7 +770,7 @@ header .navbar ul li a:hover {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  max-width: 100%; /* Full width of the screen */
+  max-width: 100%;
   padding: 2em;
   gap: 2em;
   counter-reset: ol-cards-counter;
@@ -826,7 +789,7 @@ header .navbar ul li a:hover {
   counter-increment: ol-cards-counter;
   text-align: left;
   background-color: rgb(255, 255, 255);
-  width: 100%; /* Full width of the card */
+  width: 100%;
 }
 
 .ol-cards.alternate li:nth-child() {
@@ -834,7 +797,7 @@ header .navbar ul li a:hover {
     "title step"
     "content step"
     "link step";
-  /* padding: 1em 0 1em 2em; */
+
 }
 
 .ol-cards li .step {
@@ -859,10 +822,6 @@ header .navbar ul li a:hover {
   font-size: 2em;
   text-shadow: 0.025em 0.025em 0.125em rgba(255, 255, 255, 0.4);
 }
-/* .ol-cards.alternate li:nth-child() .step { */
-  /* border-radius: 50em 0 0 50em; */
-  /* flex-direction: row-reverse; */
-/* } */
 
 .ol-cards li .step i {
   color: black;
@@ -890,7 +849,7 @@ header .navbar ul li a:hover {
   color: rgb(126, 31, 204);
   font-weight: bold;
 }
-/* Responsive adjustments */
+
 @media only screen and (max-width: 768px) {
   .ol-cards {
     padding: 1em;
@@ -963,10 +922,6 @@ header .navbar ul li a:hover {
   }
 }
 
-/* project section ends*/
-
-
-/* experience section starts */
 .experience .timeline {
   position: relative;
   max-width: 1200px;
@@ -989,7 +944,7 @@ header .navbar ul li a:hover {
   background-color: inherit;
   width: 50%;
 }
-/*circles on timeline*/
+
 .experience .container::after {
   content: "\f0b1";
   position: absolute;
@@ -1013,7 +968,7 @@ header .navbar ul li a:hover {
 .experience .right {
   left: 50%;
 }
-/* arrows pointing right */
+
 .experience .left::before {
   content: " ";
   height: 0;
@@ -1026,7 +981,7 @@ header .navbar ul li a:hover {
   border-width: 10px 0 10px 10px;
   border-color: transparent transparent transparent rgb(126, 31, 204);
 }
-/* arrows pointing left  */
+
 .experience .right::before {
   content: " ";
   height: 0;
@@ -1063,7 +1018,7 @@ header .navbar ul li a:hover {
 .experience .content .desc p {
   font-size: 1.2rem;
 }
-/* view all button */
+
 .morebtn {
   display: flex;
   justify-content: center;
@@ -1096,7 +1051,6 @@ header .navbar ul li a:hover {
   transform: translateX(5px);
 }
 
-/* Media queries - Responsive timeline on screens less than 600px wide */
 @media screen and (max-width: 600px) {
   .experience {
     min-height: 80vh;
@@ -1134,10 +1088,7 @@ header .navbar ul li a:hover {
     margin-top: 3rem;
   }
 }
-/* experience media queries ends */
-/* experience section ends */
 
-/* contact section starts */
 .contact {
   background: #000000;
   min-height: 60vh;
@@ -1273,7 +1224,7 @@ form .button-area {
 .button-area button:hover i {
   left: 8px;
 }
-/* contact section media queries starts */
+
 @media (max-width: 900px) {
   .contact {
     min-height: 70vh;
@@ -1292,10 +1243,7 @@ form .button-area {
     margin-right: 2rem;
   }
 }
-/* contact section media queries ends */
-/* contact section ends */
 
-/* footer section starts */
 .footer {
   min-height: auto;
   padding-top: 0;
@@ -1398,9 +1346,7 @@ form .button-area {
     padding: 1.2rem;
   }
 }
-/* footer section ends */
 
-/* common media queries starts*/
 @media (max-width: 450px) {
   html {
     font-size: 55%;
@@ -1412,9 +1358,7 @@ form .button-area {
     padding: 2rem;
   }
 }
-/* common media queries ends*/
 
-/* scroll top starts */
 #scroll-top {
   position: fixed;
   top: -140%;
@@ -1430,4 +1374,4 @@ form .button-area {
 #scroll-top.active {
   top: calc(100% - 12rem);
 }
-/* scroll top ends */
+
