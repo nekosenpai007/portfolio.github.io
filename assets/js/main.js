@@ -155,8 +155,8 @@
   try {
     console.log(
       "%ccipher.%c\nCurious? Good. Type cipher.hack() to claim a flag.",
-      "font: 600 28px/1.2 system-ui; color: #121214;",
-      "font: 13px/1.6 monospace; color: #c62828;"
+      "font: 600 28px/1.2 system-ui; color: #8b3dff;",
+      "font: 13px/1.6 monospace; color: #b794ff;"
     );
   } catch (e) {}
 
@@ -181,13 +181,13 @@
   var themeMeta = document.querySelector('meta[name="theme-color"]');
 
   Cipher.theme = function () {
-    return root.getAttribute("data-theme") === "xray" ? "xray" : "paper";
+    return root.getAttribute("data-theme") === "xray" ? "xray" : "default";
   };
 
   function applyTheme(theme, persist) {
     root.setAttribute("data-theme", theme);
     if (xrayBtn) xrayBtn.setAttribute("aria-pressed", String(theme === "xray"));
-    if (themeMeta) themeMeta.setAttribute("content", theme === "xray" ? "#0f0f11" : "#f4f4f2");
+    if (themeMeta) themeMeta.setAttribute("content", theme === "xray" ? "#f5f5f7" : "#09090b");
     if (persist) store("cipher-theme", theme);
     drawSpecs();
     document.dispatchEvent(new CustomEvent("cipher:theme", { detail: { theme: theme } }));
@@ -195,7 +195,7 @@
 
   if (xrayBtn) {
     xrayBtn.addEventListener("click", function () {
-      var next = Cipher.theme() === "xray" ? "paper" : "xray";
+      var next = Cipher.theme() === "xray" ? "default" : "xray";
       applyTheme(next, true);
       if (next === "xray") Cipher.flags.capture("xray");
     });

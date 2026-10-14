@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>cipher. Cybersecurity practitioner</title>
   <meta name="description" content="Cipher: cybersecurity practitioner with roots in IT infrastructure. Malware research, digital forensics and a growing love for code.">
-  <meta name="theme-color" content="#f4f4f2">
+  <meta name="theme-color" content="#09090b">
   <meta property="og:title" content="cipher. Cybersecurity practitioner">
   <meta property="og:description" content="Malware research, digital forensics and the infrastructure in between.">
   <meta property="og:type" content="website">
@@ -16,11 +16,16 @@
     (function () {
       var t = null;
       try { t = localStorage.getItem("cipher-theme"); } catch (e) {}
-      if (t !== "xray" && t !== "paper") {
-        t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "xray" : "paper";
-      }
+      if (t !== "xray") t = "default";
       document.documentElement.setAttribute("data-theme", t);
       document.documentElement.classList.add("js");
+      /* intro animation: once per visit, never with reduced motion */
+      try {
+        if (!sessionStorage.getItem("cipher-loaded") &&
+            !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          document.documentElement.classList.add("is-loading");
+        }
+      } catch (e) {}
     })();
   </script>
 
@@ -34,6 +39,11 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
 <body>
+
+<div class="loader" aria-hidden="true">
+  <canvas></canvas>
+  <p class="loader-count mono">decrypting <b>000</b>%</p>
+</div>
 
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -192,6 +202,8 @@
 <div class="xray-layer" aria-hidden="true"></div>
 
 <script src="assets/js/main.js"></script>
+<script src="assets/js/fx/loader.js"></script>
+<script src="assets/js/fx/fluid.js"></script>
 <!-- @scripts -->
 </body>
 </html>

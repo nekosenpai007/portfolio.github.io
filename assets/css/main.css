@@ -5,23 +5,24 @@
 
 /* ---------- tokens ---------- */
 
+/* Default: black, grey, white and one violet. */
 :root {
-  --paper: #f4f4f2;
-  --paper-2: #e9e9e6;
-  --paper-3: #deded9;
-  --ink: #121214;
-  --ink-2: #4a4a50;
-  --muted: #66666d;           /* small text that must stay readable (4.9:1 on paper) */
-  --faint: #9a9a9f;           /* decorative only: ticks, guides */
-  --line: rgba(18, 18, 20, 0.12);
-  --line-strong: rgba(18, 18, 20, 0.26);
-  --red: #ff3e3e;             /* fills, dots, guides, large type */
-  --red-ink: #c62828;         /* red text at small sizes (5.4:1 on paper) */
-  --red-soft: rgba(255, 62, 62, 0.08);
-  --on-red: #ffffff;
-  --panel: #121214;           /* dark panels stay dark in both themes */
-  --on-panel: #f1f1ee;
-  --on-panel-2: #b6b6b1;
+  --paper: #09090b;           /* page background (black) */
+  --paper-2: #131316;
+  --paper-3: #1c1c21;
+  --ink: #f4f4f6;             /* main text (white) */
+  --ink-2: #b4b4bd;           /* secondary text (grey) */
+  --muted: #8e8e99;           /* small text that must stay readable */
+  --faint: #4b4b55;           /* decorative only: ticks, guides */
+  --line: rgba(244, 244, 246, 0.1);
+  --line-strong: rgba(244, 244, 246, 0.22);
+  --accent: #8b3dff;          /* violet: fills, dots, guides, large type */
+  --accent-ink: #b794ff;      /* violet text at small sizes (8:1 on black) */
+  --accent-soft: rgba(139, 61, 255, 0.14);
+  --on-accent: #ffffff;
+  --panel: #141418;           /* raised dark panels */
+  --on-panel: #f4f4f6;
+  --on-panel-2: #b4b4bd;
 
   --font-display: "Bricolage Grotesque", system-ui, sans-serif;
   --font-sans: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -38,28 +39,28 @@
 
   --ease: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --shadow-lift: 0 24px 60px -30px rgba(0, 0, 0, 0.35);
+  --shadow-lift: 0 24px 60px -30px rgba(0, 0, 0, 0.9);
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
-/* X-ray: the forensic, dark view of the same page */
+/* X-ray: the negative of the page, light, with spec annotations on top */
 :root[data-theme="xray"] {
-  --paper: #0f0f11;
-  --paper-2: #18181b;
-  --paper-3: #222226;
-  --ink: #f1f1ee;
-  --ink-2: #b6b6b1;
-  --muted: #9a9a96;
-  --faint: #5a5a5e;
-  --line: rgba(241, 241, 238, 0.12);
-  --line-strong: rgba(241, 241, 238, 0.26);
-  --red: #ff4a4a;
-  --red-ink: #ff7b7b;
-  --red-soft: rgba(255, 74, 74, 0.12);
-  --panel: #18181b;
-  --shadow-lift: 0 24px 60px -30px rgba(0, 0, 0, 0.9);
-  color-scheme: dark;
+  --paper: #f5f5f7;
+  --paper-2: #eaeaee;
+  --paper-3: #dedee4;
+  --ink: #0b0b0e;
+  --ink-2: #45454f;
+  --muted: #63636e;
+  --faint: #a0a0aa;
+  --line: rgba(11, 11, 14, 0.12);
+  --line-strong: rgba(11, 11, 14, 0.26);
+  --accent: #7e1fcc;
+  --accent-ink: #6a12b5;
+  --accent-soft: rgba(126, 31, 204, 0.08);
+  --panel: #0b0b0e;
+  --shadow-lift: 0 24px 60px -30px rgba(0, 0, 0, 0.35);
+  color-scheme: light;
 }
 
 /* ---------- reset & base ---------- */
@@ -126,12 +127,12 @@ button {
 }
 
 ::selection {
-  background: var(--red);
-  color: var(--on-red);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 :focus-visible {
-  outline: 2px solid var(--red);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -243,11 +244,11 @@ button {
   font-weight: 600;
   font-size: 26px;
   line-height: 1;
-  color: var(--red);
+  color: var(--accent);
 }
 
 .dot {
-  color: var(--red);
+  color: var(--accent);
 }
 
 /* "01 —— 08" step / index counter */
@@ -261,7 +262,7 @@ button {
 }
 
 .label-index > :first-child {
-  color: var(--red-ink);
+  color: var(--accent-ink);
 }
 
 .label-index::after {
@@ -280,8 +281,8 @@ button {
 .btn-pill {
   --btn-bg: var(--ink);
   --btn-fg: var(--paper);
-  --btn-icon-bg: var(--red);
-  --btn-icon-fg: var(--on-red);
+  --btn-icon-bg: var(--accent);
+  --btn-icon-fg: var(--on-accent);
   display: inline-flex;
   align-items: center;
   gap: 14px;
@@ -345,7 +346,7 @@ button {
 .btn-pill--on-dark {
   --btn-bg: transparent;
   --btn-fg: var(--on-panel);
-  border-color: rgba(241, 241, 238, 0.24);
+  border-color: rgba(244, 244, 246, 0.24);
 }
 
 .btn-pill--on-dark:hover {
@@ -453,8 +454,8 @@ button {
 .spec-label {
   display: inline-block;
   padding: 1px 6px;
-  background: var(--red);
-  color: var(--on-red);
+  background: var(--accent);
+  color: var(--on-accent);
   font-family: var(--font-mono);
   font-size: 11px;
   line-height: 1.6;
@@ -472,14 +473,14 @@ button {
   inset: -10px;
   pointer-events: none;
   background:
-    linear-gradient(var(--red), var(--red)) top left / 10px 1px,
-    linear-gradient(var(--red), var(--red)) top left / 1px 10px,
-    linear-gradient(var(--red), var(--red)) top right / 10px 1px,
-    linear-gradient(var(--red), var(--red)) top right / 1px 10px,
-    linear-gradient(var(--red), var(--red)) bottom left / 10px 1px,
-    linear-gradient(var(--red), var(--red)) bottom left / 1px 10px,
-    linear-gradient(var(--red), var(--red)) bottom right / 10px 1px,
-    linear-gradient(var(--red), var(--red)) bottom right / 1px 10px;
+    linear-gradient(var(--accent), var(--accent)) top left / 10px 1px,
+    linear-gradient(var(--accent), var(--accent)) top left / 1px 10px,
+    linear-gradient(var(--accent), var(--accent)) top right / 10px 1px,
+    linear-gradient(var(--accent), var(--accent)) top right / 1px 10px,
+    linear-gradient(var(--accent), var(--accent)) bottom left / 10px 1px,
+    linear-gradient(var(--accent), var(--accent)) bottom left / 1px 10px,
+    linear-gradient(var(--accent), var(--accent)) bottom right / 10px 1px,
+    linear-gradient(var(--accent), var(--accent)) bottom right / 1px 10px;
   background-repeat: no-repeat;
   opacity: 0.7;
 }
@@ -614,8 +615,8 @@ button {
 }
 
 .xray-toggle[aria-pressed="true"] {
-  background: var(--red);
-  color: var(--on-red);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 .header-link {
@@ -624,7 +625,7 @@ button {
 }
 
 .header-link:hover {
-  color: var(--red-ink);
+  color: var(--accent-ink);
 }
 
 .menu-btn,
@@ -715,7 +716,7 @@ button {
 }
 
 .menu-nav a .mono {
-  color: var(--red-ink);
+  color: var(--accent-ink);
   letter-spacing: 0;
   transform: translateY(-0.2em);
 }
@@ -756,7 +757,7 @@ button {
 
 .inline-links a:hover,
 .menu-foot a:hover {
-  color: var(--red-ink);
+  color: var(--accent-ink);
 }
 
 /* ---------- scroll rail (right edge) ---------- */
@@ -786,7 +787,7 @@ button {
   height: 8px;
   margin-top: -4px;
   border-radius: 50%;
-  background: var(--red);
+  background: var(--accent);
   transform: translateY(var(--rail-y, 0px));
   will-change: transform;
 }
@@ -846,7 +847,7 @@ button {
 }
 
 .footer-col a:hover {
-  color: var(--red-ink);
+  color: var(--accent-ink);
 }
 
 .footer-bottom {
@@ -900,12 +901,12 @@ button {
 .flags-ring {
   width: 9px;
   height: 9px;
-  border: 1.5px solid var(--red);
+  border: 1.5px solid var(--accent);
   border-radius: 50%;
 }
 
 .flags.is-complete .flags-ring {
-  background: var(--red);
+  background: var(--accent);
 }
 
 .flags-panel {
@@ -953,14 +954,14 @@ button {
 }
 
 .flags-list li.is-found::before {
-  border-color: var(--red);
-  background: var(--red);
+  border-color: var(--accent);
+  background: var(--accent);
 }
 
 .flags-list code {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--red-ink);
+  color: var(--accent-ink);
 }
 
 .flags-list .hint {
@@ -1004,7 +1005,7 @@ button {
 
 .xray-box {
   position: absolute;
-  border: 1px solid var(--red);
+  border: 1px solid var(--accent);
   animation: xray-in 0.5s var(--ease) both;
 }
 
@@ -1012,7 +1013,7 @@ button {
   position: absolute;
   width: 6px;
   height: 6px;
-  border: 1px solid var(--red);
+  border: 1px solid var(--accent);
   background: var(--paper);
 }
 
@@ -1033,7 +1034,7 @@ button {
 .xray-note {
   max-width: 34ch;
   padding-left: 6px;
-  border-left: 2px solid var(--red);
+  border-left: 2px solid var(--accent);
   background: var(--paper);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -1070,6 +1071,72 @@ button {
   display: flex;
 }
 
+/* ---------- loader (assets/js/fx/loader.js) ---------- */
+
+.loader {
+  display: none;
+}
+
+.is-loading,
+.is-loading body {
+  overflow: hidden;
+}
+
+.is-loading .loader {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: #09090b;
+  cursor: pointer;
+  transition: background-color 0.7s var(--ease-in-out) 0.15s;
+}
+
+.loader canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.4s;
+}
+
+.loader-count {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 28px;
+  color: #8e8e99;
+}
+
+.loader-count b {
+  font-weight: 500;
+  color: #f4f4f6;
+}
+
+.loader.is-leaving {
+  background-color: rgba(9, 9, 11, 0);
+}
+
+.loader.is-leaving canvas,
+.loader.is-leaving .loader-count {
+  opacity: 0;
+}
+
+/* ---------- fluid cursor (assets/js/fx/fluid.js) ---------- */
+
+.fluid-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 70;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+:root[data-theme="xray"] .fluid-canvas {
+  mix-blend-mode: normal;
+}
+
 /* ---------- 404 ---------- */
 
 .page-404 {
@@ -1092,7 +1159,7 @@ button {
 }
 
 .page-404 .code-line b {
-  color: var(--red-ink);
+  color: var(--accent-ink);
   font-weight: 500;
 }
 
