@@ -2,400 +2,658 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Cipher — cybersecurity practitioner. Malware and security research, digital forensics and IT infrastructure.">
-  <meta name="keywords" content="Cipher, cybersecurity, cyber forensics, information security, portfolio">
-  <meta name="theme-color" content="#07090c">
-  <title>Portfolio | Cipher</title>
-  <script>document.documentElement.classList.add("js");</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>cipher. Cybersecurity practitioner</title>
+  <meta name="description" content="Cipher: cybersecurity practitioner with roots in IT infrastructure. Malware research, digital forensics and a growing love for code.">
+  <meta name="theme-color" content="#09090b">
+  <meta property="og:title" content="cipher. Cybersecurity practitioner">
+  <meta property="og:description" content="Malware research, digital forensics and the infrastructure in between.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/images/eagle.png" type="image/png">
 
-  <link id="favicon" rel="icon" href="assets/images/eagle.png" type="image/png">
+  <script>
+    /* Pick the theme before first paint so X-ray mode never flashes. */
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("cipher-theme"); } catch (e) {}
+      if (t !== "xray") t = "default";
+      document.documentElement.setAttribute("data-theme", t);
+      document.documentElement.classList.add("js");
+      /* intro animation: once per visit, never with reduced motion */
+      var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!still) document.documentElement.classList.add("scr-on");
+      try {
+        if (!still && !sessionStorage.getItem("cipher-loaded")) {
+          document.documentElement.classList.add("is-loading");
+        }
+      } catch (e) {}
+    })();
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="./assets/css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Caveat:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap">
 
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/sections/hero.css">
+  <link rel="stylesheet" href="assets/css/sections/process.css">
+  <link rel="stylesheet" href="assets/css/sections/about.css">
+  <link rel="stylesheet" href="assets/css/sections/skills.css">
+  <link rel="stylesheet" href="assets/css/sections/path.css">
+  <link rel="stylesheet" href="assets/css/sections/cert.css">
+  <link rel="stylesheet" href="assets/css/sections/work.css">
+  <link rel="stylesheet" href="assets/css/sections/journal.css">
+  <link rel="stylesheet" href="assets/css/sections/hobbies.css">
+  <link rel="stylesheet" href="assets/css/sections/contact.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
 <body>
 
+<div class="loader" aria-hidden="true">
+  <canvas></canvas>
+  <p class="loader-count mono">decrypting <b>000</b>%</p>
+</div>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
-<header class="site-header">
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="site-header">
   <div class="container header-inner">
-    <a href="#home" class="logo" aria-label="Cipher — back to top">
-      <span class="logo-prompt">&gt;</span> cipher<span class="cursor" aria-hidden="true">_</span>
-    </a>
+    <a href="#home" class="wordmark" aria-label="cipher. Back to top" data-spec="Wordmark" data-spec-note="cipher. from ciphertext: noise, until you hold the key.">cipher<span class="dot">.</span></a>
 
-    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
-      <i class="fas fa-bars" aria-hidden="true"></i>
-    </button>
-
-    <nav class="site-nav" id="site-nav" aria-label="Main">
-      <ul>
-        <li><a href="#about">about</a></li>
-        <li><a href="#skills">skills</a></li>
-        <li><a href="#education">education</a></li>
-        <li><a href="#cert">certs</a></li>
-        <li><a href="#project">projects</a></li>
-        <li><a href="#blog">blog</a></li>
-        <li><a href="#hobbies">hobbies</a></li>
-        <li><a href="#contact" class="nav-cta">contact</a></li>
-      </ul>
-    </nav>
+    <div class="header-actions">
+      <button class="xray-toggle" type="button" aria-pressed="false" data-scramble-hover data-spec="Toggle" data-spec-note="X-ray shows how this page is built.">
+        <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+        <span data-scramble-text>X-ray</span>
+      </button>
+      <a class="header-link" href="#contact" data-scramble-hover>Get in touch</a>
+      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
+<!-- ============ MENU OVERLAY ============ -->
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="container menu-inner">
+    <div class="menu-top">
+      <a href="#home" class="wordmark">cipher<span class="dot">.</span></a>
+      <button class="menu-close" type="button" aria-label="Close menu">
+        <span></span><span></span>
+      </button>
+    </div>
+    <nav class="menu-nav" aria-label="Chapters">
+      <ol>
+        <li><a href="#about" data-scramble-hover><span class="mono">01</span>About</a></li>
+        <li><a href="#skills" data-scramble-hover><span class="mono">02</span>Toolbox</a></li>
+        <li><a href="#path" data-scramble-hover><span class="mono">03</span>Path</a></li>
+        <li><a href="#cert" data-scramble-hover><span class="mono">04</span>Certifications</a></li>
+        <li><a href="#work" data-scramble-hover><span class="mono">05</span>Work</a></li>
+        <li><a href="#journal" data-scramble-hover><span class="mono">06</span>Journal</a></li>
+        <li><a href="#contact" data-scramble-hover><span class="mono">07</span>Contact</a></li>
+      </ol>
+    </nav>
+    <div class="menu-foot">
+      <div>
+        <p class="mono-caps">Contact</p>
+        <a href="mailto:ciphersensei@proton.me">ciphersensei@proton.me</a>
+        <p class="muted">127.0.0.1</p>
+      </div>
+      <div>
+        <p class="mono-caps">Elsewhere</p>
+        <ul class="inline-links">
+          <li><a href="https://www.linkedin.com/in/ganendra-kumar-netam-3695592b6/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/nekosenpai007" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://x.com/nekosen35693393" target="_blank" rel="noopener">X</a></li>
+          <li><a href="https://t.me/nekosenpai007" target="_blank" rel="noopener">Telegram</a></li>
+          <li><a href="https://dev.to/neko_senpai" target="_blank" rel="noopener">DEV</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCROLL RAIL (right edge) ============ -->
+<div class="rail" aria-hidden="true">
+  <span class="rail-dot"><span class="rail-chip">Home</span></span>
+</div>
+
 <main id="main">
 
-<!-- ============ HERO ============ -->
-<section class="hero" id="home">
-  <div id="particles-js" aria-hidden="true"></div>
+<section class="sec--hero" id="home" data-chapter="Home" aria-labelledby="hero-title">
+  <canvas class="hero-globe" aria-hidden="true" data-spec="Globe" data-spec-note="A network of nodes; packets travel the arcs between them."></canvas>
+  <div class="hero-shade" aria-hidden="true"></div>
 
   <div class="container hero-inner">
-    <div class="hero-text">
-      <p class="prompt-line"><span class="accent">cipher@portfolio</span>:<span class="accent-2">~</span>$ whoami</p>
-      <h1 class="hero-title">Hi there,<br>I'm <span class="accent glow">Cipher</span><span class="cursor" aria-hidden="true">_</span></h1>
-      <p class="hero-typed"><span class="dim">&gt;</span> i am into <span class="typing-text" aria-live="polite"></span><span class="caret" aria-hidden="true"></span></p>
-      <p class="hero-lede">Cybersecurity practitioner with a strong foundation in IT infrastructure, doing malware and security research.</p>
+    <p class="hero-kicker mono reveal"><span class="hero-dot" aria-hidden="true"></span>cipher@127.0.0.1 <span class="muted">~ security · forensics · infrastructure</span></p>
 
-      <div class="hero-actions">
-        <a href="#about" class="btn btn-primary"><span>about me</span> <i class="fas fa-arrow-down" aria-hidden="true"></i></a>
-        <a href="assets/files/resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost"><span>resume.pdf</span> <i class="fas fa-file-download" aria-hidden="true"></i></a>
-      </div>
+    <h1 class="hero-title" id="hero-title" data-scramble data-spec="Heading" data-spec-note="Decrypts on load; two tones, one violet period.">Hi, I'm Cipher<span class="dot">.</span><br><span class="tone-2">Cybersecurity practitioner. Malware, forensics and the systems in between.</span></h1>
 
-      <ul class="socials">
-        <li><a aria-label="LinkedIn" href="https://www.linkedin.com/in/ganendra-kumar-netam-3695592b6/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a></li>
-        <li><a aria-label="GitHub" href="https://github.com/nekosenpai007" target="_blank" rel="noopener"><i class="fab fa-github"></i></a></li>
-        <li><a aria-label="X (Twitter)" href="https://x.com/nekosen35693393" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a></li>
-        <li><a aria-label="Telegram" href="https://t.me/nekosenpai007" target="_blank" rel="noopener"><i class="fab fa-telegram-plane"></i></a></li>
-        <li><a aria-label="DEV Community" href="https://dev.to/neko_senpai" target="_blank" rel="noopener"><i class="fab fa-dev"></i></a></li>
-      </ul>
-    </div>
-
-    <div class="hero-visual">
-      <div class="window window-photo">
-        <div class="window-bar">
-          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="window-title">~/cipher/avatar.jpg</span>
-        </div>
-        <div class="window-body photo-body">
-          <img src="./assets/images/55.jpg" alt="Cipher's avatar" width="736" height="736" draggable="false">
-        </div>
-      </div>
+    <div class="hero-actions reveal">
+      <a class="btn-pill" href="#contact" data-spec="Button" data-spec-note="At least 44px tall, thumbs included.">Get in touch <span class="btn-icon"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
+      <a class="btn-pill btn-pill--outline" href="assets/files/resume.pdf" target="_blank" rel="noopener">View résumé <span class="btn-icon"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
     </div>
   </div>
 
-  <a href="#about" class="scroll-hint" aria-label="Scroll to about"><span></span></a>
+  <div class="container hero-bar mono">
+    <span>&copy;<span data-year>2026</span></span>
+    <span>(UTC+5:30)</span>
+    <span data-hero-clock aria-label="Local time in India">--:--:--</span>
+    <span class="hero-status"><span class="hero-dot" aria-hidden="true"></span>online</span>
+    <a class="hero-scroll" href="#process">Scroll <svg class="i-arrow i-arrow--down" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4"/></svg></a>
+  </div>
+
+  <p class="hero-hint mono" aria-hidden="true">Hold the globe to run a deep scan.</p>
 </section>
 
-<!-- ============ ABOUT ============ -->
-<section class="section" id="about">
-  <div class="container">
-    <header class="section-head reveal">
-      <p class="section-comment">// 01 — who am i</p>
-      <h2 class="section-title"><span class="accent">~/</span>about</h2>
+<section class="sec sec--process" id="process" data-chapter="The investigation" aria-labelledby="process-title">
+  <div class="pr-stage">
+
+    <header class="pr-head container">
+      <div class="pr-kicker">
+        <p class="mono pr-eyebrow">The investigation</p>
+        <h2 class="display-l pr-title" id="process-title" data-scramble data-spec="Heading" data-spec-note="Eight steps, one case.">From a packet to a report<span class="dot">.</span></h2>
+      </div>
+      <div class="pr-meter" aria-hidden="true">
+        <p class="mono pr-meter-label">Investigation progress</p>
+        <p class="pr-count"><span class="pr-digit" data-pr-digit>0</span><span class="pr-digit" data-pr-digit>0</span><span class="pr-digit" data-pr-digit>0</span><span class="pr-unit">%</span></p>
+      </div>
     </header>
 
-    <div class="about-grid">
-      <div class="about-photo reveal">
-        <img src="./assets/images/11.jpg" alt="Photo of Cipher" width="1064" height="1500" loading="lazy" draggable="false">
-      </div>
+    <!-- the stage: every layer below is drawn from scroll progress by process.js -->
+    <div class="pr-canvas">
+      <div class="pr-framewrap" aria-hidden="true">
+        <div class="pr-dim"><span data-pr-dim>922 × 576</span></div>
+        <div class="frame pr-frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span class="pr-bar-title">case 0x01</span></div>
+          <div class="pr-body">
+            <div class="pr-art">
 
-      <div class="about-text reveal">
-        <h3>I'm Cipher <span class="tag">The IT Guy</span></h3>
-        <p>Hello, my alias is <strong>cipher</strong>. I am a cybersecurity practitioner with a strong
-          foundation in IT infrastructure and a budding interest in programming.
-          My journey includes conducting malware and security research.
-          I am passionate about leveraging my skills to enhance cybersecurity
-          measures and continuously expand my knowledge in the field.</p>
+              <span class="pr-file">capture.pcap</span>
 
-        <div class="window window-code">
-          <div class="window-bar">
-            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span class="window-title">contact.json</span>
+              <!-- 01 a packet -->
+              <span class="pr-wire"></span>
+              <span class="pr-wire-a">eth0 · rx</span>
+              <span class="pr-wire-b">128 bytes</span>
+              <span class="pr-pkt"></span>
+
+              <!-- 02 a baseline: rows rendered by process.js -->
+              <div class="pr-hex" data-pr-hex></div>
+
+              <!-- 03 an anomaly -->
+              <span class="pr-g pr-g--h pr-g--htl"></span>
+              <span class="pr-g pr-g--h pr-g--htr"></span>
+              <span class="pr-g pr-g--h pr-g--hbl"></span>
+              <span class="pr-g pr-g--h pr-g--hbr"></span>
+              <span class="pr-g pr-g--v pr-g--vlt"></span>
+              <span class="pr-g pr-g--v pr-g--vlb"></span>
+              <span class="pr-g pr-g--v pr-g--vrt"></span>
+              <span class="pr-g pr-g--v pr-g--vrb"></span>
+
+              <!-- 04 a hypothesis -->
+              <span class="pr-group"></span>
+              <span class="pr-bracket"></span>
+              <span class="pr-bracket-label">4 bytes</span>
+              <svg class="pr-note-arrow" viewBox="0 0 64 48"><path pathLength="100" d="M60 44C40 46 14 34 6 6M3.8 14.7 6 6l6.5 6.3"/></svg>
+              <span class="hand pr-note">suspicious?</span>
+
+              <span class="pr-hit">4A</span>
+              <span class="pr-hit-ascii">J</span>
+              <span class="spec-label pr-hit-label">0x4A · offset 0x0172</span>
+
+              <!-- 05 the tools -->
+              <ul class="pr-tools">
+                <li class="chip pr-tool" style="--i:0"><span class="pr-ico pr-ico--wireshark"></span>Wireshark</li>
+                <li class="chip pr-tool" style="--i:1"><span class="pr-ico pr-ico--burp"></span>Burp Suite</li>
+                <li class="chip pr-tool" style="--i:2"><span class="pr-ico pr-ico--msf"></span>Metasploit</li>
+                <li class="chip pr-tool" style="--i:3"><span class="pr-ico pr-ico--bash"></span>Bash</li>
+              </ul>
+
+              <!-- 06 a line of code -->
+              <div class="panel-dark pr-code">
+                <div class="pr-code-bar"><i></i>scan.py</div>
+                <ol class="pr-code-lines">
+                  <li class="c"><span class="pr-cl"><b class="k">import</b> sys</span></li>
+                  <li class="c"><span class="pr-cl"></span></li>
+                  <li class="c"><span class="pr-cl"><b class="k">def</b> <b class="f">scan</b>(path, at=<b class="n">0x0172</b>):</span></li>
+                  <li class="c"><span class="pr-cl">    data = open(path, <b class="s">"rb"</b>).read()</span></li>
+                  <li class="c"><span class="pr-cl">    print(<b class="s">f"{at:#06x}: {data[at]:#04x}"</b>)</span></li>
+                  <li class="c"><span class="pr-cl"></span></li>
+                  <li class="c"><span class="pr-cl"><b class="f">scan</b>(sys.argv[<b class="n">1</b>])</span></li>
+                  <li class="sep"></li>
+                  <li class="t"><span class="pr-cl"><b class="p">$</b> python3 scan.py capture.pcap</span></li>
+                  <li class="t"><span class="pr-cl"><b class="o">0x0172: 0x4a</b></span></li>
+                </ol>
+              </div>
+
+              <!-- 07 a report -->
+              <div class="pr-report">
+                <div class="pr-report-top"><span>Report · case 0x01</span><span class="pr-report-status">status: resolved</span></div>
+                <p class="pr-report-title">Unexpected byte in the padding.</p>
+                <dl class="pr-report-meta">
+                  <div><dt>Offset</dt><dd>0x0172</dd></div>
+                  <div><dt>Value</dt><dd>0x4a</dd></div>
+                  <div><dt>Evidence</dt><dd>capture.pcap</dd></div>
+                </dl>
+                <span class="pr-report-lines"><i></i><i></i></span>
+                <span class="pr-stamp">Resolved</span>
+              </div>
+
+            </div>
           </div>
-<pre class="window-body code"><code>{
-  <span class="k">"email"</span>: <a class="s" href="mailto:ciphersensei@proton.me">"ciphersensei@proton.me"</a>,
-  <span class="k">"place"</span>: <span class="s">"127.0.0.1"</span>,
-  <span class="k">"focus"</span>: [<span class="s">"malware"</span>, <span class="s">"forensics"</span>, <span class="s">"infra"</span>]
-}</code></pre>
         </div>
+      </div>
+    </div>
 
-        <a href="assets/files/resume.pdf" target="_blank" rel="noopener" class="btn btn-primary"><span>view resume</span> <i class="fas fa-chevron-right" aria-hidden="true"></i></a>
+    <div class="pr-captions container">
+      <ol class="pr-steps" data-spec="Steps" data-spec-note="Still version: no pinning.">
+        <li class="pr-step is-active">
+          <span class="label-index"><span>01</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">A packet.</h3>
+          <p class="pr-step-desc">Every investigation starts with raw data. Capture first, conclusions later.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>02</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">A baseline.</h3>
+          <p class="pr-step-desc">Know what normal looks like, and the odd one out becomes obvious.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>03</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">An anomaly.</h3>
+          <p class="pr-step-desc">One byte where it shouldn’t be. That’s where the story starts.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>04</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">A hypothesis.</h3>
+          <p class="pr-step-desc">Every theory gets tested against the evidence, never the other way round.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>05</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">The tools.</h3>
+          <p class="pr-step-desc">Wireshark, Burp Suite, Metasploit and a terminal. The right instrument for each layer.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>06</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">A line of code.</h3>
+          <p class="pr-step-desc">Automate the repetitive, script the rest. Python and Bash do the heavy lifting.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>07</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">A report.</h3>
+          <p class="pr-step-desc">Findings only matter when someone can act on them. Clear, reproducible, documented.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>08</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">Your turn.</h3>
+          <p class="pr-step-desc">Have a system that needs a closer look? Let’s talk.</p>
+        </li>
+      </ol>
+      <a class="link-arrow pr-skip" href="#about">Skip the investigation <svg class="i-arrow i-arrow--down" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4"/></svg></a>
+    </div>
+
+    <!-- 08 your turn: the one real button on the stage -->
+    <div class="pr-final container">
+      <div class="pr-select">
+        <span class="pr-fg pr-fg--t"></span><span class="pr-fg pr-fg--b"></span><span class="pr-fg pr-fg--l"></span><span class="pr-fg pr-fg--r"></span>
+        <a class="btn-pill pr-cta" href="#contact">Get in touch <span class="btn-icon"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
+        <span class="pr-handle pr-handle--tl" aria-hidden="true"></span><span class="pr-handle pr-handle--tr" aria-hidden="true"></span><span class="pr-handle pr-handle--bl" aria-hidden="true"></span><span class="pr-handle pr-handle--br" aria-hidden="true"></span>
+        <span class="spec-label pr-cta-spec" aria-hidden="true" data-pr-cta-size>Button · 172 × 52</span>
+        <svg class="pr-cta-arrow" viewBox="0 0 64 64" aria-hidden="true"><path pathLength="100" d="M56 4C61 27 44 43 10 45m8.4-7.4L9.6 45l8.9 6.2"/></svg>
+        <span class="hand pr-cta-note" aria-hidden="true">go on, ask me.</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="sec sec--about" id="about" data-chapter="About" aria-labelledby="about-title">
+  <div class="container">
+
+    <div class="ab-top">
+      <div class="ab-intro">
+        <h2 class="display-l ab-statement" id="about-title" data-scramble data-spec="Statement" data-spec-note="Two tones: what I do, then how I do it.">I'm Cipher, the IT guy. I study how systems fail so they can be made to hold. <span class="tone-2">Curious on the outside, methodical underneath.</span></h2>
+
+        <dl class="ab-facts reveal">
+          <div class="ab-fact">
+            <dt class="mono-caps">Email</dt>
+            <dd><a class="link-arrow" href="mailto:ciphersensei@proton.me">ciphersensei@proton.me <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></dd>
+          </div>
+          <div class="ab-fact">
+            <dt class="mono-caps">Based at</dt>
+            <dd class="mono ab-home">127.0.0.1</dd>
+          </div>
+          <div class="ab-fact">
+            <dt class="mono-caps">Résumé</dt>
+            <dd><a class="link-arrow" href="assets/files/resume.pdf" target="_blank" rel="noopener">View PDF <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg><span class="sr-only"> (opens in a new tab)</span></a></dd>
+          </div>
+        </dl>
+      </div>
+
+      <figure class="ab-fig reveal">
+        <div class="ab-media crop" data-spec="Fig. 1" data-spec-note="Portrait, shown at its native 1064 × 1500 ratio.">
+          <img src="assets/images/11.jpg" width="1064" height="1500" alt="Illustration of a tabby cat in a headset at a desk, keyboard and mouse in front of a glowing monitor, shelves of books and cans behind." loading="lazy" decoding="async">
+          <span class="chip ab-chip">The IT Guy</span>
+        </div>
+        <figcaption class="mono ab-caption"><span class="ab-caption-tag">fig. 1</span><span aria-hidden="true">—</span><span>the IT guy at work</span></figcaption>
+      </figure>
+    </div>
+
+    <ol class="ab-principles" aria-label="Four things about how I work">
+      <li class="ab-principle reveal" data-spec="Principle" data-spec-note="A hairline, 24 px of air, then the type.">
+        <span class="mono ab-num" aria-hidden="true">01</span>
+        <h3 class="ab-p-title">Security research.</h3>
+        <p class="ab-p-text">I analyse malware and research security. I understand threats by taking them apart.</p>
+      </li>
+      <li class="ab-principle reveal">
+        <span class="mono ab-num" aria-hidden="true">02</span>
+        <h3 class="ab-p-title">Infrastructure roots.</h3>
+        <p class="ab-p-text">My foundation is IT infrastructure: networks, Linux and the systems everything runs on.</p>
+      </li>
+      <li class="ab-principle reveal">
+        <span class="mono ab-num" aria-hidden="true">03</span>
+        <h3 class="ab-p-title">Code by hand.</h3>
+        <p class="ab-p-text">A budding programmer. I write Python, C and Bash to automate, analyse and build my own tools.</p>
+      </li>
+      <li class="ab-principle reveal">
+        <span class="mono ab-num" aria-hidden="true">04</span>
+        <h3 class="ab-p-title">Always learning.</h3>
+        <p class="ab-p-text">I'm pursuing an M.Tech in Cyber Forensics &amp; Information Security. I'm never done learning.</p>
+      </li>
+    </ol>
+
+  </div>
+</section>
+
+<section class="sec sec--skills" id="skills" data-chapter="Toolbox" aria-labelledby="skills-title">
+  <div class="container">
+
+    <div class="sk-head-row">
+      <h2 class="display-l sk-title" id="skills-title" data-scramble data-spec="Heading" data-spec-note="Two tones, one violet period.">Everything in the toolbox<span class="dot">.</span> <span class="tone-2">From packets to code.</span></h2>
+      <p class="mono sk-count reveal" data-sk-count aria-hidden="true"></p>
+    </div>
+
+    <div class="sk-acc" data-sk-acc data-spec="Accordion" data-spec-note="The open drawer takes 3.4 shares of the width, the rest one each." aria-busy="true">
+      <noscript><p class="mono sk-status">Python, C/C++, Fortran, Bash, LaTeX, Burp Suite, Metasploit, Linux, Docker, Network, WireGuard, Wireshark.</p></noscript>
+    </div>
+
+  </div>
+</section>
+
+<section class="sec sec--path" id="path" data-chapter="Path" aria-labelledby="path-title">
+  <div class="container">
+    <header class="sec-head">
+      <h2 class="display-l" id="path-title" data-scramble data-spec="Heading" data-spec-note="Newest first, like a log.">The path<span class="dot">.</span></h2>
+      <p class="sec-head-aside mono">&ldquo;The roots of education are bitter, but the fruit is sweet.&rdquo; &mdash; Aristotle</p>
+    </header>
+
+    <ol class="path-list" data-spec="List" data-spec-note="Hover a row to see the campus.">
+      <li class="path-row reveal" data-photo="assets/images/educat/mtech.jpg" data-caption="NIELIT · campus">
+        <span class="path-year mono">2027 <span class="chip path-live">in progress</span></span>
+        <span class="path-main">
+          <span class="path-inst"><img class="path-logo" src="assets/images/educat/nielit.png" alt="" width="40" height="40" loading="lazy">NIELIT</span>
+          <span class="path-degree">M.Tech &middot; Cyber Forensics &amp; Information Security</span>
+        </span>
+        <span class="path-handle mono">@majdur_khana</span>
+        <img class="path-thumb" src="assets/images/educat/mtech.jpg" alt="NIELIT campus" width="971" height="670" loading="lazy">
+      </li>
+      <li class="path-row reveal" data-photo="assets/images/educat/college2.jpg" data-caption="Government Engineering College · campus">
+        <span class="path-year mono">2023</span>
+        <span class="path-main">
+          <span class="path-inst"><img class="path-logo" src="assets/images/educat/college.png" alt="" width="40" height="40" loading="lazy">Government Engineering College</span>
+          <span class="path-degree">B.Tech &middot; Information Technology</span>
+        </span>
+        <span class="path-handle mono">@Ghosala</span>
+        <img class="path-thumb" src="assets/images/educat/college2.jpg" alt="Government Engineering College campus" width="960" height="720" loading="lazy">
+      </li>
+      <li class="path-row reveal" data-photo="assets/images/educat/school2.jpg" data-caption="Saraswati Shishu Mandir · campus">
+        <span class="path-year mono">2018</span>
+        <span class="path-main">
+          <span class="path-inst"><img class="path-logo" src="assets/images/educat/school.jpeg" alt="" width="40" height="40" loading="lazy">Saraswati Shishu Mandir</span>
+          <span class="path-degree">Mathematics &middot; Science &middot; Language</span>
+        </span>
+        <span class="path-handle mono">@2018_trauma_center</span>
+        <img class="path-thumb" src="assets/images/educat/school2.jpg" alt="Saraswati Shishu Mandir campus" width="960" height="720" loading="lazy">
+      </li>
+    </ol>
+  </div>
+
+  <figure class="path-float" aria-hidden="true">
+    <img src="" alt="" width="960" height="720">
+    <figcaption class="mono"></figcaption>
+  </figure>
+</section>
+
+<section class="sec sec--cert" id="cert" data-chapter="Certifications" aria-labelledby="cert-title">
+  <div class="container">
+    <header class="sec-head">
+      <h2 class="display-l" id="cert-title" data-scramble data-spec="Heading" data-spec-note="Every card links to the certificate itself.">Proof of work<span class="dot">.</span></h2>
+      <p class="sec-head-aside mono"><span data-cert-count>09</span> certificates</p>
+    </header>
+    <div class="cert-grid" id="certContainer" aria-live="polite">
+      <!-- rendered from projects.json by assets/js/sections/cert.js -->
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--work" id="work" data-chapter="Work" aria-labelledby="work-title">
+  <div class="container">
+    <header class="sec-head">
+      <h2 class="display-l" id="work-title" data-scramble data-spec="Heading">Selected work<span class="dot">.</span></h2>
+      <a class="link-arrow sec-head-aside" href="https://github.com/nekosenpai007" target="_blank" rel="noopener">GitHub <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+    </header>
+
+    <div class="work-grid">
+      <a class="wcard work-card reveal" href="https://github.com/nekosenpai007" target="_blank" rel="noopener">
+        <span class="wcard-media work-media" data-ripple data-cursor="View on GitHub" data-spec="Media" data-spec-note="Hover: water ripple, RGB split.">
+          <img src="assets/images/covers/work-terminal.svg" alt="" width="1200" height="900" loading="lazy">
+          <span class="wcard-tags"><span class="tag-box">Tools</span><span class="tag-box">Write-ups</span><span class="tag-box">Research</span></span>
+        </span>
+        <span class="wcard-body">
+          <span class="wcard-meta">01 / 01 &middot; In progress &middot; <span data-year>2026</span></span>
+          <span class="wcard-title">Projects, compiling.</span>
+          <span class="wcard-desc">Security tools and write-ups are on the way. Until then, the source lives on GitHub.</span>
+          <span class="wcard-go"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span>
+        </span>
+      </a>
+
+      <aside class="work-note reveal">
+        <p class="mono-caps">Status</p>
+        <p class="lead">Nothing public yet. New tools and write-ups will land here first.</p>
+        <a class="link-arrow" href="https://github.com/nekosenpai007" target="_blank" rel="noopener">Follow on GitHub <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--journal" id="journal" data-chapter="Journal" aria-labelledby="journal-title">
+  <div class="container">
+    <header class="sec-head">
+      <h2 class="display-l" id="journal-title" data-scramble data-spec="Heading">From the journal<span class="dot">.</span></h2>
+      <a class="link-arrow sec-head-aside" href="https://nekos-organization.gitbook.io/cyber" target="_blank" rel="noopener">All articles <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+    </header>
+
+    <div class="journal-grid">
+      <a class="wcard reveal" href="https://nekos-organization.gitbook.io/cyber" target="_blank" rel="noopener">
+        <span class="wcard-media" data-ripple data-cursor="Read article">
+          <img src="assets/images/covers/journal-cyber-security.svg" alt="" width="1200" height="900" loading="lazy">
+          <span class="wcard-tags"><span class="tag-box">No. 01</span><span class="tag-box">Write-up</span></span>
+        </span>
+        <span class="wcard-body">
+          <span class="wcard-meta">01 / 02 &middot; GitBook</span>
+          <span class="wcard-title">Cyber Security</span>
+          <span class="wcard-desc">Introduction to cyber security.</span>
+          <span class="wcard-go"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span>
+        </span>
+      </a>
+
+      <a class="wcard reveal" href="https://nekos-organization.gitbook.io/cyber/digital-forensics" target="_blank" rel="noopener">
+        <span class="wcard-media" data-ripple data-cursor="Read article">
+          <img src="assets/images/covers/journal-digital-forensics.svg" alt="" width="1200" height="900" loading="lazy">
+          <span class="wcard-tags"><span class="tag-box">No. 02</span><span class="tag-box">Coming soon</span></span>
+        </span>
+        <span class="wcard-body">
+          <span class="wcard-meta">02 / 02 &middot; GitBook</span>
+          <span class="wcard-title">Digital Forensics</span>
+          <span class="wcard-desc">Coming soon.</span>
+          <span class="wcard-go"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span>
+        </span>
+      </a>
+
+      <div class="journal-more reveal" aria-hidden="true">
+        <span class="mono">03 / ??</span>
+        <p>More soon<span class="dot">.</span></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ SKILLS ============ -->
-<section class="section section-alt" id="skills">
+<section class="sec sec--hobbies" id="hobbies" data-chapter="Off the clock" aria-labelledby="hobbies-title">
   <div class="container">
-    <header class="section-head reveal">
-      <p class="section-comment">// 02 — toolbox</p>
-      <h2 class="section-title"><span class="accent">~/</span>skills</h2>
+    <header class="sec-head">
+      <h2 class="display-l" id="hobbies-title" data-scramble>Off the clock<span class="dot">.</span></h2>
     </header>
 
-    <ul class="skills-grid" id="skillsContainer" aria-label="Skills">
-      <!-- filled from skills.json -->
+    <ul class="hobby-list">
+      <li class="hobby reveal">
+        <span class="mono hobby-tag">01 &middot; Otaku</span>
+        <span class="hobby-name">Anime</span>
+        <a class="link-arrow" href="https://myanimelist.net/profile/canizaro007" target="_blank" rel="noopener">My anime list <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+      </li>
+      <li class="hobby reveal">
+        <span class="mono hobby-tag">02 &middot; Noob</span>
+        <span class="hobby-name">Gaming</span>
+        <a class="link-arrow" href="https://nekos-organization.gitbook.io/games/" target="_blank" rel="noopener">Let's connect <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+      </li>
+      <li class="hobby reveal">
+        <span class="mono hobby-tag">03 &middot; Sport</span>
+        <span class="hobby-name">Badminton</span>
+      </li>
+      <li class="hobby reveal">
+        <span class="mono hobby-tag">04 &middot; Tech</span>
+        <span class="hobby-name">Circuit man</span>
+      </li>
     </ul>
   </div>
 </section>
 
-<!-- ============ EDUCATION ============ -->
-<section class="section" id="education">
+<section class="sec sec--contact" id="contact" data-chapter="Contact" aria-labelledby="contact-title">
   <div class="container">
-    <header class="section-head reveal">
-      <p class="section-comment">// 03 — the roots of education are bitter, but the fruit is sweet. — Aristotle</p>
-      <h2 class="section-title"><span class="accent">~/</span>education</h2>
-    </header>
+    <div class="contact-panel panel-dark">
+      <span class="contact-orb" aria-hidden="true"></span>
 
-    <ol class="timeline">
-      <li class="timeline-item reveal">
-        <div class="edu-card">
-          <div class="edu-info">
-            <span class="badge">2027</span>
-            <div class="edu-head">
-              <img class="edu-logo" src="./assets/images/educat/nielit.png" alt="" width="48" height="48" loading="lazy">
-              <div>
-                <h3>NIELIT</h3>
-                <p class="handle">@majdur_khana</p>
-              </div>
-            </div>
-            <p class="edu-degree">M.Tech · Cyber Forensics &amp; Information Security</p>
-          </div>
-          <img class="edu-photo" src="./assets/images/educat/mtech.jpg" alt="NIELIT campus" loading="lazy">
+      <div class="contact-intro">
+        <h2 class="contact-title" id="contact-title" data-scramble data-spec="Heading" data-spec-note="One violet circle, one question.">Tell me what needs a closer look<span class="dot">.</span></h2>
+        <p class="contact-lede">Questions, collaborations, or just want to talk security? Write to me. I read everything.</p>
+        <a class="contact-mail" href="mailto:ciphersensei@proton.me" data-scramble-hover>ciphersensei@proton.me</a>
+      </div>
+
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="cf-field">
+          <label for="cf-name">Name</label>
+          <input id="cf-name" name="name" type="text" autocomplete="name" required>
         </div>
-      </li>
-
-      <li class="timeline-item reveal">
-        <div class="edu-card">
-          <div class="edu-info">
-            <span class="badge">2023</span>
-            <div class="edu-head">
-              <img class="edu-logo" src="./assets/images/educat/college.png" alt="" width="48" height="48" loading="lazy">
-              <div>
-                <h3>Government Engineering College</h3>
-                <p class="handle">@Ghosala</p>
-              </div>
-            </div>
-            <p class="edu-degree">B.Tech · Information Technology</p>
-          </div>
-          <img class="edu-photo" src="./assets/images/educat/college2.jpg" alt="Government Engineering College campus" loading="lazy">
+        <div class="cf-field">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" name="email" type="email" autocomplete="email" required>
         </div>
-      </li>
-
-      <li class="timeline-item reveal">
-        <div class="edu-card">
-          <div class="edu-info">
-            <span class="badge">2018</span>
-            <div class="edu-head">
-              <img class="edu-logo" src="./assets/images/educat/school.jpeg" alt="" width="48" height="48" loading="lazy">
-              <div>
-                <h3>Saraswati Shishu Mandir</h3>
-                <p class="handle">@2018_trauma_center</p>
-              </div>
-            </div>
-            <p class="edu-degree">Mathematics · Science · Language</p>
-          </div>
-          <img class="edu-photo" src="./assets/images/educat/school2.jpg" alt="Saraswati Shishu Mandir campus" loading="lazy">
+        <div class="cf-field">
+          <label for="cf-phone">Phone <span>(optional)</span></label>
+          <input id="cf-phone" name="phone" type="tel" autocomplete="tel">
         </div>
-      </li>
-    </ol>
-  </div>
-</section>
-
-<!-- ============ CERTIFICATIONS ============ -->
-<section class="section section-alt" id="cert">
-  <div class="container">
-    <header class="section-head reveal">
-      <p class="section-comment">// 04 — proof of work</p>
-      <h2 class="section-title"><span class="accent">~/</span>certifications</h2>
-    </header>
-
-    <div class="cert-grid" id="certContainer">
-      <!-- filled from projects.json -->
-    </div>
-  </div>
-</section>
-
-<!-- ============ PROJECTS ============ -->
-<section class="section" id="project">
-  <div class="container">
-    <header class="section-head reveal">
-      <p class="section-comment">// 05 — things i build</p>
-      <h2 class="section-title"><span class="accent">~/</span>projects</h2>
-    </header>
-
-    <div class="window window-terminal reveal">
-      <div class="window-bar">
-        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="window-title">bash — projects</span>
-      </div>
-<pre class="window-body code"><code><span class="accent">cipher@portfolio</span>:<span class="accent-2">~/projects</span>$ ls -la
-total 0
-<span class="dim">drwxr-xr-x  cipher  staff  .</span>
-<span class="dim">drwxr-xr-x  cipher  staff  ..</span>
-
-<span class="accent">cipher@portfolio</span>:<span class="accent-2">~/projects</span>$ echo $STATUS
-<span class="s">"coming soon — currently compiling something interesting..."</span>
-<span class="accent">cipher@portfolio</span>:<span class="accent-2">~/projects</span>$ <span class="caret" aria-hidden="true"></span></code></pre>
-    </div>
-    <p class="center-note reveal">Meanwhile, see what I'm working on at <a href="https://github.com/nekosenpai007" target="_blank" rel="noopener">github.com/nekosenpai007 <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></p>
-  </div>
-</section>
-
-<!-- ============ BLOG ============ -->
-<section class="section section-alt" id="blog">
-  <div class="container">
-    <header class="section-head reveal">
-      <p class="section-comment">// 06 — notes &amp; writeups</p>
-      <h2 class="section-title"><span class="accent">~/</span>blog</h2>
-    </header>
-
-    <div class="blog-grid">
-      <a class="card blog-card reveal" href="https://nekos-organization.gitbook.io/cyber" target="_blank" rel="noopener">
-        <span class="badge">No. 01</span>
-        <h3>Cyber Security</h3>
-        <p>Introduction to Cyber-Security.</p>
-        <span class="link-arrow">read here <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-      </a>
-
-      <a class="card blog-card reveal" href="https://nekos-organization.gitbook.io/cyber/digital-forensics" target="_blank" rel="noopener">
-        <span class="badge">No. 02</span>
-        <h3>Digital Forensics</h3>
-        <p>Coming soon.</p>
-        <span class="link-arrow">read here <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ HOBBIES ============ -->
-<section class="section" id="hobbies">
-  <div class="container">
-    <header class="section-head reveal">
-      <p class="section-comment">// 07 — when the terminal is closed</p>
-      <h2 class="section-title"><span class="accent">~/</span>hobbies</h2>
-    </header>
-
-    <div class="hobby-grid">
-      <div class="card hobby-card reveal">
-        <span class="hobby-icon"><i class="fas fa-tv" aria-hidden="true"></i></span>
-        <span class="badge">Otaku</span>
-        <h3>Anime</h3>
-        <a class="link-arrow" href="https://myanimelist.net/profile/canizaro007" target="_blank" rel="noopener">my anime list <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-      </div>
-
-      <div class="card hobby-card reveal">
-        <span class="hobby-icon"><i class="fas fa-gamepad" aria-hidden="true"></i></span>
-        <span class="badge">Noob</span>
-        <h3>Gaming</h3>
-        <a class="link-arrow" href="https://nekos-organization.gitbook.io/games/" target="_blank" rel="noopener">let's connect <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-      </div>
-
-      <div class="card hobby-card reveal">
-        <span class="hobby-icon"><i class="fas fa-table-tennis" aria-hidden="true"></i></span>
-        <span class="badge">Sport</span>
-        <h3>Badminton</h3>
-      </div>
-
-      <div class="card hobby-card reveal">
-        <span class="hobby-icon"><i class="fas fa-microchip" aria-hidden="true"></i></span>
-        <span class="badge">Tech</span>
-        <h3>Circuit man</h3>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONTACT ============ -->
-<section class="section section-alt" id="contact">
-  <div class="container">
-    <header class="section-head reveal">
-      <p class="section-comment">// 08 — open a connection</p>
-      <h2 class="section-title"><span class="accent">~/</span>contact</h2>
-    </header>
-
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <h3>Let's talk.</h3>
-        <p>Have a question, an opportunity, or just want to say hi? Drop a message and I'll get back to you.</p>
-        <ul class="contact-list">
-          <li><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:ciphersensei@proton.me">ciphersensei@proton.me</a></li>
-          <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 127.0.0.1</li>
-        </ul>
-        <ul class="socials">
-          <li><a aria-label="LinkedIn" href="https://www.linkedin.com/in/ganendra-kumar-netam-3695592b6/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a></li>
-          <li><a aria-label="GitHub" href="https://github.com/nekosenpai007" target="_blank" rel="noopener"><i class="fab fa-github"></i></a></li>
-          <li><a aria-label="X (Twitter)" href="https://x.com/nekosen35693393" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a></li>
-          <li><a aria-label="Telegram" href="https://t.me/nekosenpai007" target="_blank" rel="noopener"><i class="fab fa-telegram-plane"></i></a></li>
-        </ul>
-      </div>
-
-      <div class="window window-form reveal">
-        <div class="window-bar">
-          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="window-title">send_message.sh</span>
+        <div class="cf-field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="4" required></textarea>
         </div>
-        <form id="contact-form" class="window-body contact-form">
-          <div class="field">
-            <label for="cf-name">name</label>
-            <input id="cf-name" type="text" name="name" autocomplete="name" placeholder="John Doe" required>
-          </div>
-          <div class="field">
-            <label for="cf-email">email</label>
-            <input id="cf-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" required>
-          </div>
-          <div class="field">
-            <label for="cf-phone">phone <span class="dim">(optional)</span></label>
-            <input id="cf-phone" type="tel" name="phone" autocomplete="tel" placeholder="+91 ...">
-          </div>
-          <div class="field">
-            <label for="cf-message">message</label>
-            <textarea id="cf-message" name="message" rows="5" placeholder="Hello Cipher..." required></textarea>
-          </div>
-          <div class="form-footer">
-            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-            <button type="submit" class="btn btn-primary"><span>./send</span> <i class="fas fa-paper-plane" aria-hidden="true"></i></button>
-          </div>
-        </form>
-      </div>
+        <div class="cf-foot">
+          <p class="cf-status mono" role="status" aria-live="polite"></p>
+          <button class="btn-pill" type="submit" data-spec="Button">Send message <span class="btn-icon"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span></button>
+        </div>
+      </form>
     </div>
   </div>
 </section>
 
 </main>
 
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <div>
-      <a href="#home" class="logo"><span class="logo-prompt">&gt;</span> cipher<span class="cursor" aria-hidden="true">_</span></a>
-      <p class="muted">Thank you for visiting my personal portfolio. Connect with me over socials.</p>
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer" data-chapter="Contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="wordmark wordmark--xl" aria-label="cipher. Back to top">cipher<span class="dot">.</span></a>
+        <p class="footer-blurb">Cybersecurity practitioner with roots in IT infrastructure. Malware research, digital forensics and a growing love for code.</p>
+        <p class="mono footer-etym">cipher. from ciphertext: noise, until you hold the key.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Chapters">
+        <p class="mono-caps">Chapters</p>
+        <ul>
+          <li><a data-scramble-hover href="#about">About</a></li>
+          <li><a data-scramble-hover href="#skills">Toolbox</a></li>
+          <li><a data-scramble-hover href="#path">Path</a></li>
+          <li><a data-scramble-hover href="#cert">Certifications</a></li>
+          <li><a data-scramble-hover href="#work">Work</a></li>
+          <li><a data-scramble-hover href="#journal">Journal</a></li>
+          <li><a data-scramble-hover href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <p class="mono-caps">Contact</p>
+        <ul>
+          <li><a href="mailto:ciphersensei@proton.me">ciphersensei@proton.me</a></li>
+          <li class="muted">127.0.0.1, there's no place like home</li>
+          <li><a href="https://www.linkedin.com/in/ganendra-kumar-netam-3695592b6/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/nekosenpai007" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://x.com/nekosen35693393" target="_blank" rel="noopener">X / Twitter</a></li>
+          <li><a href="https://t.me/nekosenpai007" target="_blank" rel="noopener">Telegram</a></li>
+          <li><a href="https://dev.to/neko_senpai" target="_blank" rel="noopener">DEV</a></li>
+        </ul>
+      </div>
     </div>
-    <nav aria-label="Footer">
-      <ul class="footer-links">
-        <li><a href="#about">about</a></li>
-        <li><a href="#skills">skills</a></li>
-        <li><a href="#education">education</a></li>
-        <li><a href="#cert">certifications</a></li>
-        <li><a href="#project">projects</a></li>
-        <li><a href="#blog">blog</a></li>
-        <li><a href="#contact">contact</a></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="container footer-bottom">
-    <p>&copy; <span id="year">2026</span> Cipher. <span class="dim">// exit 0</span></p>
+
+    <div class="footer-bottom">
+      <p>&copy; <span data-year>2026</span> cipher.</p>
+      <a href="#home" class="link-arrow">Back to top <svg class="i-arrow i-arrow--up" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></a>
+    </div>
   </div>
 </footer>
 
-<a href="#home" class="scroll-top" id="scroll-top" aria-label="Back to top"><i class="fas fa-angle-up" aria-hidden="true"></i></a>
+<!-- ============ FLAG HUNT ============ -->
+<div class="flags" id="flags">
+  <button class="flags-pill" type="button" aria-expanded="false" aria-controls="flags-panel">
+    <span class="flags-ring" aria-hidden="true"></span>
+    <span><span data-flag-count>0</span>/<span data-flag-total>5</span> flags</span>
+  </button>
+  <div class="flags-panel" id="flags-panel" hidden>
+    <p class="mono-caps">Capture the flag</p>
+    <p class="flags-intro">Five flags are hidden on this page. Find them all.</p>
+    <ol class="flags-list" data-flag-list></ol>
+  </div>
+</div>
+<div class="toast" role="status" aria-live="polite"></div>
 
-<script src="./assets/js/particles.min.js"></script>
-<script src="./assets/js/app.js"></script>
-<script src="./assets/js/main.js"></script>
+<!-- X-ray HUD: pointer coordinates and viewport, only visible in X-ray mode -->
+<div class="xray-hud mono" aria-hidden="true">
+  <span>X <b data-hud-x>0</b></span>
+  <span>Y <b data-hud-y>0</b></span>
+  <span data-hud-vp></span>
+  <span data-hud-time></span>
+</div>
+<div class="xray-layer" aria-hidden="true"></div>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/fx/loader.js"></script>
+<script src="assets/js/fx/fluid.js"></script>
+<script src="assets/js/fx/scramble.js"></script>
+<script src="assets/js/fx/ripple.js"></script>
+<script src="assets/js/sections/hero.js"></script>
+<script src="assets/js/sections/process.js"></script>
+<script src="assets/js/sections/skills.js"></script>
+<script src="assets/js/sections/path.js"></script>
+<script src="assets/js/sections/cert.js"></script>
+<script src="assets/js/sections/contact.js"></script>
 </body>
 </html>

@@ -67,7 +67,7 @@
   position: absolute;
   width: 7px;
   height: 7px;
-  border: 1px solid var(--red);
+  border: 1px solid var(--accent);
   background: var(--paper);
 }
 
@@ -94,7 +94,7 @@
 .sec--process .pr-cta-arrow path,
 .sec--process .pr-note-arrow path {
   fill: none;
-  stroke: var(--red);
+  stroke: var(--accent);
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -292,7 +292,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-inline: 1px solid var(--red);
+    border-inline: 1px solid var(--accent);
   }
 
   .js .sec--process .pr-dim::before {
@@ -302,7 +302,7 @@
     right: 0;
     top: 4px;
     height: 1px;
-    background: var(--red);
+    background: var(--accent);
   }
 
   .js .sec--process .pr-dim span {
@@ -312,7 +312,7 @@
     font-family: var(--font-mono);
     font-size: 11px;
     line-height: 1;
-    color: var(--red-ink);
+    color: var(--accent-ink);
     white-space: nowrap;
   }
 
@@ -391,7 +391,7 @@
     height: 6px;
     margin-right: 8px;
     border-radius: 50%;
-    background: var(--red);
+    background: var(--accent);
     vertical-align: 1px;
   }
 
@@ -417,8 +417,8 @@
     height: 11px;
     margin: -5px 0 0 -5px;
     border-radius: 50%;
-    background: var(--red);
-    box-shadow: 0 0 0 6px var(--red-soft);
+    background: var(--accent);
+    box-shadow: 0 0 0 6px var(--accent-soft);
     transform: translateX(calc(var(--t1) * (var(--aw) - 2 * var(--wx))));
     opacity: calc(1 - var(--t2));
   }
@@ -511,8 +511,8 @@
     display: grid;
     place-items: center;
     border-radius: 2px;
-    background: var(--red);
-    color: var(--on-red);
+    background: var(--accent);
+    color: var(--on-accent);
     font-family: var(--font-mono);
     font-size: var(--hfs);
     font-weight: 500;
@@ -527,9 +527,9 @@
     font-family: var(--font-mono);
     font-size: var(--hfs);
     line-height: var(--rh);
-    color: var(--red-ink);
+    color: var(--accent-ink);
     background: var(--paper);
-    box-shadow: 0 -5px 0 -3px var(--red) inset;
+    box-shadow: 0 -5px 0 -3px var(--accent) inset;
     opacity: clamp(0, var(--t3) * 4, 1);
   }
 
@@ -548,7 +548,7 @@
   /* crosshair guides along the byte's edges, drawn in from the frame edges */
   .js .sec--process .pr-g {
     --kg: clamp(0, (var(--t3) - 0.12) / 0.5, 1);
-    background: var(--red);
+    background: var(--accent);
     opacity: calc(1 - var(--t4) * 0.5);
   }
 
@@ -618,9 +618,9 @@
     top: calc(var(--hy) - 3px);
     width: calc(4 * var(--cw) + 6px);
     height: calc(var(--hh) + 6px);
-    border: 1px dashed var(--red);
+    border: 1px dashed var(--accent);
     border-radius: 4px;
-    background: var(--red-soft);
+    background: var(--accent-soft);
     opacity: var(--k4);
     transform: scale(calc(1.06 - 0.06 * var(--k4)));
   }
@@ -630,7 +630,7 @@
     top: calc(var(--hy) + var(--hh) + 12px);
     width: calc(4 * var(--cw) - 2px);
     height: 9px;
-    border-inline: 1px solid var(--red);
+    border-inline: 1px solid var(--accent);
     transform: scaleX(clamp(0, (var(--t4) - 0.15) / 0.35, 1));
   }
 
@@ -641,7 +641,7 @@
     right: 0;
     top: 4px;
     height: 1px;
-    background: var(--red);
+    background: var(--accent);
   }
 
   .js .sec--process .pr-bracket-label {
@@ -652,7 +652,7 @@
     font-family: var(--font-mono);
     font-size: 11px;
     line-height: 16px;
-    color: var(--red-ink);
+    color: var(--accent-ink);
     white-space: nowrap;
     opacity: clamp(0, (var(--t4) - 0.4) * 4, 1);
     transform: translateX(-50%);
@@ -747,7 +747,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--red);
+    background: var(--accent);
   }
 
   .js .sec--process .pr-code-lines {
@@ -800,7 +800,7 @@
 
   .js .sec--process .pr-cl .k,
   .js .sec--process .pr-cl .p {
-    color: var(--red);
+    color: var(--accent);
   }
 
   .js .sec--process .pr-cl .s,
@@ -820,7 +820,7 @@
     height: 14px;
     margin-top: 3px;
     vertical-align: top;
-    background: var(--red);
+    background: var(--accent);
     opacity: 0;
   }
 
@@ -861,7 +861,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: var(--red-ink);
+    color: var(--accent-ink);
   }
 
   .js .sec--process .pr-report-status::before {
@@ -869,7 +869,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--red);
+    background: var(--accent);
   }
 
   .js .sec--process .pr-report-title {
@@ -928,10 +928,10 @@
     right: 20px;
     bottom: 22px;
     padding: 4px 12px;
-    border: 2px solid var(--red);
+    border: 2px solid var(--accent);
     border-radius: 6px;
     background: var(--paper);
-    color: var(--red);
+    color: var(--accent);
     font-family: var(--font-mono);
     font-size: 15px;
     font-weight: 500;

@@ -1,0 +1,75 @@
+/* ==========================================================
+   Off the clock — four typographic columns
+   ========================================================== */
+
+.sec--hobbies {
+  padding-block: clamp(80px, 9vw, 128px);
+}
+
+.sec--hobbies .hobby-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+
+.sec--hobbies .hobby {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 180px;
+  padding: 24px 24px 24px 0;
+}
+
+.sec--hobbies .hobby + .hobby {
+  padding-left: 24px;
+  border-left: 1px solid var(--line);
+}
+
+.sec--hobbies .hobby-tag {
+  color: var(--accent-ink);
+}
+
+.sec--hobbies .hobby-name {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.6vw, 38px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.sec--hobbies .link-arrow {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+@media (max-width: 900px) {
+  .sec--hobbies .hobby-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sec--hobbies .hobby:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .sec--hobbies .hobby:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 480px) {
+  .sec--hobbies .hobby-list {
+    grid-template-columns: 1fr;
+  }
+
+  .sec--hobbies .hobby,
+  .sec--hobbies .hobby + .hobby {
+    min-height: 0;
+    padding: 20px 0;
+    border-left: 0;
+  }
+
+  .sec--hobbies .hobby + .hobby {
+    border-top: 1px solid var(--line);
+  }
+}

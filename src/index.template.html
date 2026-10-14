@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>cipher. Cybersecurity practitioner</title>
   <meta name="description" content="Cipher: cybersecurity practitioner with roots in IT infrastructure. Malware research, digital forensics and a growing love for code.">
-  <meta name="theme-color" content="#f4f4f2">
+  <meta name="theme-color" content="#09090b">
   <meta property="og:title" content="cipher. Cybersecurity practitioner">
   <meta property="og:description" content="Malware research, digital forensics and the infrastructure in between.">
   <meta property="og:type" content="website">
@@ -16,11 +16,17 @@
     (function () {
       var t = null;
       try { t = localStorage.getItem("cipher-theme"); } catch (e) {}
-      if (t !== "xray" && t !== "paper") {
-        t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "xray" : "paper";
-      }
+      if (t !== "xray") t = "default";
       document.documentElement.setAttribute("data-theme", t);
       document.documentElement.classList.add("js");
+      /* intro animation: once per visit, never with reduced motion */
+      var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!still) document.documentElement.classList.add("scr-on");
+      try {
+        if (!still && !sessionStorage.getItem("cipher-loaded")) {
+          document.documentElement.classList.add("is-loading");
+        }
+      } catch (e) {}
     })();
   </script>
 
@@ -35,6 +41,11 @@
 </head>
 <body>
 
+<div class="loader" aria-hidden="true">
+  <canvas></canvas>
+  <p class="loader-count mono">decrypting <b>000</b>%</p>
+</div>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
 <!-- ============ HEADER ============ -->
@@ -43,11 +54,11 @@
     <a href="#home" class="wordmark" aria-label="cipher. Back to top" data-spec="Wordmark" data-spec-note="cipher. from ciphertext: noise, until you hold the key.">cipher<span class="dot">.</span></a>
 
     <div class="header-actions">
-      <button class="xray-toggle" type="button" aria-pressed="false" data-spec="Toggle" data-spec-note="X-ray shows how this page is built.">
+      <button class="xray-toggle" type="button" aria-pressed="false" data-scramble-hover data-spec="Toggle" data-spec-note="X-ray shows how this page is built.">
         <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
-        <span>X-ray</span>
+        <span data-scramble-text>X-ray</span>
       </button>
-      <a class="header-link" href="#contact">Get in touch</a>
+      <a class="header-link" href="#contact" data-scramble-hover>Get in touch</a>
       <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
         <span></span><span></span>
       </button>
@@ -66,13 +77,13 @@
     </div>
     <nav class="menu-nav" aria-label="Chapters">
       <ol>
-        <li><a href="#about"><span class="mono">01</span>About</a></li>
-        <li><a href="#skills"><span class="mono">02</span>Toolbox</a></li>
-        <li><a href="#path"><span class="mono">03</span>Path</a></li>
-        <li><a href="#cert"><span class="mono">04</span>Certifications</a></li>
-        <li><a href="#work"><span class="mono">05</span>Work</a></li>
-        <li><a href="#journal"><span class="mono">06</span>Journal</a></li>
-        <li><a href="#contact"><span class="mono">07</span>Contact</a></li>
+        <li><a href="#about" data-scramble-hover><span class="mono">01</span>About</a></li>
+        <li><a href="#skills" data-scramble-hover><span class="mono">02</span>Toolbox</a></li>
+        <li><a href="#path" data-scramble-hover><span class="mono">03</span>Path</a></li>
+        <li><a href="#cert" data-scramble-hover><span class="mono">04</span>Certifications</a></li>
+        <li><a href="#work" data-scramble-hover><span class="mono">05</span>Work</a></li>
+        <li><a href="#journal" data-scramble-hover><span class="mono">06</span>Journal</a></li>
+        <li><a href="#contact" data-scramble-hover><span class="mono">07</span>Contact</a></li>
       </ol>
     </nav>
     <div class="menu-foot">
@@ -137,13 +148,13 @@
       <nav class="footer-col" aria-label="Chapters">
         <p class="mono-caps">Chapters</p>
         <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Toolbox</a></li>
-          <li><a href="#path">Path</a></li>
-          <li><a href="#cert">Certifications</a></li>
-          <li><a href="#work">Work</a></li>
-          <li><a href="#journal">Journal</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a data-scramble-hover href="#about">About</a></li>
+          <li><a data-scramble-hover href="#skills">Toolbox</a></li>
+          <li><a data-scramble-hover href="#path">Path</a></li>
+          <li><a data-scramble-hover href="#cert">Certifications</a></li>
+          <li><a data-scramble-hover href="#work">Work</a></li>
+          <li><a data-scramble-hover href="#journal">Journal</a></li>
+          <li><a data-scramble-hover href="#contact">Contact</a></li>
         </ul>
       </nav>
 
@@ -192,6 +203,10 @@
 <div class="xray-layer" aria-hidden="true"></div>
 
 <script src="assets/js/main.js"></script>
+<script src="assets/js/fx/loader.js"></script>
+<script src="assets/js/fx/fluid.js"></script>
+<script src="assets/js/fx/scramble.js"></script>
+<script src="assets/js/fx/ripple.js"></script>
 <!-- @scripts -->
 </body>
 </html>

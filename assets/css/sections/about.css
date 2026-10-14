@@ -107,7 +107,7 @@
 }
 
 .sec--about .ab-caption-tag {
-  color: var(--red-ink);
+  color: var(--accent-ink);
 }
 
 /* ---------- principles ---------- */
@@ -128,7 +128,7 @@
 .sec--about .ab-num {
   display: block;
   font-size: 12px;
-  color: var(--red-ink);
+  color: var(--accent-ink);
 }
 
 .sec--about .ab-p-title {

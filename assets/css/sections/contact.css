@@ -1,0 +1,186 @@
+/* ==========================================================
+   Contact — dark panel, violet orb, the form
+   The panel stays dark in both themes, so colours here are fixed.
+   ========================================================== */
+
+.sec--contact .contact-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 48px clamp(40px, 6vw, 96px);
+  padding: clamp(40px, 6vw, 88px);
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(244, 244, 246, 0.08);
+}
+
+.sec--contact .contact-orb {
+  position: absolute;
+  right: -14%;
+  top: -38%;
+  z-index: -1;
+  width: min(62vw, 760px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #a66bff 0%, #8b3dff 45%, #5b21b6 100%);
+  opacity: 0.9;
+  filter: saturate(1.05);
+}
+
+.sec--contact .contact-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sec--contact .contact-title {
+  max-width: 11em;
+  font-family: var(--font-display);
+  font-size: clamp(38px, 4.6vw, 68px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: #f4f4f6;
+}
+
+.sec--contact .contact-title .dot {
+  color: #b794ff;
+}
+
+.sec--contact .contact-lede {
+  max-width: 26em;
+  font-size: 18px;
+  color: #c9c9d1;
+}
+
+.sec--contact .contact-mail {
+  align-self: flex-start;
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: #f4f4f6;
+  border-bottom: 1px solid rgba(244, 244, 246, 0.35);
+  padding-bottom: 2px;
+}
+
+.sec--contact .contact-mail:hover {
+  border-color: #b794ff;
+}
+
+/* form sits on a frosted card so the orb never hurts legibility */
+.sec--contact .contact-form {
+  display: grid;
+  gap: 22px;
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid rgba(244, 244, 246, 0.12);
+  border-radius: var(--radius-media);
+  background: rgba(12, 10, 18, 0.72);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.sec--contact .cf-field {
+  display: grid;
+  gap: 6px;
+}
+
+.sec--contact .cf-field label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #b4b4bd;
+}
+
+.sec--contact .cf-field label span {
+  text-transform: none;
+  letter-spacing: 0;
+  color: #8e8e99;
+}
+
+.sec--contact .cf-field input,
+.sec--contact .cf-field textarea {
+  width: 100%;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(244, 244, 246, 0.24);
+  border-radius: 0;
+  background: transparent;
+  color: #f4f4f6;
+  font-size: 17px;
+  transition: border-color 0.3s;
+}
+
+.sec--contact .cf-field textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.sec--contact .cf-field input:focus,
+.sec--contact .cf-field textarea:focus {
+  outline: none;
+  border-bottom-color: #b794ff;
+  box-shadow: 0 1px 0 #b794ff;
+}
+
+.sec--contact .cf-field input:user-invalid,
+.sec--contact .cf-field textarea:user-invalid {
+  border-bottom-color: #ff8a8a;
+}
+
+.sec--contact .cf-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.sec--contact .cf-status {
+  flex: 1 1 200px;
+  color: #b4b4bd;
+}
+
+.sec--contact .cf-status.is-ok {
+  color: #b794ff;
+}
+
+.sec--contact .cf-status.is-err {
+  color: #ff9a9a;
+}
+
+/* the panel is dark in both themes: keep the button light */
+.sec--contact .btn-pill {
+  --btn-bg: #f4f4f6;
+  --btn-fg: #09090b;
+  --btn-icon-bg: #8b3dff;
+  --btn-icon-fg: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .sec--contact .contact-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .sec--contact .contact-orb {
+    right: -40%;
+    top: -18%;
+    width: 110vw;
+  }
+}
+
+@media (max-width: 640px) {
+  .sec--contact .container {
+    padding-inline: 12px;
+  }
+
+  .sec--contact .contact-panel {
+    padding: 32px 20px;
+  }
+
+  .sec--contact .cf-foot .btn-pill {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

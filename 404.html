@@ -4,16 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>404. Nothing to see here | cipher.</title>
-  <meta name="theme-color" content="#f4f4f2">
+  <meta name="theme-color" content="#09090b">
   <meta name="robots" content="noindex">
   <link rel="icon" href="/assets/images/eagle.png" type="image/png">
   <script>
     (function () {
       var t = null;
       try { t = localStorage.getItem("cipher-theme"); } catch (e) {}
-      if (t !== "xray" && t !== "paper") {
-        t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "xray" : "paper";
-      }
+      if (t !== "xray") t = "default";
       document.documentElement.setAttribute("data-theme", t);
     })();
   </script>

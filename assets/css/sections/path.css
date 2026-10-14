@@ -1,0 +1,152 @@
+/* ==========================================================
+   Path — education as a hover list with a floating campus photo
+   ========================================================== */
+
+.sec--path .path-list {
+  border-top: 1px solid var(--line);
+}
+
+.sec--path .path-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.7fr) minmax(0, 2.4fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: 16px 32px;
+  padding: clamp(24px, 3vw, 36px) 0;
+  border-bottom: 1px solid var(--line);
+  transition: padding 0.5s var(--ease);
+}
+
+.sec--path .path-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(var(--gutter) * -0.5);
+  z-index: -1;
+  background: var(--paper-2);
+  border-radius: var(--radius-media);
+  opacity: 0;
+  transform: scaleY(0.9);
+  transition: opacity 0.35s, transform 0.5s var(--ease);
+}
+
+.sec--path .path-row:hover::before {
+  opacity: 1;
+  transform: none;
+}
+
+.sec--path .path-year {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.sec--path .path-live {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.sec--path .path-main {
+  display: grid;
+  gap: 6px;
+}
+
+.sec--path .path-inst {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.5vw, 36px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.sec--path .path-logo {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+}
+
+.sec--path .path-degree {
+  padding-left: 54px;
+  color: var(--ink-2);
+}
+
+.sec--path .path-handle {
+  justify-self: end;
+  color: var(--muted);
+}
+
+.sec--path .path-thumb {
+  display: none;
+}
+
+/* floating photo that trails the pointer over a row */
+.sec--path .path-float {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 60;
+  width: clamp(220px, 22vw, 320px);
+  margin: 0;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-100px, -100px, 0) scale(0.85) rotate(-4deg);
+  transition: opacity 0.3s;
+}
+
+.sec--path .path-float.is-on {
+  opacity: 1;
+}
+
+.sec--path .path-float img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-media);
+  box-shadow: var(--shadow-lift);
+}
+
+.sec--path .path-float figcaption {
+  margin-top: 8px;
+  color: var(--accent-ink);
+}
+
+@media (max-width: 900px) {
+  .sec--path .path-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .sec--path .path-handle {
+    justify-self: start;
+  }
+
+  .sec--path .path-degree {
+    padding-left: 0;
+  }
+
+  .sec--path .path-thumb {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 420px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-media);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .sec--path .path-float {
+    display: none;
+  }
+}
