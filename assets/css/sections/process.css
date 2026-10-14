@@ -1,0 +1,1291 @@
+/* ==========================================================
+   process: "From a packet to a report."
+   The base rules are the static list (reduced motion, short viewports,
+   no JS). The pinned, scroll-driven stage is layered on top in the media
+   query further down. process.js writes --t1 … --t8 (0 → 1, one per step)
+   on .pr-stage, and every layer is drawn from those numbers.
+   ========================================================== */
+
+/* ---------- static list ---------- */
+
+.sec--process .pr-head {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: clamp(48px, 6vw, 88px);
+}
+
+.sec--process .pr-eyebrow {
+  color: var(--muted);
+}
+
+.sec--process .pr-title {
+  max-width: 12em;
+  text-wrap: balance;
+}
+
+.sec--process .pr-canvas,
+.sec--process .pr-meter,
+.sec--process .pr-skip,
+.sec--process .pr-fg,
+.sec--process .pr-xray {
+  display: none;
+}
+
+.sec--process .pr-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 56px 32px;
+}
+
+.sec--process .pr-step {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.sec--process .pr-step-desc {
+  max-width: 30em;
+  font-size: 16px;
+  color: var(--ink-2);
+}
+
+.sec--process .pr-final {
+  margin-top: clamp(64px, 8vw, 112px);
+}
+
+.sec--process .pr-select {
+  position: relative;
+  display: inline-flex;
+  padding: 12px;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+.sec--process .pr-handle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--red);
+  background: var(--paper);
+}
+
+.sec--process .pr-handle--tl { left: -3px; top: -3px; }
+.sec--process .pr-handle--tr { right: -3px; top: -3px; }
+.sec--process .pr-handle--bl { left: -3px; bottom: -3px; }
+.sec--process .pr-handle--br { right: -3px; bottom: -3px; }
+
+.sec--process .pr-cta-spec {
+  position: absolute;
+  left: -1px;
+  top: calc(100% + 8px);
+}
+
+.sec--process .pr-cta-arrow {
+  position: absolute;
+  left: calc(100% + 6px);
+  top: calc(50% - 46px);
+  width: 64px;
+  height: 64px;
+  overflow: visible;
+}
+
+.sec--process .pr-cta-arrow path,
+.sec--process .pr-note-arrow path {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sec--process .pr-cta-note {
+  position: absolute;
+  left: calc(100% + 58px);
+  bottom: calc(100% + 6px);
+  font-size: 30px;
+  white-space: nowrap;
+  transform: rotate(-4deg);
+  transform-origin: left bottom;
+}
+
+@media (max-width: 1023px) {
+  .sec--process .pr-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .sec--process .pr-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+
+  .sec--process .pr-final {
+    display: flex;
+    justify-content: center;
+    padding-top: 64px;
+  }
+
+  /* note above the button, arrow curling down onto it */
+  .sec--process .pr-cta-arrow {
+    left: auto;
+    right: 18px;
+    top: auto;
+    bottom: calc(100% + 2px);
+    width: 52px;
+    height: 52px;
+    transform: rotate(-90deg);
+  }
+
+  .sec--process .pr-cta-note {
+    left: auto;
+    right: 72px;
+    bottom: calc(100% + 36px);
+    font-size: 28px;
+    transform: rotate(-3deg);
+    transform-origin: right bottom;
+  }
+}
+
+/* ==========================================================
+   Pinned, scroll-driven stage
+   ========================================================== */
+
+@media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
+
+  .js .sec--process {
+    height: 560vh;
+    padding-block: 0;
+  }
+
+  .js .sec--process .pr-stage {
+    --t1: 0;
+    --t2: 0;
+    --t3: 0;
+    --t4: 0;
+    --t5: 0;
+    --t6: 0;
+    --t7: 0;
+    --t8: 0;
+    --clear: clamp(0, var(--t8) * 3.4, 1);
+    --canvas-pt: 8px;
+    --canvas-pb: 28px;
+    --canvas-px: var(--gutter);
+    --dim-h: 30px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas: "head" "canvas" "captions";
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* faint measuring dots behind the stage */
+  .js .sec--process .pr-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: radial-gradient(color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 1.3px);
+    background-size: 16px 16px;
+    background-position: center top;
+    -webkit-mask-image: linear-gradient(transparent, #000 18%, #000 82%, transparent);
+    mask-image: linear-gradient(transparent, #000 18%, #000 82%, transparent);
+    pointer-events: none;
+  }
+
+  /* ---------- head: labels left, counter right ---------- */
+
+  .js .sec--process .pr-head {
+    grid-area: head;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin: 0 auto;
+    padding-top: calc(var(--header-h) + 16px);
+  }
+
+  .js .sec--process .pr-kicker {
+    display: grid;
+    gap: 2px;
+  }
+
+  .js .sec--process .pr-title {
+    max-width: none;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  .js .sec--process .pr-meter {
+    display: grid;
+    justify-items: end;
+    text-align: right;
+  }
+
+  .js .sec--process .pr-meter-label {
+    color: var(--muted);
+  }
+
+  .js .sec--process .pr-count {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 6px;
+    margin-right: -0.04em;
+    font-family: var(--font-display);
+    font-size: clamp(44px, 5.4vw, 84px);
+    font-weight: 600;
+    line-height: 0.86;
+    letter-spacing: 0;
+    color: var(--faint);
+    opacity: 0.5;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .js .sec--process .pr-digit {
+    display: inline-block;
+    width: 0.6em;
+    text-align: center;
+  }
+
+  .js .sec--process .pr-unit {
+    margin-left: 0.06em;
+    font-size: 0.4em;
+    line-height: 1.2;
+  }
+
+  /* ---------- canvas + frame ---------- */
+
+  .js .sec--process .pr-canvas {
+    grid-area: canvas;
+    display: grid;
+    place-items: center;
+    min-height: 0;
+    padding: var(--canvas-pt) var(--canvas-px) var(--canvas-pb);
+    container-type: size;
+  }
+
+  .js .sec--process .pr-framewrap {
+    position: relative;
+    width: min(922px, 100cqw, (100cqh - var(--dim-h)) * 1.6);
+    aspect-ratio: 1.6;
+    margin-top: var(--dim-h);
+    opacity: calc(1 - var(--clear));
+    transform: scale(calc(1 - var(--clear) * 0.04));
+  }
+
+  /* live size of the frame, as in "922 × 576" */
+  .js .sec--process .pr-dim {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -21px;
+    height: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-inline: 1px solid var(--red);
+  }
+
+  .js .sec--process .pr-dim::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 4px;
+    height: 1px;
+    background: var(--red);
+  }
+
+  .js .sec--process .pr-dim span {
+    position: relative;
+    padding: 0 8px;
+    background: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1;
+    color: var(--red-ink);
+    white-space: nowrap;
+  }
+
+  .js .sec--process .pr-frame {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .js .sec--process .pr-frame .frame-bar {
+    position: relative;
+    flex: none;
+  }
+
+  .js .sec--process .pr-bar-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .js .sec--process .pr-body {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* The artboard: drawn at a fixed size, scaled to fit the frame (--k from JS).
+     --mx / --my reach from the artboard edge to the frame edge, for guides. */
+  .js .sec--process .pr-art {
+    --k: 1;
+    --mx: 24px;
+    --my: 24px;
+    --aw: 760px;
+    --ah: 430px;
+    --x0: 100px;
+    --y0: 80px;
+    --cw: 28px;
+    --rh: 30px;
+    --hh: 24px;
+    --mid: 12px;
+    --wx: 40px;
+    --hfs: 13px;
+    --hx: calc(var(--x0) + 2 * var(--cw));
+    --hy: calc(var(--y0) + 7 * var(--rh) + (var(--rh) - var(--hh)) / 2);
+    --ax: calc(var(--x0) + 16 * var(--cw) + var(--mid) + 32px);
+    --lw: calc(5 * var(--cw) + var(--mid) - 4px);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--aw);
+    height: var(--ah);
+    transform: translate(-50%, -50%) scale(var(--k));
+  }
+
+  .js .sec--process .pr-art > * {
+    position: absolute;
+    margin: 0;
+  }
+
+  .js .sec--process .pr-file {
+    left: calc(var(--x0) - 56px);
+    top: 24px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 24px;
+    color: var(--muted);
+  }
+
+  .js .sec--process .pr-file::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    vertical-align: 1px;
+  }
+
+  /* ---------- 01 a packet ---------- */
+
+  /* the wire, with a tick every 32px, revealed left to right */
+  .js .sec--process .pr-wire {
+    left: var(--wx);
+    right: var(--wx);
+    top: calc(var(--y0) + 4 * var(--rh));
+    height: 6px;
+    background:
+      linear-gradient(var(--ink-2), var(--ink-2)) 0 0 / 100% 1px no-repeat,
+      repeating-linear-gradient(90deg, var(--faint) 0 1px, transparent 1px 32px) 0 1px / 100% 5px no-repeat;
+    clip-path: inset(0 calc((1 - var(--t1)) * 100%) 0 0);
+    opacity: calc(1 - var(--t2));
+  }
+
+  .js .sec--process .pr-pkt {
+    left: var(--wx);
+    top: calc(var(--y0) + 4 * var(--rh));
+    width: 11px;
+    height: 11px;
+    margin: -5px 0 0 -5px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 0 6px var(--red-soft);
+    transform: translateX(calc(var(--t1) * (var(--aw) - 2 * var(--wx))));
+    opacity: calc(1 - var(--t2));
+  }
+
+  .js .sec--process .pr-wire-a,
+  .js .sec--process .pr-wire-b {
+    top: calc(var(--y0) + 4 * var(--rh) - 30px);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--muted);
+  }
+
+  .js .sec--process .pr-wire-a {
+    left: var(--wx);
+    opacity: calc(1 - var(--t2));
+  }
+
+  .js .sec--process .pr-wire-b {
+    right: var(--wx);
+    opacity: calc(clamp(0, (var(--t1) - 0.8) * 5, 1) * (1 - var(--t2)));
+  }
+
+  /* ---------- 02 a baseline ---------- */
+
+  .js .sec--process .pr-hex {
+    left: 0;
+    top: var(--y0);
+    width: 100%;
+    height: calc(8 * var(--rh));
+    font-family: var(--font-mono);
+    font-size: var(--hfs);
+    line-height: var(--rh);
+    color: var(--muted);
+    opacity: calc(1 - var(--t7) * 0.55);
+  }
+
+  .js .sec--process .pr-row {
+    --k2: clamp(0, var(--t2) * 2.4 - var(--r) * 0.2, 1);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(var(--r) * var(--rh));
+    height: var(--rh);
+    opacity: var(--k2);
+    transform: translateY(calc((1 - var(--k2)) * 10px));
+  }
+
+  .js .sec--process .pr-off {
+    position: absolute;
+    right: calc(var(--aw) - var(--x0) + 16px);
+    color: var(--faint);
+  }
+
+  .js .sec--process .pr-bytes {
+    position: absolute;
+    left: var(--x0);
+    display: flex;
+  }
+
+  .js .sec--process .pr-bytes i {
+    width: var(--cw);
+    font-style: normal;
+    text-align: center;
+  }
+
+  .js .sec--process .pr-bytes i:nth-child(9) {
+    margin-left: var(--mid);
+  }
+
+  .js .sec--process .pr-bytes .z {
+    color: var(--faint);
+  }
+
+  .js .sec--process .pr-ascii {
+    position: absolute;
+    left: var(--ax);
+    white-space: pre;
+    color: var(--faint);
+  }
+
+  /* ---------- 03 an anomaly ---------- */
+
+  .js .sec--process .pr-hit {
+    --k3: clamp(0, var(--t3) * 4, 1);
+    left: var(--hx);
+    top: var(--hy);
+    width: var(--cw);
+    height: var(--hh);
+    display: grid;
+    place-items: center;
+    border-radius: 2px;
+    background: var(--red);
+    color: var(--on-red);
+    font-family: var(--font-mono);
+    font-size: var(--hfs);
+    font-weight: 500;
+    line-height: 1;
+    opacity: var(--k3);
+    transform: scale(calc(1.8 - 0.8 * var(--k3)));
+  }
+
+  .js .sec--process .pr-hit-ascii {
+    left: calc(var(--ax) + 2ch);
+    top: calc(var(--y0) + 7 * var(--rh));
+    font-family: var(--font-mono);
+    font-size: var(--hfs);
+    line-height: var(--rh);
+    color: var(--red-ink);
+    background: var(--paper);
+    box-shadow: 0 -5px 0 -3px var(--red) inset;
+    opacity: clamp(0, var(--t3) * 4, 1);
+  }
+
+  /* sits on whole cells of the row, so no byte is half covered */
+  .js .sec--process .pr-hit-label {
+    --kl: clamp(0, (var(--t3) - 0.55) * 3.5, 1);
+    left: calc(var(--hx) + 3 * var(--cw) + 2px);
+    top: calc(var(--hy) + var(--hh) / 2);
+    width: var(--lw);
+    text-align: center;
+    box-shadow: 0 0 0 3px var(--paper);
+    opacity: calc(var(--kl) * (1 - var(--t7)));
+    transform: translate(calc((1 - var(--kl)) * -10px), -50%);
+  }
+
+  /* crosshair guides along the byte's edges, drawn in from the frame edges */
+  .js .sec--process .pr-g {
+    --kg: clamp(0, (var(--t3) - 0.12) / 0.5, 1);
+    background: var(--red);
+    opacity: calc(1 - var(--t4) * 0.5);
+  }
+
+  .js .sec--process .pr-g--h {
+    height: 1px;
+    transform: scaleX(var(--kg));
+  }
+
+  .js .sec--process .pr-g--v {
+    width: 1px;
+    transform: scaleY(var(--kg));
+  }
+
+  .js .sec--process .pr-g--htl,
+  .js .sec--process .pr-g--hbl {
+    left: calc(-1 * var(--mx));
+    width: calc(var(--hx) + var(--mx));
+    transform-origin: left center;
+  }
+
+  .js .sec--process .pr-g--htr,
+  .js .sec--process .pr-g--hbr {
+    left: calc(var(--hx) + var(--cw));
+    right: calc(-1 * var(--mx));
+    transform-origin: right center;
+  }
+
+  .js .sec--process .pr-g--htl,
+  .js .sec--process .pr-g--htr {
+    top: var(--hy);
+  }
+
+  .js .sec--process .pr-g--hbl,
+  .js .sec--process .pr-g--hbr {
+    top: calc(var(--hy) + var(--hh) - 1px);
+  }
+
+  .js .sec--process .pr-g--vlt,
+  .js .sec--process .pr-g--vrt {
+    top: calc(-1 * var(--my));
+    height: calc(var(--hy) + var(--my));
+    transform-origin: center top;
+  }
+
+  .js .sec--process .pr-g--vlb,
+  .js .sec--process .pr-g--vrb {
+    top: calc(var(--hy) + var(--hh));
+    bottom: calc(-1 * var(--my));
+    transform-origin: center bottom;
+  }
+
+  .js .sec--process .pr-g--vlt,
+  .js .sec--process .pr-g--vlb {
+    left: var(--hx);
+  }
+
+  .js .sec--process .pr-g--vrt,
+  .js .sec--process .pr-g--vrb {
+    left: calc(var(--hx) + var(--cw) - 1px);
+  }
+
+  /* ---------- 04 a hypothesis ---------- */
+
+  .js .sec--process .pr-group {
+    --k4: clamp(0, var(--t4) * 3, 1);
+    left: calc(var(--x0) - 3px);
+    top: calc(var(--hy) - 3px);
+    width: calc(4 * var(--cw) + 6px);
+    height: calc(var(--hh) + 6px);
+    border: 1px dashed var(--red);
+    border-radius: 4px;
+    background: var(--red-soft);
+    opacity: var(--k4);
+    transform: scale(calc(1.06 - 0.06 * var(--k4)));
+  }
+
+  .js .sec--process .pr-bracket {
+    left: calc(var(--x0) + 1px);
+    top: calc(var(--hy) + var(--hh) + 12px);
+    width: calc(4 * var(--cw) - 2px);
+    height: 9px;
+    border-inline: 1px solid var(--red);
+    transform: scaleX(clamp(0, (var(--t4) - 0.15) / 0.35, 1));
+  }
+
+  .js .sec--process .pr-bracket::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 4px;
+    height: 1px;
+    background: var(--red);
+  }
+
+  .js .sec--process .pr-bracket-label {
+    left: calc(var(--x0) + 2 * var(--cw));
+    top: calc(var(--hy) + var(--hh) + 26px);
+    padding: 0 4px;
+    background: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 16px;
+    color: var(--red-ink);
+    white-space: nowrap;
+    opacity: clamp(0, (var(--t4) - 0.4) * 4, 1);
+    transform: translateX(-50%);
+  }
+
+  .js .sec--process .pr-note-arrow {
+    left: calc(var(--x0) + 4 * var(--cw) + 8px);
+    top: calc(var(--hy) + var(--hh) + 8px);
+    width: 64px;
+    height: 48px;
+    overflow: visible;
+    opacity: calc(1 - var(--t7));
+  }
+
+  .js .sec--process .pr-note-arrow path {
+    stroke-dasharray: 100 100;
+    stroke-dashoffset: calc(100 - 100 * clamp(0, (var(--t4) - 0.45) / 0.35, 1));
+  }
+
+  .js .sec--process .pr-note {
+    --kn: clamp(0, (var(--t4) - 0.62) * 3.5, 1);
+    left: calc(var(--x0) + 4 * var(--cw) + 72px);
+    top: calc(var(--hy) + var(--hh) + 34px);
+    font-size: 30px;
+    white-space: nowrap;
+    opacity: calc(var(--kn) * (1 - var(--t7)));
+    transform: rotate(-4deg) translateY(calc((1 - var(--kn)) * 6px));
+  }
+
+  /* ---------- 05 the tools ---------- */
+
+  .js .sec--process .pr-tools {
+    top: 22px;
+    right: calc(var(--aw) - var(--ax) - 16 * 0.6 * var(--hfs));
+    display: flex;
+    gap: 8px;
+  }
+
+  .js .sec--process .pr-tool {
+    --kc: clamp(0, var(--t5) * 2.2 - var(--i) * 0.3, 1);
+    gap: 7px;
+    padding: 4px 10px 4px 8px;
+    opacity: var(--kc);
+    transform: translateY(calc((1 - var(--kc)) * 10px)) scale(calc(0.92 + 0.08 * var(--kc)));
+  }
+
+  .js .sec--process .pr-ico {
+    flex: none;
+    width: 14px;
+    height: 14px;
+    background: currentColor;
+    -webkit-mask: var(--ico) center / contain no-repeat;
+    mask: var(--ico) center / contain no-repeat;
+  }
+
+  .js .sec--process .pr-ico--wireshark { --ico: url("../../icons/1_wireshark.svg"); }
+  .js .sec--process .pr-ico--burp { --ico: url("../../icons/1_burpsuite.svg"); }
+  .js .sec--process .pr-ico--msf { --ico: url("../../icons/1_metasploit.svg"); }
+  .js .sec--process .pr-ico--bash { --ico: url("../../icons/1_bash.svg"); }
+
+  /* ---------- 06 a line of code ---------- */
+
+  .js .sec--process .pr-code {
+    --kp: clamp(0, var(--t6) * 5, 1);
+    left: 404px;
+    top: 122px;
+    width: 348px;
+    padding-bottom: 14px;
+    border-radius: var(--radius-media);
+    box-shadow: var(--shadow-lift);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 20px;
+    opacity: var(--kp);
+    transform: translateY(calc((1 - var(--kp)) * 24px));
+  }
+
+  .js .sec--process .pr-code-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 16px;
+    border-bottom: 1px solid color-mix(in srgb, var(--on-panel) 12%, transparent);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-panel-2);
+  }
+
+  .js .sec--process .pr-code-bar i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+  }
+
+  .js .sec--process .pr-code-lines {
+    padding: 12px 16px 0;
+    counter-reset: pr-ln;
+    color: var(--on-panel);
+  }
+
+  .js .sec--process .pr-code-lines li {
+    height: 20px;
+    white-space: pre;
+  }
+
+  .js .sec--process .pr-code-lines li::before {
+    display: inline-block;
+    width: 2ch;
+    margin-right: 1.5ch;
+    text-align: right;
+    vertical-align: top;
+    color: var(--on-panel-2);
+    opacity: 0.45;
+  }
+
+  .js .sec--process .pr-code-lines .c::before {
+    counter-increment: pr-ln;
+    content: counter(pr-ln);
+  }
+
+  .js .sec--process .pr-code-lines .t::before {
+    content: "";
+  }
+
+  .js .sec--process .pr-code-lines .sep {
+    height: 13px;
+    margin: 0 -16px 8px;
+    border-bottom: 1px solid color-mix(in srgb, var(--on-panel) 12%, transparent);
+  }
+
+  .js .sec--process .pr-cl {
+    display: inline-block;
+    vertical-align: top;
+    max-width: calc(var(--n, 0) * 1ch);
+    overflow: hidden;
+    white-space: pre;
+  }
+
+  .js .sec--process .pr-cl b {
+    font-weight: inherit;
+  }
+
+  .js .sec--process .pr-cl .k,
+  .js .sec--process .pr-cl .p {
+    color: var(--red);
+  }
+
+  .js .sec--process .pr-cl .s,
+  .js .sec--process .pr-cl .n {
+    color: var(--on-panel-2);
+  }
+
+  .js .sec--process .pr-cl .o {
+    color: var(--on-panel);
+    font-weight: 500;
+  }
+
+  .js .sec--process .pr-code-lines li.is-typing::after {
+    content: "";
+    display: inline-block;
+    width: 1ch;
+    height: 14px;
+    margin-top: 3px;
+    vertical-align: top;
+    background: var(--red);
+    opacity: 0;
+  }
+
+  .js .sec--process .pr-stage[data-active="6"] .pr-code-lines li.is-typing::after {
+    opacity: 1;
+    animation: pr-caret 1.05s steps(1) infinite;
+  }
+
+  /* ---------- 07 a report ---------- */
+
+  .js .sec--process .pr-report {
+    --kr: clamp(0, var(--t7) * 3, 1);
+    left: 36px;
+    top: 80px;
+    width: 336px;
+    padding: 18px 22px 22px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-media);
+    background: var(--paper);
+    box-shadow: var(--shadow-lift);
+    opacity: var(--kr);
+    transform: translateY(calc((1 - var(--kr)) * 40px)) scale(calc(0.96 + 0.04 * var(--kr)));
+  }
+
+  .js .sec--process .pr-report-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .js .sec--process .pr-report-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--red-ink);
+  }
+
+  .js .sec--process .pr-report-status::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+  }
+
+  .js .sec--process .pr-report-title {
+    margin-top: 16px;
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .js .sec--process .pr-report-meta {
+    display: grid;
+    margin: 14px 0 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  .js .sec--process .pr-report-meta div {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .js .sec--process .pr-report-meta dt {
+    color: var(--muted);
+  }
+
+  .js .sec--process .pr-report-meta dd {
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .js .sec--process .pr-report-lines {
+    display: grid;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .js .sec--process .pr-report-lines i {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--paper-3);
+  }
+
+  .js .sec--process .pr-report-lines i:last-child {
+    width: 52%;
+  }
+
+  .js .sec--process .pr-stamp {
+    --ks: clamp(0, (var(--t7) - 0.5) * 5, 1);
+    position: absolute;
+    right: 20px;
+    bottom: 22px;
+    padding: 4px 12px;
+    border: 2px solid var(--red);
+    border-radius: 6px;
+    background: var(--paper);
+    color: var(--red);
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: var(--ks);
+    transform: rotate(-9deg) scale(calc(1.9 - 0.9 * var(--ks)));
+  }
+
+  /* ---------- captions ---------- */
+
+  .js .sec--process .pr-captions {
+    grid-area: captions;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    padding-bottom: 60px;
+  }
+
+  .js .sec--process .pr-steps {
+    flex: 0 1 640px;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .js .sec--process .pr-step {
+    grid-area: 1 / 1;
+    align-content: end;
+    gap: 12px;
+    padding-top: 0;
+    border-top: 0;
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(14px);
+    pointer-events: none;
+    transition:
+      opacity 0.6s var(--ease),
+      filter 0.6s var(--ease),
+      transform 0.6s var(--ease);
+  }
+
+  .js .sec--process .pr-step.is-active {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .js .sec--process .pr-step .label-index {
+    margin-bottom: 2px;
+  }
+
+  .js .sec--process .pr-step-title {
+    font-size: clamp(34px, 3.4vw, 52px);
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .js .sec--process .pr-step-desc {
+    max-width: 32em;
+    font-size: clamp(16px, 1.25vw, 18px);
+    line-height: 1.5;
+  }
+
+  .js .sec--process .pr-skip {
+    display: inline-flex;
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  /* ---------- 08 your turn ---------- */
+
+  .js .sec--process .pr-final {
+    --kf: clamp(0, (var(--t8) - 0.3) / 0.32, 1);
+    grid-area: canvas;
+    display: grid;
+    place-items: center;
+    max-width: none;
+    margin: 0;
+    padding: calc(var(--canvas-pt) + var(--dim-h)) var(--canvas-px) var(--canvas-pb);
+    pointer-events: none;
+  }
+
+  .js .sec--process .pr-select {
+    box-shadow: none;
+    opacity: var(--kf);
+    transform: scale(calc(0.94 + 0.06 * var(--kf)));
+  }
+
+  .js .sec--process .pr-stage.is-final .pr-select {
+    pointer-events: auto;
+  }
+
+  .js .sec--process .pr-fg {
+    --kg: clamp(0, (var(--t8) - 0.3) / 0.45, 1);
+    display: block;
+    position: absolute;
+    background: var(--line-strong);
+    pointer-events: none;
+  }
+
+  .js .sec--process .pr-fg--t,
+  .js .sec--process .pr-fg--b {
+    left: -100vw;
+    right: -100vw;
+    height: 1px;
+    transform: scaleX(var(--kg));
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+  }
+
+  .js .sec--process .pr-fg--t { top: 0; }
+  .js .sec--process .pr-fg--b { bottom: 0; }
+
+  .js .sec--process .pr-fg--l,
+  .js .sec--process .pr-fg--r {
+    top: -60vh;
+    bottom: -60vh;
+    width: 1px;
+    transform: scaleY(var(--kg));
+    -webkit-mask-image: linear-gradient(180deg, transparent 8%, #000 34%, #000 62%, transparent 86%);
+    mask-image: linear-gradient(180deg, transparent 8%, #000 34%, #000 62%, transparent 86%);
+  }
+
+  .js .sec--process .pr-fg--l { left: 0; }
+  .js .sec--process .pr-fg--r { right: 0; }
+
+  .js .sec--process .pr-handle {
+    --kh: clamp(0, (var(--t8) - 0.55) * 4, 1);
+    opacity: var(--kh);
+    transform: scale(calc(0.3 + 0.7 * var(--kh)));
+  }
+
+  .js .sec--process .pr-cta-spec {
+    opacity: clamp(0, (var(--t8) - 0.62) * 4, 1);
+  }
+
+  .js .sec--process .pr-cta-arrow path {
+    stroke-dasharray: 100 100;
+    stroke-dashoffset: calc(100 - 100 * clamp(0, (var(--t8) - 0.66) / 0.26, 1));
+  }
+
+  .js .sec--process .pr-cta-note {
+    opacity: clamp(0, (var(--t8) - 0.8) * 6, 1);
+  }
+
+  /* ---------- X-ray: local spec boxes that stick with the stage ---------- */
+
+  .js .sec--process .pr-xray {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  :root[data-theme="xray"].js .sec--process .pr-xray {
+    display: block;
+  }
+
+  /* ---------- wide: labels sit beside the frame ---------- */
+
+  @media (min-width: 1200px) {
+    .js .sec--process .pr-stage {
+      --canvas-pt: calc(var(--header-h) + 18px);
+      /* keep the frame clear of the labels and the counter at any width */
+      --canvas-px: max(var(--gutter) + 236px, (100vw - var(--maxw)) / 2 + var(--gutter) + 236px);
+      --canvas-pb: 36px;
+      grid-template-rows: minmax(0, 1fr) auto;
+      grid-template-areas: "canvas" "captions";
+    }
+
+    .js .sec--process .pr-head {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+  }
+
+  /* ---------- phone ---------- */
+
+  @media (max-width: 640px) {
+    .js .sec--process .pr-stage {
+      --canvas-pt: 10px;
+      --canvas-pb: 18px;
+      --dim-h: 26px;
+    }
+
+    .js .sec--process .pr-head {
+      align-items: flex-end;
+      gap: 16px;
+      padding-top: calc(var(--header-h) + 12px);
+    }
+
+    .js .sec--process .pr-kicker {
+      min-width: 0;
+    }
+
+    .js .sec--process .pr-eyebrow,
+    .js .sec--process .pr-title,
+    .js .sec--process .pr-meter-label {
+      font-size: 11px;
+      text-wrap: balance;
+    }
+
+    .js .sec--process .pr-count {
+      font-size: 44px;
+    }
+
+    .js .sec--process .pr-framewrap {
+      width: 100cqw;
+      height: min(100cqh - var(--dim-h), 640px);
+      aspect-ratio: auto;
+    }
+
+    .js .sec--process .pr-dim {
+      top: -19px;
+    }
+
+    .js .sec--process .pr-art {
+      --aw: 340px;
+      --ah: 404px;
+      --x0: 44px;
+      --y0: 84px;
+      --cw: 18px;
+      --rh: 24px;
+      --hh: 20px;
+      --mid: 0px;
+      --wx: 18px;
+      --hfs: 10.5px;
+      --lw: calc(9 * var(--cw) - 4px);
+    }
+
+    .js .sec--process .pr-file,
+    .js .sec--process .pr-ascii,
+    .js .sec--process .pr-hit-ascii {
+      display: none;
+    }
+
+    .js .sec--process .pr-off {
+      right: calc(var(--aw) - var(--x0) + 8px);
+    }
+
+    .js .sec--process .pr-note-arrow {
+      left: calc(var(--x0) + 4 * var(--cw) + 4px);
+    }
+
+    .js .sec--process .pr-note {
+      left: calc(var(--x0) + 4 * var(--cw) + 70px);
+      font-size: 27px;
+    }
+
+    .js .sec--process .pr-tools {
+      top: 8px;
+      left: 0;
+      right: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .js .sec--process .pr-tool {
+      padding: 3px 8px 3px 7px;
+      font-size: 11px;
+    }
+
+    .js .sec--process .pr-code {
+      left: 6px;
+      top: 196px;
+      width: 328px;
+      font-size: 10.5px;
+      line-height: 17px;
+    }
+
+    .js .sec--process .pr-code-bar {
+      height: 30px;
+      padding: 0 12px;
+    }
+
+    .js .sec--process .pr-code-lines {
+      padding: 10px 12px 0;
+    }
+
+    .js .sec--process .pr-code-lines li {
+      height: 17px;
+    }
+
+    .js .sec--process .pr-code-lines li::before {
+      margin-right: 1ch;
+    }
+
+    .js .sec--process .pr-code-lines .sep {
+      height: 10px;
+      margin: 0 -12px 6px;
+    }
+
+    .js .sec--process .pr-code-lines li.is-typing::after {
+      height: 12px;
+      margin-top: 2px;
+    }
+
+    .js .sec--process .pr-report {
+      left: 18px;
+      top: 58px;
+      width: 304px;
+      padding: 16px 18px 18px;
+    }
+
+    .js .sec--process .pr-report-title {
+      font-size: 21px;
+    }
+
+    .js .sec--process .pr-stamp {
+      right: 16px;
+      bottom: 18px;
+      font-size: 13px;
+    }
+
+    .js .sec--process .pr-captions {
+      display: block;
+      padding-bottom: 22px;
+    }
+
+    .js .sec--process .pr-step {
+      gap: 8px;
+    }
+
+    .js .sec--process .pr-step-title {
+      font-size: 30px;
+    }
+
+    .js .sec--process .pr-step-desc {
+      max-width: calc(100% - 112px);
+      font-size: 15px;
+    }
+
+    .js .sec--process .pr-skip {
+      position: absolute;
+      top: 0;
+      right: var(--gutter);
+      font-size: 12px;
+    }
+  }
+}
+
+@keyframes pr-caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}

@@ -1,0 +1,202 @@
+/* ==========================================================
+   about — the stance: a two-tone statement, fig. 1 and four
+   principles on hairlines.
+   ========================================================== */
+
+.sec--about {
+  --ab-gap: clamp(32px, 6vw, 96px);
+}
+
+/* ---------- statement + figure ---------- */
+
+.sec--about .ab-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.48fr);
+  column-gap: var(--ab-gap);
+  align-items: stretch;
+}
+
+.sec--about .ab-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+  min-width: 0;
+}
+
+.sec--about .ab-statement {
+  max-width: 24ch;
+  font-size: clamp(34px, 4.45vw, 64px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+/* ---------- contact facts ---------- */
+
+.sec--about .ab-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px clamp(32px, 4vw, 64px);
+  margin: 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.sec--about .ab-fact {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.sec--about .ab-fact dd {
+  margin: 0;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.sec--about .ab-fact .link-arrow {
+  font-size: 16px;
+}
+
+.sec--about .ab-home {
+  font-size: 15px;
+  color: var(--ink);
+}
+
+/* ---------- fig. 1 ---------- */
+
+.sec--about .ab-fig {
+  align-self: start;
+  width: 100%;
+  max-width: 440px;
+  justify-self: end;
+  /* line the image up with the cap height of the statement, not its line box */
+  margin-top: clamp(6px, 0.95vw, 14px);
+}
+
+.sec--about .ab-media {
+  aspect-ratio: 1064 / 1500;
+  background: var(--paper-2);
+  border-radius: 3px;
+}
+
+.sec--about .ab-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 3px;
+  background: var(--paper-2);
+}
+
+.sec--about .ab-chip {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1;
+}
+
+.sec--about .ab-caption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sec--about .ab-caption-tag {
+  color: var(--red-ink);
+}
+
+/* ---------- principles ---------- */
+
+.sec--about .ab-principles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 40px 48px;
+  margin-top: clamp(80px, 9vw, 128px);
+}
+
+.sec--about .ab-principle {
+  position: relative;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.sec--about .ab-num {
+  display: block;
+  font-size: 12px;
+  color: var(--red-ink);
+}
+
+.sec--about .ab-p-title {
+  margin-top: 32px;
+  font-family: var(--font-display);
+  font-size: clamp(21px, 1.75vw, 25px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.sec--about .ab-p-text {
+  max-width: 34ch;
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1100px) {
+  .sec--about .ab-principles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px clamp(32px, 5vw, 64px);
+  }
+}
+
+@media (max-width: 760px) {
+  .sec--about .ab-top {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 56px;
+  }
+
+  .sec--about .ab-statement {
+    font-size: clamp(32px, 8.6vw, 48px);
+    line-height: 1.04;
+  }
+
+  .sec--about .ab-intro {
+    gap: 40px;
+  }
+
+  .sec--about .ab-fig {
+    justify-self: start;
+    max-width: min(100%, 420px);
+  }
+}
+
+@media (max-width: 560px) {
+  .sec--about .ab-principles {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    margin-top: 72px;
+  }
+
+  .sec--about .ab-p-title {
+    margin-top: 20px;
+  }
+
+  .sec--about .ab-facts {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .sec--about .ab-fact:first-child {
+    grid-column: 1 / -1;
+  }
+}
