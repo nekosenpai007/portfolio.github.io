@@ -1,92 +1,72 @@
 [
   {
     "name": "App Development",
-    "desc": "compeleted the training on app development with android with java.",
+    "desc": "Completed training on Android app development with Java.",
     "image": "android",
-    "category": "mern",
     "links": {
-      "view": "https://drive.google.com/file/d/1kn9qk4-PQk7duxCjJOMstxkHX_NBOvmX/view?usp=drive_link",
-      "code": "https://github.com/jigar-sable/instagram-mern"
+      "view": "https://drive.google.com/file/d/1kn9qk4-PQk7duxCjJOMstxkHX_NBOvmX/view?usp=drive_link"
     }
   },
   {
     "name": "Cyber Security",
-    "desc": "Compeleted the training on Cyber security and cyber foresics.",
+    "desc": "Completed training on cyber security and cyber forensics.",
     "image": "forensics",
-    "category": "mern",
     "links": {
-      "view": "https://drive.google.com/file/d/1UNhVodr6DL4jFgZTP7_AoW6a4Oo9iorG/view?usp=drive_link",
-      "code": "https://github.com/jigar-sable/flipkart-mern"
+      "view": "https://drive.google.com/file/d/1UNhVodr6DL4jFgZTP7_AoW6a4Oo9iorG/view?usp=drive_link"
     }
   },
   {
     "name": "Firewall",
-    "desc": "Compeleted the Course on Firewall.",
+    "desc": "Completed a course on firewalls.",
     "image": "firewall",
-    "category": "mern",
     "links": {
-      "view": "https://drive.google.com/file/d/1ebLnklWk4YnlBM7r9ndYFOg268FGjbqv/view?usp=drive_link",
-      "code": "https://github.com/jigar-sable/resumegen"
+      "view": "https://drive.google.com/file/d/1ebLnklWk4YnlBM7r9ndYFOg268FGjbqv/view?usp=drive_link"
     }
   },
   {
     "name": "Networking Essentials",
-    "desc": "Compeleted the Course on Computer Network by CISCO",
+    "desc": "Completed the Computer Networking course by Cisco.",
     "image": "network",
-    "category": "mern",
-    "links": {
-      "view": "https://reactjsprojects.herokuapp.com/",
-      "code": "https://github.com/jigar-sable/React-Projects"
-    }
+    "links": {}
   },
   {
     "name": "High Performance Computing",
-    "desc": "Compeleted the Workshop of HPC at IUAC",
+    "desc": "Completed the High Performance Computing workshop at IUAC.",
     "image": "hpc",
-    "category": "mern",
     "links": {
-      "view": "https://drive.google.com/file/d/1tdCj0zERgulCHIKrzbahe_3nsMUYOGfZ/view?usp=drive_link",
-      "code": "https://github.com/jigar-sable/Flipkart-Clone-PHP"
+      "view": "https://drive.google.com/file/d/1tdCj0zERgulCHIKrzbahe_3nsMUYOGfZ/view?usp=drive_link"
     }
   },
   {
     "name": "Internship at CDAC Patna",
-    "desc": "Compeleted 6 month internship at CDAC patna in Department of Cyber-Security and Cyber-Forensics",
+    "desc": "Completed a 6-month internship at CDAC Patna in the Department of Cyber Security and Cyber Forensics.",
     "image": "internship",
-    "category": "mern",
     "links": {
-      "view": "https://drive.google.com/file/d/12wC4IFCJWagCUxhAOinJyvTDpUymJbc5/view?usp=drive_link",
-      "code": "https://github.com/jigar-sable/JavaScript-Projects"
+      "view": "https://drive.google.com/file/d/12wC4IFCJWagCUxhAOinJyvTDpUymJbc5/view?usp=drive_link"
     }
   },
   {
     "name": "Pentesting",
-    "desc": "Compeleted 40 hours course on the pentesting",
+    "desc": "Completed a 40-hour course on penetration testing.",
     "image": "packt",
-    "category": "mern",
     "links": {
-      "view": "https://coursera.org/share/337a09aef848ec566b20833096bb07e8",
-      "code": "Broken"
+      "view": "https://coursera.org/share/337a09aef848ec566b20833096bb07e8"
     }
   },
   {
     "name": "Network Mapper",
-    "desc": "Compeleted 40 hours course on the nmap",
+    "desc": "Completed a 40-hour course on Nmap.",
     "image": "packt",
-    "category": "mern",
     "links": {
-      "view": "https://coursera.org/share/135eaf0a891d028963521e6dca39fe1f",
-      "code": "Broken"
+      "view": "https://coursera.org/share/135eaf0a891d028963521e6dca39fe1f"
     }
   },
   {
     "name": "Cyber Security Professional",
-    "desc": "Compeleted 120 hours course on the Cyber Security Professional",
+    "desc": "Completed a 120-hour Cyber Security Professional course.",
     "image": "google",
-    "category": "mern",
     "links": {
-      "view": "https://coursera.org/share/c6982be9c9116e6ac33420fad40319a6",
-      "code": "Broken"
+      "view": "https://coursera.org/share/c6982be9c9116e6ac33420fad40319a6"
     }
   }
 ]

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>cipher. Cybersecurity practitioner</title>
+  <meta name="description" content="Cipher: cybersecurity practitioner with roots in IT infrastructure. Malware research, digital forensics and a growing love for code.">
+  <meta name="theme-color" content="#f4f4f2">
+  <meta property="og:title" content="cipher. Cybersecurity practitioner">
+  <meta property="og:description" content="Malware research, digital forensics and the infrastructure in between.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/images/eagle.png" type="image/png">
+
+  <script>
+    /* Pick the theme before first paint so X-ray mode never flashes. */
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("cipher-theme"); } catch (e) {}
+      if (t !== "xray" && t !== "paper") {
+        t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "xray" : "paper";
+      }
+      document.documentElement.setAttribute("data-theme", t);
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Caveat:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap">
+
+  <link rel="stylesheet" href="assets/css/main.css">
+  <!-- @styles -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href="#home" class="wordmark" aria-label="cipher. Back to top" data-spec="Wordmark" data-spec-note="cipher. from ciphertext: noise, until you hold the key.">cipher<span class="dot">.</span></a>
+
+    <div class="header-actions">
+      <button class="xray-toggle" type="button" aria-pressed="false" data-spec="Toggle" data-spec-note="X-ray shows how this page is built.">
+        <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+        <span>X-ray</span>
+      </button>
+      <a class="header-link" href="#contact">Get in touch</a>
+      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MENU OVERLAY ============ -->
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="container menu-inner">
+    <div class="menu-top">
+      <a href="#home" class="wordmark">cipher<span class="dot">.</span></a>
+      <button class="menu-close" type="button" aria-label="Close menu">
+        <span></span><span></span>
+      </button>
+    </div>
+    <nav class="menu-nav" aria-label="Chapters">
+      <ol>
+        <li><a href="#about"><span class="mono">01</span>About</a></li>
+        <li><a href="#skills"><span class="mono">02</span>Toolbox</a></li>
+        <li><a href="#path"><span class="mono">03</span>Path</a></li>
+        <li><a href="#cert"><span class="mono">04</span>Certifications</a></li>
+        <li><a href="#work"><span class="mono">05</span>Work</a></li>
+        <li><a href="#journal"><span class="mono">06</span>Journal</a></li>
+        <li><a href="#contact"><span class="mono">07</span>Contact</a></li>
+      </ol>
+    </nav>
+    <div class="menu-foot">
+      <div>
+        <p class="mono-caps">Contact</p>
+        <a href="mailto:ciphersensei@proton.me">ciphersensei@proton.me</a>
+        <p class="muted">127.0.0.1</p>
+      </div>
+      <div>
+        <p class="mono-caps">Elsewhere</p>
+        <ul class="inline-links">
+          <li><a href="https://www.linkedin.com/in/ganendra-kumar-netam-3695592b6/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/nekosenpai007" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://x.com/nekosen35693393" target="_blank" rel="noopener">X</a></li>
+          <li><a href="https://t.me/nekosenpai007" target="_blank" rel="noopener">Telegram</a></li>
+          <li><a href="https://dev.to/neko_senpai" target="_blank" rel="noopener">DEV</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCROLL RAIL (right edge) ============ -->
+<div class="rail" aria-hidden="true">
+  <span class="rail-dot"><span class="rail-chip">Home</span></span>
+</div>
+
+<main id="main">
+
+<!-- @section hero -->
+
+<!-- @section process -->
+
+<!-- @section about -->
+
+<!-- @section skills -->
+
+<!-- @section path -->
+
+<!-- @section cert -->
+
+<!-- @section work -->
+
+<!-- @section journal -->
+
+<!-- @section hobbies -->
+
+<!-- @section contact -->
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer" data-chapter="Contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="wordmark wordmark--xl" aria-label="cipher. Back to top">cipher<span class="dot">.</span></a>
+        <p class="footer-blurb">Cybersecurity practitioner with roots in IT infrastructure. Malware research, digital forensics and a growing love for code.</p>
+        <p class="mono footer-etym">cipher. from ciphertext: noise, until you hold the key.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Chapters">
+        <p class="mono-caps">Chapters</p>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Toolbox</a></li>
+          <li><a href="#path">Path</a></li>
+          <li><a href="#cert">Certifications</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#journal">Journal</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <p class="mono-caps">Contact</p>
+        <ul>
+          <li><a href="mailto:ciphersensei@proton.me">ciphersensei@proton.me</a></li>
+          <li class="muted">127.0.0.1, there's no place like home</li>
+          <li><a href="https://www.linkedin.com/in/ganendra-kumar-netam-3695592b6/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/nekosenpai007" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://x.com/nekosen35693393" target="_blank" rel="noopener">X / Twitter</a></li>
+          <li><a href="https://t.me/nekosenpai007" target="_blank" rel="noopener">Telegram</a></li>
+          <li><a href="https://dev.to/neko_senpai" target="_blank" rel="noopener">DEV</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span data-year>2026</span> cipher.</p>
+      <a href="#home" class="link-arrow">Back to top <svg class="i-arrow i-arrow--up" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ FLAG HUNT ============ -->
+<div class="flags" id="flags">
+  <button class="flags-pill" type="button" aria-expanded="false" aria-controls="flags-panel">
+    <span class="flags-ring" aria-hidden="true"></span>
+    <span><span data-flag-count>0</span>/<span data-flag-total>5</span> flags</span>
+  </button>
+  <div class="flags-panel" id="flags-panel" hidden>
+    <p class="mono-caps">Capture the flag</p>
+    <p class="flags-intro">Five flags are hidden on this page. Find them all.</p>
+    <ol class="flags-list" data-flag-list></ol>
+  </div>
+</div>
+<div class="toast" role="status" aria-live="polite"></div>
+
+<!-- X-ray HUD: pointer coordinates and viewport, only visible in X-ray mode -->
+<div class="xray-hud mono" aria-hidden="true">
+  <span>X <b data-hud-x>0</b></span>
+  <span>Y <b data-hud-y>0</b></span>
+  <span data-hud-vp></span>
+  <span data-hud-time></span>
+</div>
+<div class="xray-layer" aria-hidden="true"></div>
+
+<script src="assets/js/main.js"></script>
+<!-- @scripts -->
+</body>
+</html>

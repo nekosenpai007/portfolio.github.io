@@ -1,0 +1,159 @@
+<section class="sec sec--process" id="process" data-chapter="The investigation" aria-labelledby="process-title">
+  <div class="pr-stage">
+
+    <header class="pr-head container">
+      <div class="pr-kicker">
+        <p class="mono pr-eyebrow">The investigation</p>
+        <h2 class="display-l pr-title" id="process-title" data-spec="Heading" data-spec-note="Eight steps, one case.">From a packet to a report<span class="dot">.</span></h2>
+      </div>
+      <div class="pr-meter" aria-hidden="true">
+        <p class="mono pr-meter-label">Investigation progress</p>
+        <p class="pr-count"><span class="pr-digit" data-pr-digit>0</span><span class="pr-digit" data-pr-digit>0</span><span class="pr-digit" data-pr-digit>0</span><span class="pr-unit">%</span></p>
+      </div>
+    </header>
+
+    <!-- the stage: every layer below is drawn from scroll progress by process.js -->
+    <div class="pr-canvas">
+      <div class="pr-framewrap" aria-hidden="true">
+        <div class="pr-dim"><span data-pr-dim>922 × 576</span></div>
+        <div class="frame pr-frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span class="pr-bar-title">case 0x01</span></div>
+          <div class="pr-body">
+            <div class="pr-art">
+
+              <span class="pr-file">capture.pcap</span>
+
+              <!-- 01 a packet -->
+              <span class="pr-wire"></span>
+              <span class="pr-wire-a">eth0 · rx</span>
+              <span class="pr-wire-b">128 bytes</span>
+              <span class="pr-pkt"></span>
+
+              <!-- 02 a baseline: rows rendered by process.js -->
+              <div class="pr-hex" data-pr-hex></div>
+
+              <!-- 03 an anomaly -->
+              <span class="pr-g pr-g--h pr-g--htl"></span>
+              <span class="pr-g pr-g--h pr-g--htr"></span>
+              <span class="pr-g pr-g--h pr-g--hbl"></span>
+              <span class="pr-g pr-g--h pr-g--hbr"></span>
+              <span class="pr-g pr-g--v pr-g--vlt"></span>
+              <span class="pr-g pr-g--v pr-g--vlb"></span>
+              <span class="pr-g pr-g--v pr-g--vrt"></span>
+              <span class="pr-g pr-g--v pr-g--vrb"></span>
+
+              <!-- 04 a hypothesis -->
+              <span class="pr-group"></span>
+              <span class="pr-bracket"></span>
+              <span class="pr-bracket-label">4 bytes</span>
+              <svg class="pr-note-arrow" viewBox="0 0 64 48"><path pathLength="100" d="M60 44C40 46 14 34 6 6M3.8 14.7 6 6l6.5 6.3"/></svg>
+              <span class="hand pr-note">suspicious?</span>
+
+              <span class="pr-hit">4A</span>
+              <span class="pr-hit-ascii">J</span>
+              <span class="spec-label pr-hit-label">0x4A · offset 0x0172</span>
+
+              <!-- 05 the tools -->
+              <ul class="pr-tools">
+                <li class="chip pr-tool" style="--i:0"><span class="pr-ico pr-ico--wireshark"></span>Wireshark</li>
+                <li class="chip pr-tool" style="--i:1"><span class="pr-ico pr-ico--burp"></span>Burp Suite</li>
+                <li class="chip pr-tool" style="--i:2"><span class="pr-ico pr-ico--msf"></span>Metasploit</li>
+                <li class="chip pr-tool" style="--i:3"><span class="pr-ico pr-ico--bash"></span>Bash</li>
+              </ul>
+
+              <!-- 06 a line of code -->
+              <div class="panel-dark pr-code">
+                <div class="pr-code-bar"><i></i>scan.py</div>
+                <ol class="pr-code-lines">
+                  <li class="c"><span class="pr-cl"><b class="k">import</b> sys</span></li>
+                  <li class="c"><span class="pr-cl"></span></li>
+                  <li class="c"><span class="pr-cl"><b class="k">def</b> <b class="f">scan</b>(path, at=<b class="n">0x0172</b>):</span></li>
+                  <li class="c"><span class="pr-cl">    data = open(path, <b class="s">"rb"</b>).read()</span></li>
+                  <li class="c"><span class="pr-cl">    print(<b class="s">f"{at:#06x}: {data[at]:#04x}"</b>)</span></li>
+                  <li class="c"><span class="pr-cl"></span></li>
+                  <li class="c"><span class="pr-cl"><b class="f">scan</b>(sys.argv[<b class="n">1</b>])</span></li>
+                  <li class="sep"></li>
+                  <li class="t"><span class="pr-cl"><b class="p">$</b> python3 scan.py capture.pcap</span></li>
+                  <li class="t"><span class="pr-cl"><b class="o">0x0172: 0x4a</b></span></li>
+                </ol>
+              </div>
+
+              <!-- 07 a report -->
+              <div class="pr-report">
+                <div class="pr-report-top"><span>Report · case 0x01</span><span class="pr-report-status">status: resolved</span></div>
+                <p class="pr-report-title">Unexpected byte in the padding.</p>
+                <dl class="pr-report-meta">
+                  <div><dt>Offset</dt><dd>0x0172</dd></div>
+                  <div><dt>Value</dt><dd>0x4a</dd></div>
+                  <div><dt>Evidence</dt><dd>capture.pcap</dd></div>
+                </dl>
+                <span class="pr-report-lines"><i></i><i></i></span>
+                <span class="pr-stamp">Resolved</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-captions container">
+      <ol class="pr-steps" data-spec="Steps" data-spec-note="Still version: no pinning.">
+        <li class="pr-step is-active">
+          <span class="label-index"><span>01</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">A packet.</h3>
+          <p class="pr-step-desc">Every investigation starts with raw data. Capture first, conclusions later.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>02</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">A baseline.</h3>
+          <p class="pr-step-desc">Know what normal looks like, and the odd one out becomes obvious.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>03</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">An anomaly.</h3>
+          <p class="pr-step-desc">One byte where it shouldn’t be. That’s where the story starts.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>04</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">A hypothesis.</h3>
+          <p class="pr-step-desc">Every theory gets tested against the evidence, never the other way round.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>05</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">The tools.</h3>
+          <p class="pr-step-desc">Wireshark, Burp Suite, Metasploit and a terminal. The right instrument for each layer.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>06</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">A line of code.</h3>
+          <p class="pr-step-desc">Automate the repetitive, script the rest. Python and Bash do the heavy lifting.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>07</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">A report.</h3>
+          <p class="pr-step-desc">Findings only matter when someone can act on them. Clear, reproducible, documented.</p>
+        </li>
+        <li class="pr-step">
+          <span class="label-index"><span>08</span><span class="rule"></span><span>08</span></span>
+          <h3 class="display-m pr-step-title">Your turn.</h3>
+          <p class="pr-step-desc">Have a system that needs a closer look? Let’s talk.</p>
+        </li>
+      </ol>
+      <a class="link-arrow pr-skip" href="#about">Skip the investigation <svg class="i-arrow i-arrow--down" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4"/></svg></a>
+    </div>
+
+    <!-- 08 your turn: the one real button on the stage -->
+    <div class="pr-final container">
+      <div class="pr-select">
+        <span class="pr-fg pr-fg--t"></span><span class="pr-fg pr-fg--b"></span><span class="pr-fg pr-fg--l"></span><span class="pr-fg pr-fg--r"></span>
+        <a class="btn-pill pr-cta" href="#contact">Get in touch <span class="btn-icon"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
+        <span class="pr-handle pr-handle--tl" aria-hidden="true"></span><span class="pr-handle pr-handle--tr" aria-hidden="true"></span><span class="pr-handle pr-handle--bl" aria-hidden="true"></span><span class="pr-handle pr-handle--br" aria-hidden="true"></span>
+        <span class="spec-label pr-cta-spec" aria-hidden="true" data-pr-cta-size>Button · 172 × 52</span>
+        <svg class="pr-cta-arrow" viewBox="0 0 64 64" aria-hidden="true"><path pathLength="100" d="M56 4C61 27 44 43 10 45m8.4-7.4L9.6 45l8.9 6.2"/></svg>
+        <span class="hand pr-cta-note" aria-hidden="true">go on, ask me.</span>
+      </div>
+    </div>
+
+  </div>
+</section>

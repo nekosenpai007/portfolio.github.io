@@ -1,0 +1,588 @@
+/* ==========================================================
+   skills — "Everything in the toolbox."
+   Four drawers rendered from skills.json. Row above 900 px: the open
+   drawer takes 3.4 shares of the width (flex-grow). Below: a stacked
+   accordion, one drawer open at a time.
+   ========================================================== */
+
+.sec--skills {
+  --sk-h: 440px;
+  --sk-gap: 8px;
+  --sk-pad: 24px;
+  --sk-grow: 3.4;
+}
+
+/* ---------- heading ---------- */
+
+.sec--skills .sk-head-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 48px;
+  margin-bottom: clamp(48px, 5vw, 72px);
+}
+
+.sec--skills .sk-title {
+  text-wrap: balance;
+}
+
+.sec--skills .sk-count {
+  padding-bottom: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sec--skills .sk-count:empty {
+  display: none;
+}
+
+.sec--skills .sk-status {
+  padding: 24px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- accordion: row ---------- */
+
+.sec--skills .sk-acc {
+  --sk-n: 4;
+  container-type: inline-size;
+  display: flex;
+  gap: var(--sk-gap);
+}
+
+.js .sec--skills .sk-acc {
+  height: var(--sk-h);
+}
+
+.js .sec--skills .sk-acc.is-error {
+  height: auto;
+}
+
+.sec--skills .sk-panel {
+  position: relative;
+  isolation: isolate;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-media);
+  background: var(--paper-2);
+  transition:
+    flex-grow 0.7s var(--ease),
+    border-color 0.3s,
+    opacity 0.9s var(--ease) var(--reveal-delay, 0ms),
+    filter 0.9s var(--ease) var(--reveal-delay, 0ms),
+    transform 0.9s var(--ease) var(--reveal-delay, 0ms);
+}
+
+.sec--skills .sk-panel.is-open {
+  flex-grow: var(--sk-grow);
+}
+
+.sec--skills .sk-panel:hover {
+  border-color: var(--line-strong);
+}
+
+/* ---------- generated backgrounds ---------- */
+
+.sec--skills .sk-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.sec--skills .sk-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.7) 35%, transparent 72%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.7) 35%, transparent 72%);
+  transition: opacity 0.7s var(--ease);
+}
+
+.sec--skills .is-open .sk-pattern {
+  opacity: 1;
+}
+
+/* 01 · graph paper */
+.sec--skills .sk-panel--grid .sk-pattern {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* 02 · hex lattice of dots */
+.sec--skills .sk-panel--hex .sk-pattern {
+  background-image:
+    radial-gradient(circle, var(--line-strong) 1.2px, transparent 1.8px),
+    radial-gradient(circle, var(--line-strong) 1.2px, transparent 1.8px);
+  background-size: 20px 34.64px;
+  background-position: 0 0, 10px 17.32px;
+}
+
+/* 03 · scanlines */
+.sec--skills .sk-panel--scan .sk-pattern {
+  background-image: repeating-linear-gradient(to bottom, var(--line) 0 1px, transparent 1px 6px);
+}
+
+/* 04 · signal rings */
+.sec--skills .sk-panel--rings .sk-pattern {
+  background-image: repeating-radial-gradient(circle at 300px 96px, transparent 0 23px, var(--line) 23px 24px);
+}
+
+/* the group's first icon, very large and very faint */
+.sec--skills .sk-glyph {
+  position: absolute;
+  top: 64px;
+  right: -16px;
+  width: 220px;
+  height: 220px;
+  background: var(--ink);
+  opacity: 0.03;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  transform: translateX(24px);
+  transition: opacity 0.7s var(--ease), transform 0.9s var(--ease);
+}
+
+.sec--skills .is-open .sk-glyph {
+  opacity: 0.06;
+  transform: none;
+}
+
+/* one red detail per drawer, only when it is open */
+.sec--skills .sk-mark {
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.sec--skills .is-open .sk-mark {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s var(--ease) 0.35s, transform 0.8s var(--ease) 0.35s;
+}
+
+.sec--skills .sk-panel--grid .sk-mark {
+  left: 289px;   /* 12 × 24 + 1: sits exactly in a cell */
+  top: 73px;
+  width: 23px;
+  height: 23px;
+  background: var(--red);
+}
+
+.sec--skills .sk-panel--hex .sk-mark {
+  left: 286px;   /* lattice point (290, 86.6) */
+  top: 83px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 0 5px var(--red-soft);
+}
+
+.sec--skills .sk-panel--scan .sk-mark {
+  left: 216px;
+  top: 96px;     /* on the 16th scanline */
+  width: 144px;
+  height: 1px;
+  background: var(--red);
+  transform-origin: left center;
+}
+
+.sec--skills .sk-panel--scan .sk-mark::before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  background: var(--red);
+}
+
+.sec--skills .sk-panel--rings .sk-mark {
+  left: 296px;   /* ring centre (300, 96) */
+  top: 92px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 0 6px var(--red-soft);
+}
+
+/* ---------- header button ---------- */
+
+.sec--skills .sk-h {
+  margin: 0;
+  font: inherit;
+}
+
+.sec--skills .sk-btn {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  text-align: left;
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sec--skills .sk-btn:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: -2px;
+  border-radius: var(--radius-media);
+}
+
+.sec--skills .is-open .sk-btn {
+  pointer-events: none;
+  cursor: default;
+}
+
+.sec--skills .sk-num {
+  position: absolute;
+  top: var(--sk-pad);
+  left: var(--sk-pad);
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--muted);
+  transition: color 0.4s;
+}
+
+.sec--skills .is-open .sk-num {
+  color: var(--red-ink);
+}
+
+.sec--skills .sk-name {
+  position: absolute;
+  left: calc(var(--sk-pad) - 4px);
+  bottom: var(--sk-pad);
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.8vw, 26px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  transition: opacity 0.5s var(--ease) 0.3s, transform 0.7s var(--ease) 0.3s;
+}
+
+.sec--skills .is-open .sk-name {
+  opacity: 0;
+  transform: rotate(180deg) translateY(-16px);
+  transition-duration: 0.2s;
+  transition-delay: 0s;
+}
+
+.sec--skills .sk-plus {
+  position: absolute;
+  top: calc(var(--sk-pad) - 5px);
+  right: calc(var(--sk-pad) - 5px);
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--paper);
+  transition: opacity 0.3s var(--ease), transform 0.5s var(--ease), border-color 0.3s;
+}
+
+.sec--skills .sk-plus::before,
+.sec--skills .sk-plus::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--ink);
+  transform: translate(-50%, -50%);
+}
+
+.sec--skills .sk-plus::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.sec--skills .sk-btn:hover .sk-plus {
+  border-color: var(--ink);
+}
+
+.sec--skills .is-open .sk-plus {
+  opacity: 0;
+  transform: rotate(45deg) scale(0.8);
+}
+
+/* ---------- body ---------- */
+
+.sec--skills .sk-body {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  /* the open drawer's width, so text never reflows while the row animates */
+  width: calc((100cqw - (var(--sk-n) - 1) * var(--sk-gap)) * var(--sk-grow) / (var(--sk-grow) + var(--sk-n) - 1) - 2px);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease), visibility 0s 0.2s;
+}
+
+.sec--skills .is-open .sk-body {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.6s var(--ease) 0.25s, visibility 0s;
+}
+
+.sec--skills .sk-body-in {
+  height: 100%;
+}
+
+.sec--skills .sk-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--sk-pad);
+}
+
+.sec--skills .sk-meta {
+  align-self: flex-end;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+
+.sec--skills .sk-main {
+  transform: translateY(12px);
+  transition: transform 0.3s var(--ease);
+}
+
+.sec--skills .is-open .sk-main {
+  transform: none;
+  transition: transform 0.8s var(--ease) 0.25s;
+}
+
+.sec--skills .sk-group {
+  margin: 0;
+}
+
+.sec--skills .sk-desc {
+  max-width: 36ch;
+  margin-top: 12px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.sec--skills .sk-tools {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 24px;
+  margin-top: 24px;
+}
+
+.sec--skills .sk-tool {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.sec--skills .sk-tool-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* light tile so the dark icons stay legible in X-ray mode */
+.sec--skills .sk-tile {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-field);
+  background: var(--paper);
+}
+
+.sec--skills .sk-tile img {
+  width: 20px;
+  height: 20px;
+}
+
+:root[data-theme="xray"] .sec--skills .sk-tile {
+  border-color: transparent;
+  background: var(--on-panel);
+}
+
+/* ---------- accordion: stacked (phones and tablets) ---------- */
+
+@media (max-width: 900px) {
+  .sec--skills {
+    --sk-pad: 20px;
+  }
+
+  .sec--skills .sk-acc {
+    container-type: normal;
+    flex-direction: column;
+  }
+
+  .js .sec--skills .sk-acc {
+    height: auto;
+    min-height: calc(4 * 74px + 3 * var(--sk-gap));
+  }
+
+  .sec--skills .sk-panel {
+    flex: none;
+  }
+
+  .sec--skills .sk-btn {
+    position: relative;
+    inset: auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 72px;
+    padding: 12px var(--sk-pad);
+  }
+
+  .sec--skills .is-open .sk-btn {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .sec--skills .sk-num {
+    position: static;
+    flex: none;
+  }
+
+  .sec--skills .sk-name,
+  .sec--skills .is-open .sk-name {
+    position: static;
+    min-width: 0;
+    font-size: 22px;
+    white-space: normal;
+    writing-mode: horizontal-tb;
+    opacity: 1;
+    transform: none;
+  }
+
+  .sec--skills .sk-plus {
+    position: relative;
+    top: auto;
+    right: auto;
+    flex: none;
+    margin-left: auto;
+  }
+
+  .sec--skills .is-open .sk-plus {
+    opacity: 1;
+    transform: rotate(45deg);
+  }
+
+  .sec--skills .sk-body {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    width: auto;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 1;
+    transition: grid-template-rows 0.6s var(--ease), visibility 0s 0.6s;
+  }
+
+  .sec--skills .is-open .sk-body {
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.6s var(--ease), visibility 0s;
+  }
+
+  .sec--skills .sk-body-in {
+    height: auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .sec--skills .sk-content {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--sk-pad) var(--sk-pad);
+  }
+
+  .sec--skills .sk-main {
+    order: 1;
+  }
+
+  .sec--skills .sk-meta {
+    order: 2;
+    align-self: flex-start;
+    margin-top: 16px;
+  }
+
+  .sec--skills .sk-group {
+    display: none;
+  }
+
+  .sec--skills .sk-desc {
+    margin-top: 0;
+    font-size: 16px;
+  }
+
+  .sec--skills .sk-tools {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+    margin-top: 20px;
+  }
+
+  .sec--skills .sk-pattern {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, rgba(0, 0, 0, 0.5) 72px, transparent 160px);
+    mask-image: linear-gradient(to bottom, #000 0, rgba(0, 0, 0, 0.5) 72px, transparent 160px);
+  }
+
+  .sec--skills .sk-glyph {
+    top: auto;
+    bottom: -32px;
+    right: -32px;
+    width: 180px;
+    height: 180px;
+  }
+
+  .sec--skills .is-open .sk-glyph {
+    opacity: 0.05;
+  }
+
+  .sec--skills .sk-mark {
+    display: none;
+  }
+}
+
+@media (min-width: 700px) {
+  .sec--skills .sk-title .tone-2 {
+    display: block;
+  }
+}
+
+@media (max-width: 360px) {
+  .sec--skills .sk-tools {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

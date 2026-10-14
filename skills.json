@@ -1,50 +1,38 @@
 [
-    {
-        "name": "Python",
-        "icon": "./assets/icons/1_python.svg"
-    },
-    {
-        "name": "C/C++",
-        "icon": "./assets/icons/1_c.svg"
-    },
-    {
-        "name": "Fortran",
-        "icon": "./assets/icons/1_fortran.svg"
-    },
-    {
-        "name": "LaTex",
-        "icon": "./assets/icons/1_latex.svg"
-    },
-    {
-        "name": "Burp Suite",
-        "icon": "./assets/icons/1_burpsuite.svg"
-    },
-    {
-        "name":"Bash",
-        "icon":"./assets/icons/1_bash.svg"
-    },
-    {
-        "name": "Metasploit",
-        "icon": "./assets/icons/1_metasploit.svg"
-    },
-    {
-        "name":"Linux",
-        "icon":"./assets/icons/1_linux.svg"
-    },
-    {
-        "name":"Docker",
-        "icon":"./assets/icons/1_docker.svg"
-    },
-    {
-        "name":"Network",
-        "icon":"./assets/icons/1_network-adapter.svg"
-    },
-    {
-        "name":"WireGuard",
-        "icon":"./assets/icons/1_wireguard.svg"
-    },
-    {
-        "name":"WireShark",
-        "icon":"./assets/icons/1_wireshark.svg"
-    }
+  {
+    "group": "Languages",
+    "desc": "Scripting the repetitive, compiling the fast, typesetting the rest.",
+    "items": [
+      { "name": "Python", "icon": "./assets/icons/1_python.svg" },
+      { "name": "C/C++", "icon": "./assets/icons/1_c.svg" },
+      { "name": "Fortran", "icon": "./assets/icons/1_fortran.svg" },
+      { "name": "Bash", "icon": "./assets/icons/1_bash.svg" },
+      { "name": "LaTeX", "icon": "./assets/icons/1_latex.svg" }
+    ]
+  },
+  {
+    "group": "Offensive security",
+    "desc": "Testing web apps and systems the way an attacker would.",
+    "items": [
+      { "name": "Burp Suite", "icon": "./assets/icons/1_burpsuite.svg" },
+      { "name": "Metasploit", "icon": "./assets/icons/1_metasploit.svg" }
+    ]
+  },
+  {
+    "group": "Systems",
+    "desc": "Where everything runs: hardened, containerised, reproducible.",
+    "items": [
+      { "name": "Linux", "icon": "./assets/icons/1_linux.svg" },
+      { "name": "Docker", "icon": "./assets/icons/1_docker.svg" }
+    ]
+  },
+  {
+    "group": "Networking",
+    "desc": "Reading the wire: capture, tunnel, analyse.",
+    "items": [
+      { "name": "Network", "icon": "./assets/icons/1_network-adapter.svg" },
+      { "name": "WireGuard", "icon": "./assets/icons/1_wireguard.svg" },
+      { "name": "Wireshark", "icon": "./assets/icons/1_wireshark.svg" }
+    ]
+  }
 ]
