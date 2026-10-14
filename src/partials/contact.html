@@ -1,0 +1,36 @@
+<section class="sec sec--contact" id="contact" data-chapter="Contact" aria-labelledby="contact-title">
+  <div class="container">
+    <div class="contact-panel panel-dark">
+      <span class="contact-orb" aria-hidden="true"></span>
+
+      <div class="contact-intro">
+        <h2 class="contact-title" id="contact-title" data-scramble data-spec="Heading" data-spec-note="One violet circle, one question.">Tell me what needs a closer look<span class="dot">.</span></h2>
+        <p class="contact-lede">Questions, collaborations, or just want to talk security? Write to me. I read everything.</p>
+        <a class="contact-mail" href="mailto:ciphersensei@proton.me" data-scramble-hover>ciphersensei@proton.me</a>
+      </div>
+
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="cf-field">
+          <label for="cf-name">Name</label>
+          <input id="cf-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="cf-field">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="cf-field">
+          <label for="cf-phone">Phone <span>(optional)</span></label>
+          <input id="cf-phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+        <div class="cf-field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="4" required></textarea>
+        </div>
+        <div class="cf-foot">
+          <p class="cf-status mono" role="status" aria-live="polite"></p>
+          <button class="btn-pill" type="submit" data-spec="Button">Send message <span class="btn-icon"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

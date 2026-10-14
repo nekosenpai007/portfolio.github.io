@@ -1,0 +1,30 @@
+/* ==========================================================
+   Work — one featured card plus a status note
+   ========================================================== */
+
+.sec--work .work-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 32px clamp(32px, 5vw, 80px);
+}
+
+.sec--work .work-card .wcard-media {
+  aspect-ratio: 16 / 10;
+}
+
+.sec--work .work-card .wcard-title {
+  font-size: clamp(24px, 2.4vw, 34px);
+}
+
+.sec--work .work-note {
+  display: grid;
+  gap: 18px;
+  padding-bottom: 8px;
+}
+
+@media (max-width: 900px) {
+  .sec--work .work-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -997,8 +997,9 @@ button {
   position: absolute;
   top: 0;
   left: 0;
-  width: 0;
+  width: 100%;
   height: 0;
+  overflow: hidden;   /* labels near the right edge must not widen the page */
   z-index: 80;
   pointer-events: none;
 }
@@ -1052,8 +1053,9 @@ button {
 
 .xray-hud {
   position: fixed;
-  left: var(--gutter);
+  left: 50%;
   bottom: 24px;
+  transform: translateX(-50%);
   z-index: 95;
   display: none;
   gap: 18px;
@@ -1149,6 +1151,235 @@ button {
 
 @keyframes scr-failsafe {
   to { visibility: visible; }
+}
+
+/* ---------- section header: title left, aside right ---------- */
+
+.sec-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 48px;
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+
+.sec-head-aside {
+  max-width: 34ch;
+  color: var(--muted);
+  text-align: right;
+}
+
+a.sec-head-aside {
+  color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .sec-head-aside {
+    text-align: left;
+  }
+}
+
+/* ---------- work cards (certifications, work, journal) ----------
+   <a class="wcard" href>
+     <span class="wcard-media" data-ripple data-cursor="View certificate"> <img> <span class="wcard-tags">…</span> </span>
+     <span class="wcard-body"> meta · title · desc · round arrow </span>
+   </a> */
+
+.wcard {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  color: var(--ink);
+}
+
+.wcard-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-media);
+  background: var(--paper-2);
+  isolation: isolate;
+}
+
+.wcard-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease), opacity 0.3s;
+}
+
+.wcard:hover .wcard-media img {
+  transform: scale(1.03);
+}
+
+/* while the ripple canvas shows, it replaces the image underneath */
+.wcard-media.is-rippling img {
+  opacity: 0;
+}
+
+.wcard-tags {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-box {
+  display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid rgba(244, 244, 246, 0.55);
+  border-radius: 3px;
+  background: rgba(9, 9, 11, 0.45);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f4f4f6;
+}
+
+.wcard-body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 16px;
+  align-items: start;
+}
+
+.wcard-meta {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.wcard-title {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.7vw, 26px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.wcard-desc {
+  grid-column: 1;
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+.wcard-go {
+  grid-column: 2;
+  grid-row: 2 / span 2;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  transition: transform 0.5s var(--ease);
+}
+
+.wcard-go .i-arrow {
+  transition: transform 0.45s var(--ease);
+}
+
+.wcard:hover .wcard-go .i-arrow {
+  transform: rotate(45deg);
+}
+
+.wcard--muted .wcard-go {
+  background: var(--paper-3);
+  color: var(--muted);
+}
+
+/* ---------- ripple + view cursor (assets/js/fx/ripple.js) ---------- */
+
+.ripple-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.ripple-canvas.is-on {
+  opacity: 1;
+}
+
+.view-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 150;
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.view-cursor .vc-label,
+.view-cursor .vc-icon {
+  display: grid;
+  place-items: center;
+  height: 34px;
+  background: var(--accent);
+  color: var(--on-accent);
+  transform: scale(0.4);
+  opacity: 0;
+  transition: transform 0.35s var(--ease), opacity 0.25s;
+}
+
+.view-cursor .vc-label {
+  padding: 0 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform-origin: left center;
+}
+
+.view-cursor .vc-icon {
+  width: 34px;
+  transition-delay: 0.04s;
+}
+
+.view-cursor .vc-icon svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* the label sits just below-right of the pointer */
+.view-cursor {
+  margin: 14px 0 0 14px;
+}
+
+.view-cursor.is-on .vc-label,
+.view-cursor.is-on .vc-icon {
+  transform: none;
+  opacity: 1;
+}
+
+.has-fx-cursor [data-cursor] {
+  cursor: none;
 }
 
 /* ---------- fluid cursor (assets/js/fx/fluid.js) ---------- */

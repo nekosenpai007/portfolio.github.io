@@ -208,7 +208,9 @@
   function drawSpecs() {
     if (!xrayLayer) return;
     xrayLayer.innerHTML = "";
+    xrayLayer.style.height = "0";
     if (Cipher.theme() !== "xray") return;
+    xrayLayer.style.height = document.documentElement.scrollHeight + "px";
 
     var html = "";
     var sx = window.scrollX;
