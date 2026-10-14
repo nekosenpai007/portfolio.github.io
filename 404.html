@@ -2,42 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07090c">
-  <title>404 | Cipher</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404. Nothing to see here | cipher.</title>
+  <meta name="theme-color" content="#f4f4f2">
+  <meta name="robots" content="noindex">
   <link rel="icon" href="/assets/images/eagle.png" type="image/png">
-
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("cipher-theme"); } catch (e) {}
+      if (t !== "xray" && t !== "paper") {
+        t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "xray" : "paper";
+      }
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/assets/css/main.css">
 </head>
-<body>
+<body class="page-404">
 
-<header class="site-header scrolled">
+<header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="logo" aria-label="Cipher — home">
-      <span class="logo-prompt">&gt;</span> cipher<span class="cursor" aria-hidden="true">_</span>
-    </a>
+    <a href="/" class="wordmark" aria-label="cipher. Home">cipher<span class="dot">.</span></a>
   </div>
 </header>
 
-<main class="page-404">
+<main>
   <div class="container">
-    <div class="window">
-      <div class="window-bar">
-        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="window-title">bash — 404</span>
-      </div>
-      <div class="window-body">
-<pre class="code"><code><span class="accent">cipher@portfolio</span>:<span class="accent-2">~</span>$ cd <span id="path">this-page</span>
-bash: cd: no such file or directory</code></pre>
-        <h1 class="big">404</h1>
-        <p class="muted">Looks like you're lost. The page you are looking for is not available.</p>
-        <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left" aria-hidden="true"></i> <span>cd ~</span></a>
-      </div>
+    <p class="mono code-line">GET <span id="path">/this-page</span> &rarr; <b>404 Not Found</b></p>
+    <h1 class="display-xl">Nothing to see<br>here<span class="dot">.</span></h1>
+    <p class="lead">I looked closely. This page doesn't exist, or it moved. The rest of the site is still where you left it.</p>
+    <div class="actions">
+      <a class="btn-pill" href="/">Back home <span class="btn-icon"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
     </div>
   </div>
 </main>
