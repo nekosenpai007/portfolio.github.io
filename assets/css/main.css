@@ -29,8 +29,8 @@
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-hand: "Caveat", "Segoe Print", cursive;
 
-  --gutter: clamp(20px, 5vw, 72px);
-  --maxw: 1440px;
+  --gutter: clamp(20px, 5.5vw, 120px);
+  --maxw: 1920px;
   --header-h: 72px;
   --radius-pill: 999px;
   --radius-field: 8px;
@@ -807,6 +807,75 @@ button {
   color: var(--ink);
   white-space: nowrap;
   opacity: 1;
+}
+
+/* ---------- page ruler (left edge, wide screens) ----------
+   Ticks every 8px, a labelled mark every 128px; labels count real page pixels
+   as you scroll (assets/js/main.js). */
+
+.ruler {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 85;
+  display: none;
+  width: 48px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ruler-ticks {
+  position: absolute;
+  inset: -128px 0 -128px 0;
+  background-image:
+    linear-gradient(to bottom, var(--faint) 0 1px, transparent 1px),
+    linear-gradient(to bottom, var(--faint) 0 1px, transparent 1px),
+    linear-gradient(to bottom, var(--muted) 0 1px, transparent 1px);
+  background-size: 6px 8px, 10px 64px, 16px 128px;
+  background-repeat: repeat-y;
+  opacity: 0.7;
+  transform: translate3d(0, var(--ruler-shift, 0px), 0);
+  will-change: transform;
+}
+
+.ruler-label {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  margin-top: -6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  will-change: transform;
+}
+
+.ruler-y {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  background: var(--paper);
+  padding: 6px 0;
+}
+
+.ruler-y b {
+  font-weight: 500;
+  color: var(--accent-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 1200px) {
+  .ruler {
+    display: block;
+  }
 }
 
 /* ---------- footer ---------- */

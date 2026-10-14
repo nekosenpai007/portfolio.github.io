@@ -359,6 +359,56 @@
   }, { passive: true });
   window.addEventListener("resize", onScroll);
 
+  /* ---------- page ruler (left edge) ---------- */
+
+  var ruler = document.querySelector(".ruler");
+  var rulerTicks = ruler && ruler.querySelector(".ruler-ticks");
+  var rulerBox = ruler && ruler.querySelector(".ruler-labels");
+  var rulerY = ruler && ruler.querySelector("[data-ruler-y]");
+  var rulerLabels = [];
+  var STEP = 128;
+
+  function buildRuler() {
+    if (!ruler) return;
+    var n = Math.ceil(window.innerHeight / STEP) + 2;
+    if (rulerLabels.length === n) return;
+    rulerBox.innerHTML = "";
+    rulerLabels = [];
+    for (var i = 0; i < n; i++) {
+      var el = document.createElement("span");
+      el.className = "ruler-label";
+      rulerBox.appendChild(el);
+      rulerLabels.push(el);
+    }
+  }
+
+  function updateRuler() {
+    if (!ruler || !ruler.offsetWidth) return; // hidden below 1200px
+    var y = Math.round(window.scrollY);
+    var shift = -(y % STEP);
+    rulerTicks.style.setProperty("--ruler-shift", shift + "px");
+    var base = y - (y % STEP);
+    for (var i = 0; i < rulerLabels.length; i++) {
+      var top = shift + i * STEP;
+      rulerLabels[i].style.transform = "translate3d(0," + top + "px,0)";
+      rulerLabels[i].textContent = base + i * STEP;
+    }
+    var txt = String(y);
+    while (txt.length < 4) txt = "0" + txt;
+    rulerY.textContent = txt;
+  }
+
+  var rulerTick = false;
+  window.addEventListener("scroll", function () {
+    if (!rulerTick) {
+      rulerTick = true;
+      requestAnimationFrame(function () { rulerTick = false; updateRuler(); });
+    }
+  }, { passive: true });
+  window.addEventListener("resize", function () { buildRuler(); updateRuler(); });
+  buildRuler();
+  updateRuler();
+
   /* ---------- boot ---------- */
 
   document.querySelectorAll("[data-year]").forEach(function (el) {
