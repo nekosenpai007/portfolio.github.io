@@ -1121,6 +1121,36 @@ button {
   opacity: 0;
 }
 
+/* ---------- scramble text (assets/js/fx/scramble.js) ---------- */
+
+.scr-w {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.scr-c {
+  display: inline-block;
+  text-align: center;
+}
+
+.scr-c.is-glyph {
+  color: var(--accent-ink);
+}
+
+.scr-c.is-hidden {
+  visibility: hidden;
+}
+
+/* headlines wait for their reveal; the failsafe shows them anyway after 4s */
+.scr-on [data-scramble]:not(.scr-done):not(.is-scrambling) {
+  visibility: hidden;
+  animation: scr-failsafe 0s linear 4s forwards;
+}
+
+@keyframes scr-failsafe {
+  to { visibility: visible; }
+}
+
 /* ---------- fluid cursor (assets/js/fx/fluid.js) ---------- */
 
 .fluid-canvas {

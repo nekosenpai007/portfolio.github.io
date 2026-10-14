@@ -86,7 +86,7 @@
   /* ---------- flag hunt ---------- */
 
   var FLAGS = [
-    { id: "look_closer", hint: "Some things only show under the lens." },
+    { id: "deep_scan", hint: "Hold the globe to run a deep scan." },
     { id: "xray", hint: "See how this page is built." },
     { id: "case_closed", hint: "Follow the investigation to the very end." },
     { id: "console", hint: "Developers know where to look." },

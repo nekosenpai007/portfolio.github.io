@@ -1,529 +1,427 @@
-/* hero — the lens, the pixel ruler, the typing line and flag 1.
-   The X-ray layer is a second copy of the hero layout; the lens reveals it
-   through clip-path: circle(var(--hero-lens-r) at var(--hero-lx) var(--hero-ly)). */
+/* Hero: a rotating network globe drawn on a 2D canvas.
+   Dots on a sphere (denser "land" clusters), hub nodes, data packets travelling
+   along arcs between hubs, a scan line sweeping the latitudes and two orbit rings.
+   The globe leans toward the pointer; pressing and holding it runs a deep scan
+   (flag: deep_scan). Static single frame with reduced motion. */
 (function () {
   "use strict";
 
-  var hero = document.getElementById("home");
-  if (!hero || !hero.classList.contains("sec--hero")) return;
-
-  var paper = hero.querySelector(".hero-paper");
-  var xray = hero.querySelector(".hero-xray");
-  var lens = hero.querySelector(".hero-lens");
-  var title = paper && paper.querySelector(".hero-title");
-  if (!paper || !xray || !lens || !title) return;
-
   var C = window.Cipher || {};
+  var hero = document.getElementById("home");
+  var canvas = hero && hero.querySelector(".hero-globe");
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext("2d");
   var reduced = !!C.reducedMotion;
-  var finePointer = C.finePointer !== undefined
-    ? !!C.finePointer
-    : window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  var readX = lens.querySelector("[data-lens-x]");
-  var readY = lens.querySelector("[data-lens-y]");
-  var handle = lens.querySelector(".hero-lens-handle");
-  var flagEl = xray.querySelector(".hx-flag");
-  var hint = hero.querySelector(".hero-hint");
+  /* ---------- live clock (India) ---------- */
 
-  var FLAG_ID = "look_closer";
-  var HINT_KEY = "cipher-lens-hint";
-
-  /* ---------- helpers ---------- */
-
-  function clamp(v, lo, hi) {
-    return v < lo ? lo : v > hi ? hi : v;
+  var clock = hero.querySelector("[data-hero-clock]");
+  var fmt = null;
+  try {
+    fmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+  } catch (e) {}
+  function tick() {
+    if (clock && fmt) clock.textContent = fmt.format(new Date());
   }
+  tick();
+  setInterval(tick, 1000);
 
-  /* Position of el inside the hero, ignoring transforms (entrance animations). */
-  function posIn(el) {
-    var x = 0;
-    var y = 0;
-    while (el && el !== hero) {
-      x += el.offsetLeft;
-      y += el.offsetTop;
-      el = el.offsetParent;
-    }
-    return { x: x, y: y };
+  /* ---------- colours from the theme ---------- */
+
+  var col = {};
+  function readColors() {
+    var cs = getComputedStyle(document.documentElement);
+    col.accent = cs.getPropertyValue("--accent").trim() || "#8b3dff";
+    col.accentInk = cs.getPropertyValue("--accent-ink").trim() || "#b794ff";
+    col.ink = cs.getPropertyValue("--ink").trim() || "#f4f4f6";
+    col.faint = cs.getPropertyValue("--faint").trim() || "#4b4b55";
+    col.dark = C.theme && C.theme() === "xray" ? false : true;
   }
-
-  function toHex(color) {
-    var m = String(color).match(/[\d.]+/g);
-    if (!m || m.length < 3) return color;
-    return "#" + m.slice(0, 3).map(function (n) {
-      var h = Math.round(+n).toString(16);
-      return h.length < 2 ? "0" + h : h;
-    }).join("");
-  }
-
-  function store(key, value) {
-    try {
-      if (value === undefined) return localStorage.getItem(key);
-      localStorage.setItem(key, value);
-    } catch (e) {
-      return null;
-    }
-    return null;
-  }
-
-  /* ---------- lens ring ticks ---------- */
-
-  var tickGroup = lens.querySelector(".hero-lens-ticks");
-  if (tickGroup && !tickGroup.firstChild) {
-    var ticks = "";
-    for (var i = 0; i < 72; i++) {
-      var a = (i * 5 * Math.PI) / 180;
-      var major = i % 18 === 0;
-      var mid = i % 6 === 0;
-      var r1 = 124;
-      var r2 = major ? 139 : mid ? 133 : 129;
-      var c = Math.cos(a);
-      var s = Math.sin(a);
-      ticks += '<line x1="' + (c * r1).toFixed(2) + '" y1="' + (s * r1).toFixed(2) +
-        '" x2="' + (c * r2).toFixed(2) + '" y2="' + (s * r2).toFixed(2) + '"' +
-        (major ? ' class="is-major"' : "") + "/>";
-    }
-    tickGroup.innerHTML = ticks;
-  }
+  readColors();
+  document.addEventListener("cipher:theme", function () {
+    readColors();
+    if (reduced) draw(0);
+  });
 
   /* ---------- geometry ---------- */
 
-  var geo = { w: 0, h: 0, restX: 0, restY: 0, rRest: 120, rPress: 210, fx: -1e4, fy: -1e4, fr: 0 };
-  var rulerH = 0;
-  var rulers = hero.querySelectorAll(".hero-ruler-labels");
+  var W = 0, H = 0, dpr = 1, cx = 0, cy = 0, R = 0;
+  var small = false;
 
-  function drawRulers(h) {
-    if (h === rulerH) return;
-    rulerH = h;
-    var html = "";
-    for (var v = 64; v <= h - 16; v += 64) {
-      html += '<span style="top:' + v + 'px">' + v + "</span>";
+  function size() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = hero.clientWidth;
+    H = hero.clientHeight;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    small = W <= 900;
+    if (small) {
+      cx = W * 0.5;
+      cy = H * 0.32;
+      R = Math.min(W * 0.4, H * 0.24);
+    } else {
+      cx = W * 0.72;
+      cy = H * 0.45;
+      R = Math.min(W * 0.24, H * 0.38);
     }
-    Array.prototype.forEach.call(rulers, function (el) { el.innerHTML = html; });
   }
 
-  function setText(sel, text) {
-    var el = xray.querySelector(sel);
-    if (el && el.textContent !== text) el.textContent = text;
+  // smooth pseudo-noise on the sphere, used to group dots into "continents"
+  function land(x, y, z) {
+    return Math.sin(3.1 * x + 1.7) * Math.sin(2.3 * y + 0.4) * Math.sin(2.9 * z + 2.1) +
+      0.5 * Math.sin(5.3 * x - 2.2 * z + 0.9) * Math.sin(4.1 * y + 1.3);
   }
 
-  /* Live specs inside the X-ray layer, e.g. "Heading 640×115" and "104/100 px · #121214". */
-  function updateSpecs() {
-    var tcs = getComputedStyle(title);
-    setText('[data-hx="title-size"]', title.offsetWidth + "×" + title.offsetHeight);
-    setText('[data-hx="title-type"]', Math.round(parseFloat(tcs.fontSize)) + "/" +
-      Math.round(parseFloat(tcs.lineHeight)) + " px · " + toHex(tcs.color));
-
-    var lead = paper.querySelector(".hero-lead");
-    if (lead) {
-      var lcs = getComputedStyle(lead);
-      setText('[data-hx="lead-size"]', lead.offsetWidth + "×" + lead.offsetHeight);
-      setText('[data-hx="lead-type"]', Math.round(parseFloat(lcs.fontSize)) + "/" +
-        Math.round(parseFloat(lcs.lineHeight)) + " px · Space Grotesk");
+  var points = [];
+  var hubs = [];
+  (function build() {
+    var n = window.innerWidth < 700 ? 650 : 1100;
+    var golden = Math.PI * (3 - Math.sqrt(5));
+    for (var i = 0; i < n; i++) {
+      var y = 1 - (i / (n - 1)) * 2;
+      var r = Math.sqrt(1 - y * y);
+      var th = golden * i;
+      var x = Math.cos(th) * r;
+      var z = Math.sin(th) * r;
+      var isLand = land(x, y, z) > 0.08;
+      points.push({ x: x, y: y, z: z, land: isLand });
     }
+    var landPts = points.filter(function (p) { return p.land; });
+    for (var h = 0; h < 22 && landPts.length; h++) {
+      hubs.push(landPts[(h * 97 + 13) % landPts.length]);
+    }
+  })();
 
-    var media = paper.querySelector(".hero-media");
-    if (media) setText('[data-hx="media-size"]', media.offsetWidth + "×" + media.offsetHeight);
+  /* ---------- state ---------- */
 
-    var btn = paper.querySelector(".hero-actions .btn-pill");
-    if (btn) setText('[data-hx="btn-size"]', btn.offsetWidth + "×" + btn.offsetHeight);
+  var yaw = 0.6, pitch = 0.32;
+  var targetYaw = 0, targetPitch = 0, offYaw = 0, offPitch = 0;
+  var scanning = false, scanStart = 0, scanBoost = 0;
+  var arcs = [], pings = [];
+  var scrollP = 0;
+
+  function rotate(p) {
+    var cosY = Math.cos(yaw + offYaw), sinY = Math.sin(yaw + offYaw);
+    var x = p.x * cosY - p.z * sinY;
+    var z = p.x * sinY + p.z * cosY;
+    var cosX = Math.cos(pitch + offPitch), sinX = Math.sin(pitch + offPitch);
+    var y = p.y * cosX - z * sinX;
+    z = p.y * sinX + z * cosX;
+    return { x: x, y: y, z: z };
   }
 
-  function measure() {
-    geo.w = hero.offsetWidth;
-    geo.h = hero.offsetHeight;
+  function project(v, radius) {
+    return { x: cx + v.x * radius, y: cy - v.y * radius, z: v.z };
+  }
 
-    var cs = getComputedStyle(hero);
-    geo.rRest = parseFloat(cs.getPropertyValue("--hero-r-rest")) || 120;
-    geo.rPress = parseFloat(cs.getPropertyValue("--hero-r-press")) || 210;
+  function slerp(a, b, t) {
+    var dot = Math.max(-1, Math.min(1, a.x * b.x + a.y * b.y + a.z * b.z));
+    var om = Math.acos(dot);
+    if (om < 1e-4) return { x: a.x, y: a.y, z: a.z };
+    var s = Math.sin(om);
+    var k1 = Math.sin((1 - t) * om) / s, k2 = Math.sin(t * om) / s;
+    return { x: a.x * k1 + b.x * k2, y: a.y * k1 + b.y * k2, z: a.z * k1 + b.z * k2 };
+  }
 
-    /* rest: over the start of the headline, showing its spec labels above */
-    var t = posIn(title);
-    geo.restX = t.x + geo.rRest * 0.6;
-    geo.restY = t.y + title.offsetHeight * 0.18;
+  function newArc(now) {
+    var a = hubs[(Math.random() * hubs.length) | 0];
+    var b = hubs[(Math.random() * hubs.length) | 0];
+    if (a === b) return;
+    arcs.push({ a: a, b: b, start: now, dur: 1500 + Math.random() * 1400 });
+  }
 
-    if (flagEl) {
-      var f = posIn(flagEl);
-      geo.fx = f.x + flagEl.offsetWidth / 2;
-      geo.fy = f.y + flagEl.offsetHeight / 2;
-      geo.fr = Math.max(flagEl.offsetWidth, flagEl.offsetHeight) / 2;
-    }
+  /* ---------- drawing ---------- */
 
-    drawRulers(geo.h);
-    updateSpecs();
+  function alphaHex(a) {
+    return Math.max(0, Math.min(1, a));
+  }
 
-    if (st.mode === "rest") {
-      st.tx = geo.restX;
-      st.ty = geo.restY;
-      if (!started) {
-        st.x = st.tx;
-        st.y = st.ty;
-        apply();
+  function draw(now) {
+    ctx.clearRect(0, 0, W, H);
+    var radius = R * (1 + scrollP * 0.55);
+    var fade = 1 - scrollP * 0.9;
+    if (fade <= 0.01) return;
+    ctx.globalAlpha = 1;
+
+    // atmosphere
+    var g = ctx.createRadialGradient(cx, cy, radius * 0.6, cx, cy, radius * 1.45);
+    g.addColorStop(0, "rgba(139, 61, 255, " + (0.14 * fade) + ")");
+    g.addColorStop(1, "rgba(139, 61, 255, 0)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius * 1.45, 0, Math.PI * 2);
+    ctx.fill();
+
+    // rim
+    ctx.globalAlpha = 0.35 * fade;
+    ctx.strokeStyle = col.accent;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // orbit rings (behind and in front handled by alpha only; they're faint)
+    drawOrbit(now, radius, 1.28, 0.95, 0.2, fade);
+    drawOrbit(now, radius, 1.46, -0.55, 0.65, fade);
+
+    // scan line latitude (sweeps top → bottom)
+    var period = 6000 / (1 + scanBoost * 5);
+    var scanY = 1 - ((now % period) / period) * 2;
+
+    // dots
+    for (var i = 0; i < points.length; i++) {
+      var p = points[i];
+      var v = rotate(p);
+      var s = project(v, radius);
+      var front = v.z > 0;
+      var depth = (v.z + 1) / 2; // 0 back … 1 front
+      var near = Math.abs(p.y - scanY) < 0.035;
+      var a, size;
+      if (p.land) {
+        a = front ? 0.5 + depth * 0.5 : 0.1 + depth * 0.14;
+        size = front ? 1.4 + depth * 1.1 : 0.9;
       } else {
-        kick();
+        a = front ? 0.16 + depth * 0.22 : 0.05;
+        size = front ? 1 : 0.8;
       }
-    } else if (st.mode === "placed") {
-      st.tx = clamp(st.tx, 0, geo.w);
-      st.ty = clamp(st.ty, 0, geo.h);
-      kick();
-    }
-  }
-
-  /* ---------- state + render loop ---------- */
-
-  var st = {
-    x: 0, y: 0, tx: 0, ty: 0,
-    mode: "rest",          // rest | follow | drag | placed
-    pressed: false,
-    cx: 0, cy: 0,          // last client position of the mouse
-    gx: 0, gy: 0,          // grab offset while dragging
-    dragId: null,
-    cover: 0,
-    captured: !!(C.flags && C.flags.has && C.flags.has(FLAG_ID))
-  };
-  var started = false;
-  var visible = true;
-  var raf = 0;
-  var lastT = 0;
-  var shownX = null;
-  var shownY = null;
-
-  if (st.captured && flagEl) flagEl.classList.add("is-captured");
-
-  function apply() {
-    var xs = st.x.toFixed(1) + "px";
-    var ys = st.y.toFixed(1) + "px";
-    xray.style.setProperty("--hero-lx", xs);
-    xray.style.setProperty("--hero-ly", ys);
-    lens.style.setProperty("--hero-lx", xs);
-    lens.style.setProperty("--hero-ly", ys);
-    var rx = Math.round(st.x);
-    var ry = Math.round(st.y);
-    if (readX && rx !== shownX) { readX.textContent = rx; shownX = rx; }
-    if (readY && ry !== shownY) { readY.textContent = ry; shownY = ry; }
-  }
-
-  function tau() {
-    if (st.mode === "drag") return 45;
-    if (st.mode === "follow") return 110;
-    return 170;
-  }
-
-  function frame(t) {
-    raf = 0;
-    var dt = lastT ? Math.min(64, t - lastT) : 16;
-    lastT = t;
-    var k = 1 - Math.exp(-dt / tau());
-    st.x += (st.tx - st.x) * k;
-    st.y += (st.ty - st.y) * k;
-    var settled = Math.abs(st.tx - st.x) < 0.15 && Math.abs(st.ty - st.y) < 0.15;
-    if (settled) {
-      st.x = st.tx;
-      st.y = st.ty;
-    }
-    apply();
-    var watching = checkFlag(dt);
-    if (!settled || watching) schedule();
-    else lastT = 0;
-  }
-
-  function schedule() {
-    if (!raf && visible) raf = requestAnimationFrame(frame);
-  }
-
-  var reducedFlagTimer = 0;
-
-  function kick() {
-    if (reduced) {
-      st.x = st.tx;
-      st.y = st.ty;
-      apply();
-      clearTimeout(reducedFlagTimer);
-      if (covering()) {
-        reducedFlagTimer = setTimeout(function () {
-          if (covering()) capture();
-        }, 600);
+      ctx.globalAlpha = alphaHex(a * fade);
+      ctx.fillStyle = near && front ? col.accentInk : col.ink;
+      if (near && front) {
+        ctx.globalAlpha = alphaHex(0.95 * fade);
+        size += 0.8;
       }
-      return;
+      ctx.fillRect(s.x - size / 2, s.y - size / 2, size, size);
     }
-    schedule();
-  }
 
-  /* ---------- flag 1: hold the lens over it for ~600 ms ---------- */
+    // hubs
+    for (var h = 0; h < hubs.length; h++) {
+      var hv = rotate(hubs[h]);
+      if (hv.z < 0) continue;
+      var hs = project(hv, radius);
+      ctx.globalAlpha = alphaHex((0.4 + hv.z * 0.6) * fade);
+      ctx.strokeStyle = col.accentInk;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(hs.x, hs.y, 3.2, 0, Math.PI * 2);
+      ctx.stroke();
+    }
 
-  function covering() {
-    if (st.captured || !flagEl || !hero.classList.contains("is-lens-on")) return false;
-    var r = st.pressed ? geo.rPress : geo.rRest;
-    var dx = geo.fx - st.x;
-    var dy = geo.fy - st.y;
-    var room = Math.max(18, r - geo.fr * 0.75);
-    return dx * dx + dy * dy < room * room;
-  }
-
-  function checkFlag(dt) {
-    if (st.captured) return false;
-    if (covering()) {
-      st.cover += dt;
-      if (st.cover >= 600) {
-        capture();
-        return false;
+    // arcs with packets
+    for (var k = arcs.length - 1; k >= 0; k--) {
+      var arc = arcs[k];
+      var t = (now - arc.start) / arc.dur;
+      if (t >= 1.25) {
+        pings.push({ p: arc.b, start: now });
+        arcs.splice(k, 1);
+        continue;
       }
-      return true;
+      var head = Math.min(1, t);
+      var tail = Math.max(0, t - 0.45);
+      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = col.accent;
+      var prev = null;
+      var STEPS = 28;
+      for (var j = 0; j <= STEPS; j++) {
+        var u = tail + (head - tail) * (j / STEPS);
+        var q = slerp(arc.a, arc.b, u);
+        var lift = 1 + 0.22 * Math.sin(Math.PI * u);
+        var rv = rotate({ x: q.x * lift, y: q.y * lift, z: q.z * lift });
+        var rs = project(rv, radius);
+        if (prev) {
+          var fadeTail = j / STEPS;
+          ctx.globalAlpha = alphaHex((rv.z > -0.15 ? 0.9 : 0.15) * fadeTail * fade * (t > 1 ? 1 - (t - 1) * 4 : 1));
+          ctx.beginPath();
+          ctx.moveTo(prev.x, prev.y);
+          ctx.lineTo(rs.x, rs.y);
+          ctx.stroke();
+        }
+        prev = rs;
+      }
+      if (t <= 1 && prev) {
+        ctx.globalAlpha = fade;
+        ctx.fillStyle = col.ink;
+        ctx.beginPath();
+        ctx.arc(prev.x, prev.y, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
-    st.cover = 0;
-    return false;
+
+    // pings where packets land
+    for (var m = pings.length - 1; m >= 0; m--) {
+      var pg = pings[m];
+      var age = (now - pg.start) / 900;
+      if (age >= 1) { pings.splice(m, 1); continue; }
+      var pv = rotate(pg.p);
+      if (pv.z < 0) continue;
+      var ps = project(pv, radius);
+      ctx.globalAlpha = alphaHex((1 - age) * fade);
+      ctx.strokeStyle = col.accentInk;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(ps.x, ps.y, 3 + age * 16, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // deep scan: a ring tightening around the globe while held
+    if (scanning) {
+      var held = Math.min(1, (now - scanStart) / 1500);
+      ctx.globalAlpha = fade;
+      ctx.strokeStyle = col.accent;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius * 1.12, -Math.PI / 2, -Math.PI / 2 + held * Math.PI * 2);
+      ctx.stroke();
+      ctx.font = "500 12px " + getComputedStyle(document.body).getPropertyValue("--font-mono");
+      ctx.fillStyle = col.accentInk;
+      ctx.textAlign = "center";
+      ctx.fillText("deep scan " + Math.round(held * 100) + "%", cx, cy + radius * 1.12 + 22);
+    }
+    ctx.globalAlpha = 1;
   }
 
-  function capture() {
-    if (st.captured) return;
-    st.captured = true;
-    if (flagEl) flagEl.classList.add("is-captured");
-    if (C.flags && C.flags.capture) C.flags.capture(FLAG_ID);
+  function drawOrbit(now, radius, scale, tiltX, tiltZ, fade) {
+    var segs = 72;
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = col.faint;
+    var cosT = Math.cos(tiltX), sinT = Math.sin(tiltX), cosZ = Math.cos(tiltZ), sinZ = Math.sin(tiltZ);
+    function orbitPoint(a) {
+      var x = Math.cos(a) * scale, y = 0, z = Math.sin(a) * scale;
+      var y2 = y * cosT - z * sinT, z2 = y * sinT + z * cosT;
+      var x3 = x * cosZ - y2 * sinZ, y3 = x * sinZ + y2 * cosZ;
+      return rotate({ x: x3, y: y3, z: z2 });
+    }
+    var prev = null;
+    for (var i = 0; i <= segs; i++) {
+      var v = orbitPoint((i / segs) * Math.PI * 2);
+      var s = project(v, radius);
+      if (prev && i % 2 === 0) {
+        ctx.globalAlpha = alphaHex((v.z > 0 ? 0.55 : 0.18) * fade);
+        ctx.beginPath();
+        ctx.moveTo(prev.x, prev.y);
+        ctx.lineTo(s.x, s.y);
+        ctx.stroke();
+      }
+      prev = s;
+    }
+    // satellite
+    var sv = orbitPoint((now / 1000) * (0.5 / scale));
+    var ss = project(sv, radius);
+    ctx.globalAlpha = alphaHex((sv.z > 0 ? 1 : 0.3) * fade);
+    ctx.fillStyle = col.accent;
+    ctx.beginPath();
+    ctx.arc(ss.x, ss.y, 2.6, 0, Math.PI * 2);
+    ctx.fill();
   }
 
-  /* ---------- pressing grows the lens ---------- */
+  /* ---------- loop ---------- */
 
-  function setPressed(on) {
-    if (st.pressed === on) return;
-    st.pressed = on;
-    hero.classList.toggle("is-pressed", on);
-    kick();
+  var raf = 0, running = false, last = 0, nextArc = 0;
+
+  function frame(now) {
+    var dt = Math.min(0.05, (now - (last || now)) / 1000);
+    last = now;
+    scanBoost += ((scanning ? 1 : 0) - scanBoost) * 0.06;
+    yaw += dt * (0.12 + scanBoost * 1.6);
+    offYaw += (targetYaw - offYaw) * 0.05;
+    offPitch += (targetPitch - offPitch) * 0.05;
+
+    if (now > nextArc && arcs.length < (small ? 5 : 8)) {
+      newArc(now);
+      nextArc = now + 260 + Math.random() * 420 - scanBoost * 200;
+    }
+
+    if (scanning && now - scanStart > 1500 && !scanning.done) {
+      scanning = { done: true };
+      if (C.flags) C.flags.capture("deep_scan");
+      for (var i = 0; i < 6; i++) newArc(now);
+    }
+
+    draw(now);
+    raf = requestAnimationFrame(frame);
   }
 
-  function toHero(clientX, clientY) {
-    var r = hero.getBoundingClientRect();
-    return { x: clientX - r.left, y: clientY - r.top };
+  function startLoop() {
+    if (running || reduced) return;
+    running = true;
+    last = 0;
+    raf = requestAnimationFrame(frame);
   }
 
-  /* Mouse / pen: the lens follows the pointer inside the hero. */
+  function stopLoop() {
+    running = false;
+    cancelAnimationFrame(raf);
+  }
+
+  /* ---------- input ---------- */
+
   hero.addEventListener("pointermove", function (e) {
-    if (e.pointerType === "touch" || st.mode === "drag") return;
-    st.cx = e.clientX;
-    st.cy = e.clientY;
-    if (reduced) return;
-    var p = toHero(e.clientX, e.clientY);
-    st.mode = "follow";
-    st.tx = p.x;
-    st.ty = p.y;
-    kick();
+    if (e.pointerType === "touch") return;
+    var r = hero.getBoundingClientRect();
+    targetYaw = ((e.clientX - r.left) / r.width - 0.5) * 0.6;
+    targetPitch = ((e.clientY - r.top) / r.height - 0.5) * 0.35;
   }, { passive: true });
 
-  hero.addEventListener("pointerleave", function (e) {
-    if (e.pointerType === "touch" || st.mode === "drag") return;
-    setPressed(false);
-    if (st.mode === "follow" || (reduced && st.mode === "placed")) {
-      st.mode = "rest";
-      st.tx = geo.restX;
-      st.ty = geo.restY;
-      kick();
-    }
+  hero.addEventListener("pointerleave", function () {
+    targetYaw = 0;
+    targetPitch = 0;
   });
 
-  hero.addEventListener("pointerdown", function (e) {
-    if (e.pointerType === "touch" || e.button !== 0) return;
-    if (e.target.closest("a, button, input, textarea, select, label")) return;
-    if (reduced) {
-      /* no motion: the lens jumps to where you press */
-      var p = toHero(e.clientX, e.clientY);
-      st.mode = "placed";
-      st.tx = p.x;
-      st.ty = p.y;
-    }
-    setPressed(true);
-    dismissHint(true);
+  function onGlobe(e) {
+    var r = canvas.getBoundingClientRect();
+    var dx = e.clientX - r.left - cx, dy = e.clientY - r.top - cy;
+    return Math.sqrt(dx * dx + dy * dy) < R * 1.15;
+  }
+
+  canvas.addEventListener("pointerdown", function (e) {
+    if (reduced || e.button !== 0 || !onGlobe(e)) return;
+    scanning = true;
+    scanStart = performance.now();
+    canvas.classList.add("is-scanning");
   });
 
-  window.addEventListener("pointerup", function (e) {
-    if (e.pointerType !== "touch" && st.mode !== "drag") setPressed(false);
+  function endScan() {
+    scanning = false;
+    canvas.classList.remove("is-scanning");
+  }
+  window.addEventListener("pointerup", endScan);
+  canvas.addEventListener("pointercancel", endScan);
+
+  // keep scroll position in sync for the zoom-out as the hero leaves
+  function onScroll() {
+    var r = hero.getBoundingClientRect();
+    scrollP = Math.min(1, Math.max(0, -r.top / r.height));
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  /* ---------- boot ---------- */
+
+  size();
+  onScroll();
+  window.addEventListener("resize", function () {
+    size();
+    if (reduced) draw(0);
   });
-
-  window.addEventListener("blur", function () {
-    if (st.mode !== "drag") setPressed(false);
-  });
-
-  hero.addEventListener("selectstart", function (e) {
-    if (st.pressed) e.preventDefault();
-  });
-
-  /* Touch: drag the lens by its handle; the page scrolls everywhere else. */
-  if (handle) {
-    handle.addEventListener("pointerdown", function (e) {
-      if (e.pointerType === "mouse") return;
-      e.preventDefault();
-      try { handle.setPointerCapture(e.pointerId); } catch (err) {}
-      var p = toHero(e.clientX, e.clientY);
-      st.gx = p.x - st.x;
-      st.gy = p.y - st.y;
-      st.dragId = e.pointerId;
-      st.mode = "drag";
-      setPressed(true);
-      dismissHint(true);
-    });
-
-    handle.addEventListener("pointermove", function (e) {
-      if (st.mode !== "drag" || e.pointerId !== st.dragId) return;
-      var p = toHero(e.clientX, e.clientY);
-      st.tx = clamp(p.x - st.gx, 0, geo.w);
-      st.ty = clamp(p.y - st.gy, 0, geo.h);
-      kick();
-    });
-
-    var endDrag = function (e) {
-      if (st.mode !== "drag" || (e && e.pointerId !== st.dragId)) return;
-      st.mode = "placed";
-      st.dragId = null;
-      setPressed(false);
-    };
-    handle.addEventListener("pointerup", endDrag);
-    handle.addEventListener("pointercancel", endDrag);
-    handle.addEventListener("lostpointercapture", endDrag);
-  }
-
-  /* Scrolling moves the page under a resting mouse: keep the lens on the pointer. */
-  var scrollQueued = false;
-  window.addEventListener("scroll", function () {
-    if (st.mode !== "follow" || scrollQueued) return;
-    scrollQueued = true;
-    requestAnimationFrame(function () {
-      scrollQueued = false;
-      if (st.mode !== "follow") return;
-      var p = toHero(st.cx, st.cy);
-      st.tx = p.x;
-      st.ty = p.y;
-      kick();
-    });
-  }, { passive: true });
-
-  /* ---------- one-time hint ---------- */
-
-  var hintDone = store(HINT_KEY) === "1";
-  var hintPending = false;
-  var hintTimer = 0;
-  var hintHide = 0;
-
-  function showHint() {
-    if (hintDone || !hint) return;
-    if (!visible) {
-      hintPending = true;
-      return;
-    }
-    hintPending = false;
-    hint.classList.add("is-on");
-    store(HINT_KEY, "1");
-    hintHide = setTimeout(function () { dismissHint(false); }, 8000);
-  }
-
-  function dismissHint(interacted) {
-    if (interacted) store(HINT_KEY, "1");
-    hintDone = true;
-    hintPending = false;
-    clearTimeout(hintTimer);
-    clearTimeout(hintHide);
-    if (hint) hint.classList.remove("is-on");
-  }
-
-  if (hint && !hintDone) {
-    if (!finePointer) {
-      var hintText = hint.querySelector("[data-hint-text]");
-      if (hintText) hintText.textContent = "Drag the lens to look closer.";
-    }
-    hintTimer = setTimeout(showHint, 3000);
-  }
-
-  /* ---------- typing line ---------- */
-
-  var WORDS = ["Cyber Security", "Web Designing", "Web Development", "Information Technology"];
-  var typeLine = paper.querySelector(".hero-type");
-  var typeWord = paper.querySelector(".hero-type-word");
-  var tw = { i: 0, n: WORDS[0].length, dir: 0, timer: 0 };
-
-  function typeLater(ms) {
-    clearTimeout(tw.timer);
-    tw.timer = setTimeout(typeStep, ms);
-  }
-
-  function typeStep() {
-    tw.timer = 0;
-    if (!visible || document.hidden) return;
-    var word = WORDS[tw.i];
-    if (tw.dir === 0) {
-      tw.dir = -1;
-      typeLine.classList.add("is-typing");
-      return typeLater(30);
-    }
-    if (tw.dir === -1) {
-      tw.n -= 1;
-      if (tw.n <= 0) {
-        tw.n = 0;
-        tw.i = (tw.i + 1) % WORDS.length;
-        tw.dir = 1;
-        typeWord.textContent = "";
-        return typeLater(280);
-      }
-      typeWord.textContent = word.slice(0, tw.n);
-      return typeLater(26);
-    }
-    tw.n += 1;
-    typeWord.textContent = word.slice(0, tw.n);
-    if (tw.n >= word.length) {
-      tw.dir = 0;
-      typeLine.classList.remove("is-typing");
-      return typeLater(2400);
-    }
-    return typeLater(55 + Math.random() * 45);
-  }
-
-  function resumeTyping() {
-    if (reduced || !typeWord || !typeLine) return;
-    if (!tw.timer && visible && !document.hidden) typeLater(tw.dir === 0 ? 1600 : 200);
-  }
-
-  if (typeWord && typeLine && !reduced) {
-    typeWord.textContent = WORDS[0];
-    typeLater(3200);
-    document.addEventListener("visibilitychange", resumeTyping);
-  }
-
-  /* ---------- visibility, resize, theme ---------- */
 
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(function (entries) {
-      visible = entries[0].isIntersecting;
-      if (visible) {
-        kick();
-        resumeTyping();
-        if (hintPending) showHint();
-      } else if (raf) {
-        cancelAnimationFrame(raf);
-        raf = 0;
-        lastT = 0;
-      }
+      if (entries[0].isIntersecting && !document.hidden) startLoop();
+      else stopLoop();
     }).observe(hero);
+  } else {
+    startLoop();
   }
 
-  var measureQueued = false;
-  function queueMeasure() {
-    if (measureQueued) return;
-    measureQueued = true;
-    requestAnimationFrame(function () {
-      measureQueued = false;
-      measure();
-    });
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) stopLoop();
+    else if (hero.getBoundingClientRect().bottom > 0) startLoop();
+  });
+
+  function reveal() {
+    canvas.classList.add("is-on");
   }
+  if (C.afterLoad) C.afterLoad(reveal);
+  else reveal();
 
-  if ("ResizeObserver" in window) new ResizeObserver(queueMeasure).observe(hero);
-  window.addEventListener("resize", queueMeasure);
-  window.addEventListener("load", queueMeasure);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(queueMeasure);
-  document.addEventListener("cipher:theme", function () { updateSpecs(); });
-
-  /* ---------- start ---------- */
-
-  measure();
-  started = true;
-
-  /* Open the lens once the headline has landed. */
-  setTimeout(function () {
-    hero.classList.add("is-lens-on");
-    setTimeout(function () { hero.classList.add("is-lens-ready"); }, reduced ? 0 : 1000);
-  }, reduced ? 0 : 950);
+  if (reduced) draw(4200);
 })();
