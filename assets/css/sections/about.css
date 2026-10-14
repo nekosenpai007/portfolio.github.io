@@ -25,8 +25,8 @@
 }
 
 .sec--about .ab-statement {
-  max-width: 24ch;
-  font-size: clamp(34px, 4.45vw, 64px);
+  max-width: 28ch;
+  font-size: clamp(34px, 4.2vw, 76px);
   line-height: 1.02;
   letter-spacing: -0.035em;
   text-wrap: balance;
