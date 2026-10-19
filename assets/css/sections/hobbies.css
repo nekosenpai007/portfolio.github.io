@@ -1,75 +1,125 @@
 /* ==========================================================
-   Off the clock — four typographic columns
+   Off the clock — four huge rows; hover one, the rest dim
+   (typography after cta-gules, numbering after ario.law)
    ========================================================== */
 
-.sec--hobbies {
-  padding-block: clamp(80px, 9vw, 128px);
-}
-
-.sec--hobbies .hobby-list {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1px solid var(--line);
-}
-
-.sec--hobbies .hobby {
+.sec--hobbies .hb-wrap {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-height: 180px;
-  padding: 24px 24px 24px 0;
+  gap: clamp(32px, 5vh, 64px);
 }
 
-.sec--hobbies .hobby + .hobby {
-  padding-left: 24px;
-  border-left: 1px solid var(--line);
+.sec--hobbies .hb-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 32px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
-.sec--hobbies .hobby-tag {
+.sec--hobbies .hb-label {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+.sec--hobbies .hb-list {
+  border-top: 1px solid var(--line-strong);
+}
+
+.sec--hobbies .hb-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px 32px;
+  padding: clamp(10px, 1.6vh, 20px) 0;
+  border-bottom: 1px solid var(--line-strong);
+  transition: opacity 0.4s var(--ease);
+}
+
+/* violet wipe behind the hovered row */
+.sec--hobbies .hb-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent-soft);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform 0.5s var(--ease);
+}
+
+.sec--hobbies .hb-n {
   color: var(--accent-ink);
 }
 
-.sec--hobbies .hobby-name {
+.sec--hobbies .hb-name {
   font-family: var(--font-display);
-  font-size: clamp(26px, 2.6vw, 38px);
+  font-size: clamp(48px, 8.4vw, 156px);
   font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  transition: transform 0.6s var(--ease), color 0.4s;
 }
 
-.sec--hobbies .link-arrow {
-  margin-top: auto;
-  align-self: flex-start;
+.sec--hobbies .hb-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-@media (max-width: 900px) {
-  .sec--hobbies .hobby-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+.sec--hobbies .hb-badge {
+  padding: 4px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  color: var(--ink-2);
+}
+
+.sec--hobbies .hb-meta .link-arrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+@media (hover: hover) {
+  .sec--hobbies .hb-list:hover .hb-row {
+    opacity: 0.3;
   }
 
-  .sec--hobbies .hobby:nth-child(3) {
-    padding-left: 0;
-    border-left: 0;
+  .sec--hobbies .hb-list .hb-row:hover {
+    opacity: 1;
   }
 
-  .sec--hobbies .hobby:nth-child(n + 3) {
-    border-top: 1px solid var(--line);
+  .sec--hobbies .hb-row:hover::before {
+    transform: none;
+  }
+
+  .sec--hobbies .hb-row:hover .hb-name {
+    transform: translateX(24px);
+    color: var(--accent-ink);
   }
 }
 
-@media (max-width: 480px) {
-  .sec--hobbies .hobby-list {
-    grid-template-columns: 1fr;
+@media (max-width: 640px) {
+  .sec--hobbies .hb-row {
+    grid-template-columns: 36px minmax(0, 1fr);
   }
 
-  .sec--hobbies .hobby,
-  .sec--hobbies .hobby + .hobby {
-    min-height: 0;
-    padding: 20px 0;
-    border-left: 0;
-  }
-
-  .sec--hobbies .hobby + .hobby {
-    border-top: 1px solid var(--line);
+  .sec--hobbies .hb-meta {
+    grid-column: 2;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
   }
 }
