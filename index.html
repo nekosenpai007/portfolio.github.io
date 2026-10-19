@@ -57,23 +57,64 @@
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<!-- ============ HEADER ============ -->
+<!-- ============ HEADER: fixed floating bar (after axiom-power-template) ============ -->
 <header class="site-header" id="site-header">
-  <div class="container header-inner">
-    <a href="#home" class="wordmark" aria-label="cipher. Back to top" data-spec="Wordmark" data-spec-note="cipher. from ciphertext: noise, until you hold the key.">cipher<span class="dot">.</span></a>
+  <div class="nav-bar">
+    <a href="#home" class="nav-brand" aria-label="cipher. Back to top" data-spec="Wordmark" data-spec-note="cipher. from ciphertext: noise, until you hold the key.">
+      <span class="nav-logo" aria-hidden="true"><svg viewBox="0 0 200 200"><path d="M150 52 A 70 70 0 1 0 150 148" fill="none" stroke="currentColor" stroke-width="40"/><rect x="146" y="124" width="30" height="30" fill="currentColor"/></svg></span>
+      <span class="wordmark">cipher<span class="dot">.</span></span>
+    </a>
 
-    <div class="header-actions">
+    <nav class="nav-links" aria-label="Main">
+      <a href="#about"><span class="roll" aria-hidden="true"><span>About</span><span>About</span></span><span class="sr-only">About</span></a>
+      <a href="#skills"><span class="roll" aria-hidden="true"><span>Toolbox</span><span>Toolbox</span></span><span class="sr-only">Toolbox</span></a>
+      <a href="#path"><span class="roll" aria-hidden="true"><span>Path</span><span>Path</span></span><span class="sr-only">Path</span></a>
+      <a href="#work"><span class="roll" aria-hidden="true"><span>Work</span><span>Work</span></span><span class="sr-only">Work</span></a>
+      <a href="#journal"><span class="roll" aria-hidden="true"><span>Journal</span><span>Journal</span></span><span class="sr-only">Journal</span></a>
+      <button class="nav-more" type="button" aria-expanded="false" aria-controls="nav-panel"><span class="roll" aria-hidden="true"><span>More</span><span>More</span></span><span class="sr-only">More</span><svg class="nav-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></button>
+    </nav>
+
+    <div class="nav-actions">
       <button class="xray-toggle" type="button" aria-pressed="false" data-scramble-hover data-spec="Toggle" data-spec-note="X-ray shows how this page is built.">
         <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
         <span data-scramble-text>X-ray</span>
       </button>
-      <a class="header-link" href="#contact" data-scramble-hover>Get in touch</a>
+      <a class="nav-cta" href="#contact">Get in touch <span class="nav-cta-ico"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
       <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
         <span></span><span></span>
       </button>
     </div>
   </div>
+
+  <!-- "More" mega panel -->
+  <div class="nav-panel" id="nav-panel" hidden>
+    <div class="nav-panel-col">
+      <p class="nav-panel-h"><span aria-hidden="true"></span>Pages</p>
+      <ul class="nav-pages">
+        <li><a href="#cert"><b>Certifications</b><span>Nine certificates, each one linked.</span></a></li>
+        <li><a href="#hobbies"><b>Off the clock</b><span>Anime, gaming, badminton and circuits.</span></a></li>
+        <li><a href="#contact"><b>Contact</b><span>Write to me. I read everything.</span></a></li>
+        <li><a href="assets/files/resume.pdf" target="_blank" rel="noopener"><b>Résumé</b><span>The one-page version, as a PDF.</span></a></li>
+      </ul>
+    </div>
+    <div class="nav-panel-col">
+      <p class="nav-panel-h"><span aria-hidden="true"></span>From the journal</p>
+      <div class="nav-cards">
+        <a class="nav-card" href="https://nekos-organization.gitbook.io/cyber" target="_blank" rel="noopener">
+          <img src="assets/images/covers/journal-cyber-security.svg" alt="" width="1200" height="900" loading="lazy">
+          <span class="nav-card-t">Introduction to cyber security</span>
+          <span class="nav-card-m mono">Read more <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span>
+        </a>
+        <a class="nav-card" href="https://nekos-organization.gitbook.io/cyber/digital-forensics" target="_blank" rel="noopener">
+          <img src="assets/images/covers/journal-digital-forensics.svg" alt="" width="1200" height="900" loading="lazy">
+          <span class="nav-card-t">Digital forensics</span>
+          <span class="nav-card-m mono">Coming soon <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </div>
 </header>
+<div class="nav-scrim" aria-hidden="true"></div>
 
 <!-- ============ MENU OVERLAY ============ -->
 <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
@@ -389,157 +430,227 @@
 </section>
 
 <section class="sec sec--path" id="path" data-chapter="Path" aria-labelledby="path-title">
-  <div class="container">
-    <header class="sec-head">
-      <h2 class="display-l" id="path-title" data-scramble data-spec="Heading" data-spec-note="Newest first, like a log.">The path<span class="dot">.</span></h2>
-      <p class="sec-head-aside mono">&ldquo;The roots of education are bitter, but the fruit is sweet.&rdquo; &mdash; Aristotle</p>
-    </header>
+  <div class="path-pin">
+    <div class="path-bgs" aria-hidden="true">
+      <img class="path-bg is-on" src="assets/images/educat/school2.jpg" alt="" width="960" height="720" loading="lazy">
+      <img class="path-bg" src="assets/images/educat/college2.jpg" alt="" width="960" height="720" loading="lazy">
+      <img class="path-bg" src="assets/images/educat/mtech.jpg" alt="" width="971" height="670" loading="lazy">
+      <svg class="path-lines" viewBox="0 0 1200 800" preserveAspectRatio="none">
+        <path d="M0 130 C 200 128, 260 120, 330 126 S 420 90, 470 128 S 620 132, 1200 120"/>
+        <path d="M0 260 C 180 258, 300 262, 380 256 S 450 214, 500 258 S 700 262, 1200 252"/>
+        <path d="M0 390 C 220 392, 320 386, 400 390 S 470 352, 520 392 S 760 388, 1200 384"/>
+        <path d="M0 520 C 160 518, 300 522, 420 518 S 490 486, 540 522 S 820 520, 1200 514"/>
+        <path d="M0 650 C 240 652, 360 646, 440 650 S 510 612, 560 652 S 880 648, 1200 644"/>
+      </svg>
+      <span class="path-grain"></span>
+    </div>
 
-    <ol class="path-list" data-spec="List" data-spec-note="Hover a row to see the campus.">
-      <li class="path-row reveal" data-photo="assets/images/educat/mtech.jpg" data-caption="NIELIT · campus">
-        <span class="path-year mono">2027 <span class="chip path-live">in progress</span></span>
-        <span class="path-main">
-          <span class="path-inst"><img class="path-logo" src="assets/images/educat/nielit.png" alt="" width="40" height="40" loading="lazy">NIELIT</span>
-          <span class="path-degree">M.Tech &middot; Cyber Forensics &amp; Information Security</span>
-        </span>
-        <span class="path-handle mono">@majdur_khana</span>
-        <img class="path-thumb" src="assets/images/educat/mtech.jpg" alt="NIELIT campus" width="971" height="670" loading="lazy">
-      </li>
-      <li class="path-row reveal" data-photo="assets/images/educat/college2.jpg" data-caption="Government Engineering College · campus">
-        <span class="path-year mono">2023</span>
-        <span class="path-main">
-          <span class="path-inst"><img class="path-logo" src="assets/images/educat/college.png" alt="" width="40" height="40" loading="lazy">Government Engineering College</span>
-          <span class="path-degree">B.Tech &middot; Information Technology</span>
-        </span>
-        <span class="path-handle mono">@Ghosala</span>
-        <img class="path-thumb" src="assets/images/educat/college2.jpg" alt="Government Engineering College campus" width="960" height="720" loading="lazy">
-      </li>
-      <li class="path-row reveal" data-photo="assets/images/educat/school2.jpg" data-caption="Saraswati Shishu Mandir · campus">
-        <span class="path-year mono">2018</span>
-        <span class="path-main">
-          <span class="path-inst"><img class="path-logo" src="assets/images/educat/school.jpeg" alt="" width="40" height="40" loading="lazy">Saraswati Shishu Mandir</span>
-          <span class="path-degree">Mathematics &middot; Science &middot; Language</span>
-        </span>
-        <span class="path-handle mono">@2018_trauma_center</span>
-        <img class="path-thumb" src="assets/images/educat/school2.jpg" alt="Saraswati Shishu Mandir campus" width="960" height="720" loading="lazy">
-      </li>
-    </ol>
+    <div class="container path-frame">
+      <header class="path-top mono">
+        <h2 class="path-title" id="path-title">The path</h2>
+        <span><b data-path-now>01</b> / 03</span>
+      </header>
+
+      <div class="path-stages">
+        <article class="path-stage is-on" data-stage="0">
+          <p class="path-stage-n mono">Stage 01 &middot; 2018</p>
+          <h3 class="path-stage-title">Foundation</h3>
+          <p class="path-stage-desc">Mathematics, science and language at Saraswati Shishu Mandir, where the curiosity started.</p>
+          <dl class="path-table mono">
+            <div><dt>School</dt><dd>Saraswati Shishu Mandir</dd></div>
+            <div><dt>Subjects</dt><dd>Mathematics &middot; Science &middot; Language</dd></div>
+            <div><dt>Handle</dt><dd>@2018_trauma_center</dd></div>
+          </dl>
+        </article>
+        <article class="path-stage" data-stage="1">
+          <p class="path-stage-n mono">Stage 02 &middot; 2023</p>
+          <h3 class="path-stage-title">Engineering</h3>
+          <p class="path-stage-desc">B.Tech in Information Technology at Government Engineering College: networks, systems and code.</p>
+          <dl class="path-table mono">
+            <div><dt>College</dt><dd>Government Engineering College</dd></div>
+            <div><dt>Degree</dt><dd>B.Tech &middot; Information Technology</dd></div>
+            <div><dt>Handle</dt><dd>@Ghosala</dd></div>
+          </dl>
+        </article>
+        <article class="path-stage" data-stage="2">
+          <p class="path-stage-n mono">Stage 03 &middot; 2027 &middot; In progress</p>
+          <h3 class="path-stage-title">Forensics</h3>
+          <p class="path-stage-desc">M.Tech in Cyber Forensics &amp; Information Security at NIELIT. The deep end, on purpose.</p>
+          <dl class="path-table mono">
+            <div><dt>Institute</dt><dd>NIELIT</dd></div>
+            <div><dt>Degree</dt><dd>M.Tech &middot; Cyber Forensics &amp; Information Security</dd></div>
+            <div><dt>Handle</dt><dd>@majdur_khana</dd></div>
+          </dl>
+        </article>
+      </div>
+
+      <footer class="path-foot">
+        <span class="path-progress" aria-hidden="true"><i></i></span>
+        <p class="path-quote mono">&ldquo;The roots of education are bitter, but the fruit is sweet.&rdquo; &mdash; Aristotle</p>
+      </footer>
+    </div>
   </div>
-
-  <figure class="path-float" aria-hidden="true">
-    <img src="" alt="" width="960" height="720">
-    <figcaption class="mono"></figcaption>
-  </figure>
 </section>
 
 <section class="sec sec--cert" id="cert" data-chapter="Certifications" aria-labelledby="cert-title">
-  <div class="container">
-    <header class="sec-head">
-      <h2 class="display-l" id="cert-title" data-scramble data-spec="Heading" data-spec-note="Every card links to the certificate itself.">Proof of work<span class="dot">.</span></h2>
-      <p class="sec-head-aside mono"><span data-cert-count>09</span> certificates</p>
-    </header>
-    <div class="cert-grid" id="certContainer" aria-live="polite">
+  <div class="container cert-layout">
+    <!-- left: stays put while the cards scroll -->
+    <aside class="cert-panel">
+      <p class="cert-kicker mono-caps"><span class="cert-sq" aria-hidden="true"></span>Certifications</p>
+      <h2 class="cert-title" id="cert-title" data-scramble data-spec="Heading" data-spec-note="Static panel; only the cards move.">Proof of work<span class="dot">.</span><br><span class="tone-2"><span data-cert-words>Nine</span> certificates.</span></h2>
+      <p class="cert-lede">Courses, trainings and an internship. Every card links to the certificate itself.</p>
+      <ol class="cert-index" aria-label="Certificates">
+        <!-- filled from projects.json -->
+      </ol>
+      <p class="cert-count mono" aria-hidden="true"><b data-cert-current>01</b> / <span data-cert-count>09</span></p>
+    </aside>
+
+    <!-- right: the cards -->
+    <div class="cert-stack" id="certContainer" aria-live="polite">
       <!-- rendered from projects.json by assets/js/sections/cert.js -->
     </div>
   </div>
 </section>
 
 <section class="sec sec--work" id="work" data-chapter="Work" aria-labelledby="work-title">
-  <div class="container">
-    <header class="sec-head">
-      <h2 class="display-l" id="work-title" data-scramble data-spec="Heading">Selected work<span class="dot">.</span></h2>
-      <a class="link-arrow sec-head-aside" href="https://github.com/nekosenpai007" target="_blank" rel="noopener">GitHub <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
-    </header>
+  <div class="work-pin">
+    <img class="work-contours" src="assets/images/covers/contours.svg" alt="" aria-hidden="true">
 
-    <div class="work-grid">
-      <a class="wcard work-card reveal" href="https://github.com/nekosenpai007" target="_blank" rel="noopener">
-        <span class="wcard-media work-media" data-ripple data-cursor="View on GitHub" data-spec="Media" data-spec-note="Hover: water ripple, RGB split.">
-          <img src="assets/images/covers/work-terminal.svg" alt="" width="1200" height="900" loading="lazy">
-          <span class="wcard-tags"><span class="tag-box">Tools</span><span class="tag-box">Write-ups</span><span class="tag-box">Research</span></span>
+    <div class="work-side">
+      <h2 class="work-label mono-caps" id="work-title">Selected work</h2>
+      <p class="work-hint mono" aria-hidden="true"><span data-work-now>01</span> / 03 &nbsp;&middot;&nbsp; scroll &rarr;</p>
+      <a class="link-arrow work-gh" href="https://github.com/nekosenpai007" target="_blank" rel="noopener">GitHub <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+    </div>
+
+    <div class="work-viewport">
+    <div class="work-track">
+      <a class="work-card" href="https://github.com/nekosenpai007" target="_blank" rel="noopener">
+        <span class="work-media" data-ripple data-cursor="View on GitHub" data-spec="Media" data-spec-note="Hover: water ripple, RGB split.">
+          <img src="assets/images/covers/work-network.png" alt="" width="1200" height="780" loading="lazy">
+          <span class="work-tag mono">WK-01</span>
         </span>
-        <span class="wcard-body">
-          <span class="wcard-meta">01 / 01 &middot; In progress &middot; <span data-year>2026</span></span>
-          <span class="wcard-title">Projects, compiling.</span>
-          <span class="wcard-desc">Security tools and write-ups are on the way. Until then, the source lives on GitHub.</span>
-          <span class="wcard-go"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span>
+        <span class="work-title">Projects,<br>compiling.</span>
+        <span class="work-cols mono">
+          <span>Security tools and write-ups are on the way.</span>
+          <span>Until then, the source lives on GitHub.</span>
         </span>
       </a>
 
-      <aside class="work-note reveal">
-        <p class="mono-caps">Status</p>
-        <p class="lead">Nothing public yet. New tools and write-ups will land here first.</p>
-        <a class="link-arrow" href="https://github.com/nekosenpai007" target="_blank" rel="noopener">Follow on GitHub <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
-      </aside>
+      <a class="work-card" href="https://nekos-organization.gitbook.io/cyber" target="_blank" rel="noopener">
+        <span class="work-media" data-ripple data-cursor="Read write-ups">
+          <img src="assets/images/covers/work-orbits.png" alt="" width="1200" height="780" loading="lazy">
+          <span class="work-tag mono">WK-02</span>
+        </span>
+        <span class="work-title">Write-ups<br>on GitBook.</span>
+        <span class="work-cols mono">
+          <span>Notes on cyber security and digital forensics.</span>
+          <span>Written while learning, shared in the open.</span>
+        </span>
+      </a>
+
+      <a class="work-card" href="https://dev.to/neko_senpai" target="_blank" rel="noopener">
+        <span class="work-media" data-ripple data-cursor="Open DEV">
+          <img src="assets/images/covers/work-field.png" alt="" width="1200" height="780" loading="lazy">
+          <span class="work-tag mono">WK-03</span>
+        </span>
+        <span class="work-title">Posts<br>on DEV.</span>
+        <span class="work-cols mono">
+          <span>Short posts on dev.to.</span>
+          <span>Follow along as new ones land.</span>
+        </span>
+      </a>
+    </div>
     </div>
   </div>
 </section>
 
 <section class="sec sec--journal" id="journal" data-chapter="Journal" aria-labelledby="journal-title">
-  <div class="container">
-    <header class="sec-head">
-      <h2 class="display-l" id="journal-title" data-scramble data-spec="Heading">From the journal<span class="dot">.</span></h2>
-      <a class="link-arrow sec-head-aside" href="https://nekos-organization.gitbook.io/cyber" target="_blank" rel="noopener">All articles <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+  <div class="jr-pin">
+    <header class="container jr-head">
+      <h2 class="jr-label mono-caps" id="journal-title">From the journal</h2>
+      <a class="link-arrow" href="https://nekos-organization.gitbook.io/cyber" target="_blank" rel="noopener">All articles <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
     </header>
 
-    <div class="journal-grid">
-      <a class="wcard reveal" href="https://nekos-organization.gitbook.io/cyber" target="_blank" rel="noopener">
-        <span class="wcard-media" data-ripple data-cursor="Read article">
-          <img src="assets/images/covers/journal-cyber-security.svg" alt="" width="1200" height="900" loading="lazy">
-          <span class="wcard-tags"><span class="tag-box">No. 01</span><span class="tag-box">Write-up</span></span>
-        </span>
-        <span class="wcard-body">
-          <span class="wcard-meta">01 / 02 &middot; GitBook</span>
-          <span class="wcard-title">Cyber Security</span>
-          <span class="wcard-desc">Introduction to cyber security.</span>
-          <span class="wcard-go"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span>
-        </span>
-      </a>
+    <div class="jr-stage">
+      <div class="jr-cube">
+        <a class="jr-face" href="https://nekos-organization.gitbook.io/cyber" target="_blank" rel="noopener">
+          <span class="jr-card">
+            <span class="jr-cross" aria-hidden="true"></span>
+            <span class="jr-num">01</span>
+            <span class="jr-title">Cyber<br>Security</span>
+            <span class="jr-table">
+              <span><i>Type</i><b>Write-up</b></span>
+              <span><i>Read on</i><b>GitBook</b></span>
+            </span>
+          </span>
+          <span class="jr-media" data-ripple data-cursor="Read article">
+            <img src="assets/images/covers/journal-cyber-security.svg" alt="" width="1200" height="900" loading="lazy">
+          </span>
+        </a>
 
-      <a class="wcard reveal" href="https://nekos-organization.gitbook.io/cyber/digital-forensics" target="_blank" rel="noopener">
-        <span class="wcard-media" data-ripple data-cursor="Read article">
-          <img src="assets/images/covers/journal-digital-forensics.svg" alt="" width="1200" height="900" loading="lazy">
-          <span class="wcard-tags"><span class="tag-box">No. 02</span><span class="tag-box">Coming soon</span></span>
-        </span>
-        <span class="wcard-body">
-          <span class="wcard-meta">02 / 02 &middot; GitBook</span>
-          <span class="wcard-title">Digital Forensics</span>
-          <span class="wcard-desc">Coming soon.</span>
-          <span class="wcard-go"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span>
-        </span>
-      </a>
+        <a class="jr-face" href="https://nekos-organization.gitbook.io/cyber/digital-forensics" target="_blank" rel="noopener">
+          <span class="jr-card">
+            <span class="jr-cross" aria-hidden="true"></span>
+            <span class="jr-num">02</span>
+            <span class="jr-title">Digital<br>Forensics</span>
+            <span class="jr-table">
+              <span><i>Status</i><b>Coming soon</b></span>
+              <span><i>Read on</i><b>GitBook</b></span>
+            </span>
+          </span>
+          <span class="jr-media" data-ripple data-cursor="Read article">
+            <img src="assets/images/covers/journal-digital-forensics.svg" alt="" width="1200" height="900" loading="lazy">
+          </span>
+        </a>
 
-      <div class="journal-more reveal" aria-hidden="true">
-        <span class="mono">03 / ??</span>
-        <p>More soon<span class="dot">.</span></p>
+        <div class="jr-face jr-face--soon">
+          <span class="jr-card">
+            <span class="jr-cross" aria-hidden="true"></span>
+            <span class="jr-num">03</span>
+            <span class="jr-title">More<br>soon</span>
+            <span class="jr-table">
+              <span><i>Status</i><b>In the works</b></span>
+              <span><i>Follow</i><b>GitBook</b></span>
+            </span>
+          </span>
+          <span class="jr-media jr-media--blank" aria-hidden="true"></span>
+        </div>
       </div>
     </div>
+
+    <p class="container jr-count mono" aria-hidden="true"><b data-jr-now>01</b> / 03</p>
   </div>
 </section>
 
 <section class="sec sec--hobbies" id="hobbies" data-chapter="Off the clock" aria-labelledby="hobbies-title">
-  <div class="container">
-    <header class="sec-head">
-      <h2 class="display-l" id="hobbies-title" data-scramble>Off the clock<span class="dot">.</span></h2>
+  <div class="container hb-wrap">
+    <header class="hb-head mono">
+      <h2 class="hb-label" id="hobbies-title">Off the clock</h2>
+      <span>04 interests &middot; when the terminal is closed</span>
     </header>
 
-    <ul class="hobby-list">
-      <li class="hobby reveal">
-        <span class="mono hobby-tag">01 &middot; Otaku</span>
-        <span class="hobby-name">Anime</span>
-        <a class="link-arrow" href="https://myanimelist.net/profile/canizaro007" target="_blank" rel="noopener">My anime list <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+    <ul class="hb-list">
+      <li class="hb-row">
+        <span class="hb-n mono">01</span>
+        <span class="hb-name">Anime</span>
+        <span class="hb-meta mono"><span class="hb-badge">Otaku</span>
+          <a class="link-arrow" href="https://myanimelist.net/profile/canizaro007" target="_blank" rel="noopener">My anime list <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></span>
       </li>
-      <li class="hobby reveal">
-        <span class="mono hobby-tag">02 &middot; Noob</span>
-        <span class="hobby-name">Gaming</span>
-        <a class="link-arrow" href="https://nekos-organization.gitbook.io/games/" target="_blank" rel="noopener">Let's connect <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+      <li class="hb-row">
+        <span class="hb-n mono">02</span>
+        <span class="hb-name">Gaming</span>
+        <span class="hb-meta mono"><span class="hb-badge">Noob</span>
+          <a class="link-arrow" href="https://nekos-organization.gitbook.io/games/" target="_blank" rel="noopener">Let's connect <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></span>
       </li>
-      <li class="hobby reveal">
-        <span class="mono hobby-tag">03 &middot; Sport</span>
-        <span class="hobby-name">Badminton</span>
+      <li class="hb-row">
+        <span class="hb-n mono">03</span>
+        <span class="hb-name">Badminton</span>
+        <span class="hb-meta mono"><span class="hb-badge">Sport</span></span>
       </li>
-      <li class="hobby reveal">
-        <span class="mono hobby-tag">04 &middot; Tech</span>
-        <span class="hobby-name">Circuit man</span>
+      <li class="hb-row">
+        <span class="hb-n mono">04</span>
+        <span class="hb-name">Circuit man</span>
+        <span class="hb-meta mono"><span class="hb-badge">Tech</span></span>
       </li>
     </ul>
   </div>
@@ -586,45 +697,66 @@
 
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer" data-chapter="Contact">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="#home" class="wordmark wordmark--xl" aria-label="cipher. Back to top">cipher<span class="dot">.</span></a>
-        <p class="footer-blurb">Cybersecurity practitioner with roots in IT infrastructure. Malware research, digital forensics and a growing love for code.</p>
-        <p class="mono footer-etym">cipher. from ciphertext: noise, until you hold the key.</p>
-      </div>
+  <a class="ft-marquee" href="mailto:ciphersensei@proton.me" aria-label="Get in touch: email ciphersensei@proton.me">
+    <span class="ft-track" aria-hidden="true">
+      <span class="ft-group"><span class="ft-word">Get in touch</span><span class="ft-slash" aria-hidden="true">/</span><span class="ft-word">Get in touch</span><span class="ft-slash" aria-hidden="true">/</span><span class="ft-word">Get in touch</span><span class="ft-slash" aria-hidden="true">/</span></span><span class="ft-group"><span class="ft-word">Get in touch</span><span class="ft-slash" aria-hidden="true">/</span><span class="ft-word">Get in touch</span><span class="ft-slash" aria-hidden="true">/</span><span class="ft-word">Get in touch</span><span class="ft-slash" aria-hidden="true">/</span></span>
+    </span>
+  </a>
 
-      <nav class="footer-col" aria-label="Chapters">
-        <p class="mono-caps">Chapters</p>
-        <ul>
-          <li><a data-scramble-hover href="#about">About</a></li>
-          <li><a data-scramble-hover href="#skills">Toolbox</a></li>
-          <li><a data-scramble-hover href="#path">Path</a></li>
-          <li><a data-scramble-hover href="#cert">Certifications</a></li>
-          <li><a data-scramble-hover href="#work">Work</a></li>
-          <li><a data-scramble-hover href="#journal">Journal</a></li>
-          <li><a data-scramble-hover href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+  <div class="ft-body">
+    <a href="#home" class="ft-mark" aria-label="cipher. Back to top">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <path d="M150 52 A 70 70 0 1 0 150 148" fill="none" stroke="currentColor" stroke-width="36" stroke-linecap="butt"/>
+        <rect x="150" y="128" width="26" height="26" fill="currentColor"/>
+      </svg>
+    </a>
 
-      <div class="footer-col">
-        <p class="mono-caps">Contact</p>
-        <ul>
-          <li><a href="mailto:ciphersensei@proton.me">ciphersensei@proton.me</a></li>
-          <li class="muted">127.0.0.1, there's no place like home</li>
-          <li><a href="https://www.linkedin.com/in/ganendra-kumar-netam-3695592b6/" target="_blank" rel="noopener">LinkedIn</a></li>
-          <li><a href="https://github.com/nekosenpai007" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="https://x.com/nekosen35693393" target="_blank" rel="noopener">X / Twitter</a></li>
-          <li><a href="https://t.me/nekosenpai007" target="_blank" rel="noopener">Telegram</a></li>
-          <li><a href="https://dev.to/neko_senpai" target="_blank" rel="noopener">DEV</a></li>
-        </ul>
-      </div>
+    <div class="ft-col">
+      <p class="ft-h">Based at</p>
+      <p>127.0.0.1<br>There's no place<br>like home</p>
     </div>
 
-    <div class="footer-bottom">
-      <p>&copy; <span data-year>2026</span> cipher.</p>
-      <a href="#home" class="link-arrow">Back to top <svg class="i-arrow i-arrow--up" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></a>
+    <nav class="ft-col" aria-label="Sitemap">
+      <p class="ft-h">Sitemap</p>
+      <ul>
+        <li><a data-scramble-hover href="#about">About</a></li>
+        <li><a data-scramble-hover href="#skills">Toolbox</a></li>
+        <li><a data-scramble-hover href="#path">Path</a></li>
+        <li><a data-scramble-hover href="#cert">Certifications</a></li>
+        <li><a data-scramble-hover href="#work">Work</a></li>
+        <li><a data-scramble-hover href="#journal">Journal</a></li>
+        <li><a data-scramble-hover href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="ft-col">
+      <p class="ft-h">Elsewhere</p>
+      <ul>
+        <li><a data-scramble-hover href="https://www.linkedin.com/in/ganendra-kumar-netam-3695592b6/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a data-scramble-hover href="https://github.com/nekosenpai007" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a data-scramble-hover href="https://x.com/nekosen35693393" target="_blank" rel="noopener">X / Twitter</a></li>
+        <li><a data-scramble-hover href="https://t.me/nekosenpai007" target="_blank" rel="noopener">Telegram</a></li>
+        <li><a data-scramble-hover href="https://dev.to/neko_senpai" target="_blank" rel="noopener">DEV</a></li>
+      </ul>
     </div>
+
+    <div class="ft-col">
+      <p class="ft-h">Contact</p>
+      <ul>
+        <li><a data-scramble-hover href="mailto:ciphersensei@proton.me">ciphersensei@proton.me</a></li>
+        <li><a data-scramble-hover href="assets/files/resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a></li>
+        <li><a data-scramble-hover href="https://nekos-organization.gitbook.io/cyber" target="_blank" rel="noopener">Write-ups</a></li>
+      </ul>
+    </div>
+
+    <a class="ft-top" href="#home" aria-label="Back to top">
+      <svg class="i-arrow i-arrow--up" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg>
+    </a>
+  </div>
+
+  <div class="ft-bottom">
+    <p>&copy; <span data-year>2026</span> cipher.</p>
+    <p class="mono">cipher. from ciphertext: noise, until you hold the key.</p>
   </div>
 </footer>
 
@@ -661,6 +793,8 @@
 <script src="assets/js/sections/skills.js"></script>
 <script src="assets/js/sections/path.js"></script>
 <script src="assets/js/sections/cert.js"></script>
+<script src="assets/js/sections/work.js"></script>
+<script src="assets/js/sections/journal.js"></script>
 <script src="assets/js/sections/contact.js"></script>
 </body>
 </html>

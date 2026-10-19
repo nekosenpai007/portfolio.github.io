@@ -1,34 +1,283 @@
 /* ==========================================================
-   Certifications — grid of work cards, logos on white
+   Proof of work — static left panel, cards scroll on the right
+   (layout after axiom-power-template's Capabilities section)
    ========================================================== */
 
-.sec--cert .cert-grid {
+.sec--cert {
+  justify-content: flex-start;
+}
+
+.sec--cert .cert-layout {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(36px, 4vw, 56px) clamp(20px, 2.4vw, 32px);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(40px, 6vw, 120px);
+  align-items: start;
 }
 
-.sec--cert .cert-media {
-  background: #ffffff;
+/* ---------- left panel ---------- */
+
+.sec--cert .cert-panel {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--header-h) - 64px);
 }
 
-.sec--cert .cert-media img {
-  object-fit: cover;
+.sec--cert .cert-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink-2);
+  letter-spacing: 0.18em;
 }
 
-.sec--cert .cert-empty {
-  grid-column: 1 / -1;
+.sec--cert .cert-sq {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+}
+
+.sec--cert .cert-title {
+  margin-top: 28px;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 4.4vw, 72px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+
+.sec--cert .cert-title .tone-2 {
+  color: var(--ink-2);
+}
+
+.sec--cert .cert-lede {
+  max-width: 30em;
+  margin-top: 28px;
+  font-size: 18px;
+  color: var(--ink-2);
+}
+
+.sec--cert .cert-index {
+  margin-top: auto;
+  padding-top: 40px;
+  max-width: 460px;
+  counter-reset: none;
+}
+
+.sec--cert .cert-index li {
+  border-top: 1px solid var(--line);
+}
+
+.sec--cert .cert-index li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.sec--cert .cert-index a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.3s, padding 0.4s var(--ease);
+}
+
+.sec--cert .cert-index a::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: scale(0);
+  transition: transform 0.35s var(--ease);
+}
+
+.sec--cert .cert-index a:hover {
+  color: var(--ink-2);
+}
+
+.sec--cert .cert-index a.is-active {
+  color: var(--ink);
+}
+
+.sec--cert .cert-index a.is-active::before {
+  transform: none;
+}
+
+.sec--cert .cert-count {
+  margin-top: 20px;
   color: var(--muted);
 }
 
-@media (max-width: 1023px) {
-  .sec--cert .cert-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.sec--cert .cert-count b {
+  font-weight: 500;
+  color: var(--accent-ink);
 }
 
-@media (max-width: 640px) {
-  .sec--cert .cert-grid {
+/* ---------- right: cards ---------- */
+
+.sec--cert .cert-stack {
+  display: grid;
+  gap: 24px;
+}
+
+.sec--cert .cert-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: min(78svh, 680px);
+  padding: clamp(24px, 2.6vw, 36px);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-media);
+  background:
+    radial-gradient(120% 80% at 80% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    var(--paper-2);
+  color: var(--ink);
+  overflow: hidden;
+  transform-origin: 50% 0;
+  transition: border-color 0.4s;
+}
+
+.sec--cert a.cert-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.sec--cert .cert-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sec--cert .cert-ico {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-field);
+  background: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--accent-ink);
+}
+
+.sec--cert .cert-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* the media keeps the water ripple + VIEW cursor (data-ripple / data-cursor) */
+.sec--cert .cert-media {
+  position: relative;
+  display: block;
+  flex: 1;
+  min-height: 220px;
+  margin: 28px 0;
+  overflow: hidden;
+  border-radius: var(--radius-media);
+  background: #ffffff;
+  isolation: isolate;
+}
+
+.sec--cert .cert-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0;
+  transform: scale(1.25); /* logos sit on a lot of white */
+  transition: transform 0.9s var(--ease), opacity 0.3s;
+}
+
+.sec--cert .cert-card:hover .cert-media img {
+  transform: scale(1.3);
+}
+
+.sec--cert .cert-media.is-rippling img {
+  opacity: 0;
+}
+
+.sec--cert .cert-card-title {
+  max-width: 18em;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.3vw, 36px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.sec--cert .cert-card-desc {
+  max-width: 34em;
+  margin-top: 12px;
+  font-size: 17px;
+  color: var(--ink-2);
+}
+
+.sec--cert .cert-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sec--cert .cert-card-foot b {
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--accent-ink);
+}
+
+.sec--cert .cert-card-foot .i-arrow {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.45s var(--ease);
+}
+
+.sec--cert a.cert-card:hover .cert-card-foot .i-arrow {
+  transform: rotate(45deg);
+}
+
+.sec--cert .cert-empty {
+  color: var(--muted);
+}
+
+/* ---------- small screens: panel on top, cards below ---------- */
+
+@media (max-width: 1023px) {
+  .sec--cert .cert-layout {
     grid-template-columns: 1fr;
+  }
+
+  .sec--cert .cert-panel {
+    position: static;
+    min-height: 0;
+  }
+
+  .sec--cert .cert-index,
+  .sec--cert .cert-count {
+    display: none;
+  }
+
+  .sec--cert .cert-card {
+    min-height: 0;
+  }
+
+  .sec--cert .cert-media {
+    flex: none;
+    aspect-ratio: 16 / 10;
   }
 }

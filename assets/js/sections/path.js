@@ -1,51 +1,50 @@
-/* Path: a campus photo trails the pointer while hovering an education row. */
+/* The path: pin the section and swap the three stages as it scrolls past.
+   Falls back to a plain stacked list on phones, short screens and reduced motion. */
 (function () {
   "use strict";
 
   var C = window.Cipher || {};
   var sec = document.getElementById("path");
-  if (!sec || !C.finePointer) return;
-  var float = sec.querySelector(".path-float");
-  var img = float && float.querySelector("img");
-  var cap = float && float.querySelector("figcaption");
-  if (!float) return;
+  if (!sec) return;
+  var stages = Array.prototype.slice.call(sec.querySelectorAll(".path-stage"));
+  var bgs = Array.prototype.slice.call(sec.querySelectorAll(".path-bg"));
+  var now = sec.querySelector("[data-path-now]");
+  var n = stages.length;
+  var current = 0;
+  var ticking = false;
 
-  var x = 0, y = 0, fx = 0, fy = 0, on = false, raf = 0, current = null;
-
-  function loop() {
-    var k = C.reducedMotion ? 1 : 0.14;
-    fx += (x - fx) * k;
-    fy += (y - fy) * k;
-    var tilt = C.reducedMotion ? 0 : Math.max(-8, Math.min(8, (x - fx) * 0.05));
-    float.style.transform = "translate3d(" + (fx + 24) + "px," + (fy - 120) + "px,0) rotate(" + (tilt - 3).toFixed(2) + "deg)";
-    if (on || Math.abs(x - fx) > 0.5) raf = requestAnimationFrame(loop);
-    else raf = 0;
+  function canPin() {
+    return !C.reducedMotion && window.innerWidth > 640 && window.innerHeight >= 560;
   }
 
-  sec.addEventListener("pointermove", function (e) {
-    if (e.pointerType === "touch") return;
-    var row = e.target.closest(".path-row");
-    x = e.clientX;
-    y = e.clientY;
-    if (row !== current) {
-      current = row;
-      if (row) {
-        if (!on) { fx = x; fy = y; }
-        img.src = row.getAttribute("data-photo");
-        cap.textContent = row.getAttribute("data-caption");
-        on = true;
-        float.classList.add("is-on");
-      } else {
-        on = false;
-        float.classList.remove("is-on");
-      }
-    }
-    if (!raf) raf = requestAnimationFrame(loop);
-  }, { passive: true });
+  function show(i) {
+    if (i === current) return;
+    stages[current].classList.remove("is-on");
+    if (bgs[current]) bgs[current].classList.remove("is-on");
+    stages[i].classList.add("is-on");
+    if (bgs[i]) bgs[i].classList.add("is-on");
+    current = i;
+    if (now) now.textContent = "0" + (i + 1);
+  }
 
-  sec.addEventListener("pointerleave", function () {
-    current = null;
-    on = false;
-    float.classList.remove("is-on");
-  });
+  function update() {
+    ticking = false;
+    if (sec.classList.contains("is-static")) return;
+    var r = sec.getBoundingClientRect();
+    var span = sec.offsetHeight - window.innerHeight;
+    var p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+    sec.style.setProperty("--path-p", p.toFixed(4));
+    show(Math.min(n - 1, Math.floor(p * n)));
+  }
+
+  function mode() {
+    sec.classList.toggle("is-static", !canPin());
+    update();
+  }
+
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  window.addEventListener("resize", mode);
+  mode();
 })();
