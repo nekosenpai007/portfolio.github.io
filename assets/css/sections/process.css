@@ -156,6 +156,8 @@
 @media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
 
   .js .sec--process {
+    display: block;         /* opt out of the shared centring: the stage must pin from the top */
+    min-height: 0;
     height: 560vh;
     padding-block: 0;
   }
