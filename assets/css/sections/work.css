@@ -1,30 +1,208 @@
 /* ==========================================================
-   Work — one featured card plus a status note
+   Selected work — pinned; vertical scroll slides the cards sideways
+   (after axiom.peppermint.id)
    ========================================================== */
 
-.sec--work .work-grid {
+.sec--work {
+  display: block;
+  min-height: 0;
+  padding: 0;
+}
+
+.sec--work .work-pin {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.sec--work.is-pinned .work-pin {
+  position: sticky;
+  top: 0;
+}
+
+.sec--work .work-contours {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.95;
+  pointer-events: none;
+  transform: translate3d(calc(var(--work-p, 0) * -6%), 0, 0) scale(1.12);
+}
+
+/* cards fade out as they slide past the label on the left */
+.sec--work.is-pinned .work-viewport {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(to right, transparent calc(var(--gutter) + 60px), #000 26vw);
+  mask-image: linear-gradient(to right, transparent calc(var(--gutter) + 60px), #000 26vw);
+}
+
+.sec--work .work-side {
+  position: absolute;
+  left: var(--gutter);
+  top: calc(var(--header-h) + 24px);
+  bottom: 40px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 22vw;
+  pointer-events: none;
+}
+
+.sec--work .work-side a {
+  pointer-events: auto;
+}
+
+.sec--work .work-label {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+.sec--work .work-hint {
+  color: var(--muted);
+}
+
+.sec--work .work-hint span {
+  color: var(--accent-ink);
+}
+
+.sec--work .work-gh {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.sec--work .work-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: flex;
+  gap: clamp(32px, 4vw, 80px);
+  padding-left: max(28vw, calc(var(--gutter) + 260px));
+  padding-right: var(--gutter);
+  transform: translate3d(var(--work-x, 0px), -50%, 0);
+  will-change: transform;
+}
+
+.sec--work .work-card {
+  flex: none;
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-  align-items: end;
-  gap: 32px clamp(32px, 5vw, 80px);
+  grid-template-rows: auto auto 1fr;
+  width: min(56vw, 900px);
+  padding: 14px;
+  background: #f1f1f2;
+  color: #0b0b0e;
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.6);
 }
 
-.sec--work .work-card .wcard-media {
-  aspect-ratio: 16 / 10;
+.sec--work .work-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 1200 / 620;
+  overflow: hidden;
+  background: #efefef;
+  isolation: isolate;
 }
 
-.sec--work .work-card .wcard-title {
-  font-size: clamp(24px, 2.4vw, 34px);
+.sec--work .work-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s var(--ease), opacity 0.3s;
 }
 
-.sec--work .work-note {
+.sec--work .work-card:hover .work-media img {
+  transform: scale(1.03);
+}
+
+.sec--work .work-media.is-rippling img {
+  opacity: 0;
+}
+
+.sec--work .work-tag {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  padding: 10px 14px;
+  background: #f1f1f2;
+  font-size: 15px;
+  color: #0b0b0e;
+}
+
+.sec--work .work-title {
+  margin: 26px 14px 0;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 3.4vw, 56px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.sec--work .work-cols {
   display: grid;
-  gap: 18px;
-  padding-bottom: 8px;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-self: end;
+  margin: 36px 14px 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #3a3a42;
 }
 
-@media (max-width: 900px) {
-  .sec--work .work-grid {
+/* ---------- not pinned (phones, reduced motion): swipe the row ---------- */
+
+.sec--work:not(.is-pinned) .work-pin {
+  height: auto;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--header-h) + 16px) 0 48px;
+}
+
+.sec--work:not(.is-pinned) .work-side {
+  position: relative;
+  inset: auto;
+  width: auto;
+  margin: 0 var(--gutter) 28px;
+}
+
+.sec--work:not(.is-pinned) .work-gh {
+  margin-top: 0;
+}
+
+.sec--work:not(.is-pinned) .work-track {
+  position: relative;
+  top: auto;
+  transform: none;
+  padding-left: var(--gutter);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.sec--work:not(.is-pinned) .work-track::-webkit-scrollbar {
+  display: none;
+}
+
+.sec--work:not(.is-pinned) .work-card {
+  width: min(84vw, 560px);
+  scroll-snap-align: start;
+}
+
+@media (max-width: 640px) {
+  .sec--work .work-cols {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 }
