@@ -174,9 +174,20 @@ button {
   padding-inline: var(--gutter);
 }
 
+/* Every section fills at least one screen and centres its content, so
+   you never see half of the next section while reading this one. */
 .sec {
   position: relative;
-  padding-block: clamp(96px, 12vw, 176px);
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: calc(var(--header-h) + 24px) clamp(64px, 8vw, 112px);
+}
+
+.sec > .container {
+  width: 100%;
 }
 
 /* ---------- type ---------- */

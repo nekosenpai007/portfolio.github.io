@@ -1,43 +1,62 @@
 <section class="sec sec--path" id="path" data-chapter="Path" aria-labelledby="path-title">
-  <div class="container">
-    <header class="sec-head">
-      <h2 class="display-l" id="path-title" data-scramble data-spec="Heading" data-spec-note="Newest first, like a log.">The path<span class="dot">.</span></h2>
-      <p class="sec-head-aside mono">&ldquo;The roots of education are bitter, but the fruit is sweet.&rdquo; &mdash; Aristotle</p>
-    </header>
+  <div class="path-pin">
+    <div class="path-bgs" aria-hidden="true">
+      <img class="path-bg is-on" src="assets/images/educat/school2.jpg" alt="" width="960" height="720" loading="lazy">
+      <img class="path-bg" src="assets/images/educat/college2.jpg" alt="" width="960" height="720" loading="lazy">
+      <img class="path-bg" src="assets/images/educat/mtech.jpg" alt="" width="971" height="670" loading="lazy">
+      <svg class="path-lines" viewBox="0 0 1200 800" preserveAspectRatio="none">
+        <path d="M0 130 C 200 128, 260 120, 330 126 S 420 90, 470 128 S 620 132, 1200 120"/>
+        <path d="M0 260 C 180 258, 300 262, 380 256 S 450 214, 500 258 S 700 262, 1200 252"/>
+        <path d="M0 390 C 220 392, 320 386, 400 390 S 470 352, 520 392 S 760 388, 1200 384"/>
+        <path d="M0 520 C 160 518, 300 522, 420 518 S 490 486, 540 522 S 820 520, 1200 514"/>
+        <path d="M0 650 C 240 652, 360 646, 440 650 S 510 612, 560 652 S 880 648, 1200 644"/>
+      </svg>
+      <span class="path-grain"></span>
+    </div>
 
-    <ol class="path-list" data-spec="List" data-spec-note="Hover a row to see the campus.">
-      <li class="path-row reveal" data-photo="assets/images/educat/mtech.jpg" data-caption="NIELIT · campus">
-        <span class="path-year mono">2027 <span class="chip path-live">in progress</span></span>
-        <span class="path-main">
-          <span class="path-inst"><img class="path-logo" src="assets/images/educat/nielit.png" alt="" width="40" height="40" loading="lazy">NIELIT</span>
-          <span class="path-degree">M.Tech &middot; Cyber Forensics &amp; Information Security</span>
-        </span>
-        <span class="path-handle mono">@majdur_khana</span>
-        <img class="path-thumb" src="assets/images/educat/mtech.jpg" alt="NIELIT campus" width="971" height="670" loading="lazy">
-      </li>
-      <li class="path-row reveal" data-photo="assets/images/educat/college2.jpg" data-caption="Government Engineering College · campus">
-        <span class="path-year mono">2023</span>
-        <span class="path-main">
-          <span class="path-inst"><img class="path-logo" src="assets/images/educat/college.png" alt="" width="40" height="40" loading="lazy">Government Engineering College</span>
-          <span class="path-degree">B.Tech &middot; Information Technology</span>
-        </span>
-        <span class="path-handle mono">@Ghosala</span>
-        <img class="path-thumb" src="assets/images/educat/college2.jpg" alt="Government Engineering College campus" width="960" height="720" loading="lazy">
-      </li>
-      <li class="path-row reveal" data-photo="assets/images/educat/school2.jpg" data-caption="Saraswati Shishu Mandir · campus">
-        <span class="path-year mono">2018</span>
-        <span class="path-main">
-          <span class="path-inst"><img class="path-logo" src="assets/images/educat/school.jpeg" alt="" width="40" height="40" loading="lazy">Saraswati Shishu Mandir</span>
-          <span class="path-degree">Mathematics &middot; Science &middot; Language</span>
-        </span>
-        <span class="path-handle mono">@2018_trauma_center</span>
-        <img class="path-thumb" src="assets/images/educat/school2.jpg" alt="Saraswati Shishu Mandir campus" width="960" height="720" loading="lazy">
-      </li>
-    </ol>
+    <div class="container path-frame">
+      <header class="path-top mono">
+        <h2 class="path-title" id="path-title">The path</h2>
+        <span><b data-path-now>01</b> / 03</span>
+      </header>
+
+      <div class="path-stages">
+        <article class="path-stage is-on" data-stage="0">
+          <p class="path-stage-n mono">Stage 01 &middot; 2018</p>
+          <h3 class="path-stage-title">Foundation</h3>
+          <p class="path-stage-desc">Mathematics, science and language at Saraswati Shishu Mandir, where the curiosity started.</p>
+          <dl class="path-table mono">
+            <div><dt>School</dt><dd>Saraswati Shishu Mandir</dd></div>
+            <div><dt>Subjects</dt><dd>Mathematics &middot; Science &middot; Language</dd></div>
+            <div><dt>Handle</dt><dd>@2018_trauma_center</dd></div>
+          </dl>
+        </article>
+        <article class="path-stage" data-stage="1">
+          <p class="path-stage-n mono">Stage 02 &middot; 2023</p>
+          <h3 class="path-stage-title">Engineering</h3>
+          <p class="path-stage-desc">B.Tech in Information Technology at Government Engineering College: networks, systems and code.</p>
+          <dl class="path-table mono">
+            <div><dt>College</dt><dd>Government Engineering College</dd></div>
+            <div><dt>Degree</dt><dd>B.Tech &middot; Information Technology</dd></div>
+            <div><dt>Handle</dt><dd>@Ghosala</dd></div>
+          </dl>
+        </article>
+        <article class="path-stage" data-stage="2">
+          <p class="path-stage-n mono">Stage 03 &middot; 2027 &middot; In progress</p>
+          <h3 class="path-stage-title">Forensics</h3>
+          <p class="path-stage-desc">M.Tech in Cyber Forensics &amp; Information Security at NIELIT. The deep end, on purpose.</p>
+          <dl class="path-table mono">
+            <div><dt>Institute</dt><dd>NIELIT</dd></div>
+            <div><dt>Degree</dt><dd>M.Tech &middot; Cyber Forensics &amp; Information Security</dd></div>
+            <div><dt>Handle</dt><dd>@majdur_khana</dd></div>
+          </dl>
+        </article>
+      </div>
+
+      <footer class="path-foot">
+        <span class="path-progress" aria-hidden="true"><i></i></span>
+        <p class="path-quote mono">&ldquo;The roots of education are bitter, but the fruit is sweet.&rdquo; &mdash; Aristotle</p>
+      </footer>
+    </div>
   </div>
-
-  <figure class="path-float" aria-hidden="true">
-    <img src="" alt="" width="960" height="720">
-    <figcaption class="mono"></figcaption>
-  </figure>
 </section>
