@@ -2856,7 +2856,7 @@ justify-self: end;
 margin-top: clamp(6px, 0.95vw, 14px);
 }
 .sec--about .ab-media {
-aspect-ratio: 1064 / 1500;
+aspect-ratio: 896 / 1195;
 background: var(--paper-2);
 border-radius: 3px;
 }
