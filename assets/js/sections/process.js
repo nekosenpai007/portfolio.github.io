@@ -42,7 +42,6 @@
   var active = -1;
   var shownPct = -1;
   var isFinal = false;
-  var seenOpen = false;
   var t = [];
   for (var s = 0; s < N; s++) t.push(-1);
 
@@ -194,16 +193,12 @@
     var dist = r.height - stageH;
     var f = dist > 0 ? clamp(-r.top / dist, 0, 1) : 0;
     var p = clamp(f / HOLD, 0, 1);
-    var inView = r.top < window.innerHeight && r.bottom > 0;
-    if (inView && p < 1) seenOpen = true;
 
     if (p !== progress) {
       progress = p;
       render();
     }
 
-    /* the case is closed once the last step has been fully shown on screen */
-    if (p >= 1 && inView && seenOpen && C.flags) C.flags.capture("case_closed");
   }
 
   function onScroll() {
@@ -341,13 +336,10 @@
     });
   }
 
-  /* Static list: the case closes when the final button comes into view. */
-  if (cta && "IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting && !pinned && C.flags) C.flags.capture("case_closed");
-      });
-    }, { threshold: 0.6 });
-    io.observe(cta);
+  /* Flag: the case is closed when you take the hint and press the final button. */
+  if (cta) {
+    cta.addEventListener("click", function () {
+      if (C.flags) C.flags.capture("case_closed");
+    });
   }
 })();

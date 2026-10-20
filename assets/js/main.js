@@ -88,7 +88,7 @@
   var FLAGS = [
     { id: "deep_scan", hint: "Hold the globe to run a deep scan." },
     { id: "xray", hint: "See how this page is built." },
-    { id: "case_closed", hint: "Follow the investigation to the very end." },
+    { id: "case_closed", hint: "Take the hint at the end of the investigation." },
     { id: "console", hint: "Developers know where to look." },
     { id: "konami", hint: "Old cheat codes still work." }
   ];
@@ -205,31 +205,66 @@
      size, e.g. "Heading 851×100", plus an optional data-spec-note line. */
   var specTimer = 0;
 
+  /* Boxes live on a fixed layer and are re-positioned every scroll frame, so they
+     stay on their element even inside pinned or sliding sections. */
+  var specs = [];
+  var specRaf = 0;
+
   function drawSpecs() {
     if (!xrayLayer) return;
     xrayLayer.innerHTML = "";
-    xrayLayer.style.height = "0";
+    specs = [];
     if (Cipher.theme() !== "xray") return;
-    xrayLayer.style.height = document.documentElement.scrollHeight + "px";
 
-    var html = "";
-    var sx = window.scrollX;
-    var sy = window.scrollY;
     document.querySelectorAll("[data-spec]").forEach(function (el) {
       if (el.closest("[hidden]")) return;
-      var r = el.getBoundingClientRect();
-      if (r.width < 2 || r.height < 2) return;
       var note = el.getAttribute("data-spec-note");
-      html +=
-        '<div class="xray-box" style="left:' + (r.left + sx) + "px;top:" + (r.top + sy) +
-        "px;width:" + r.width + "px;height:" + r.height + 'px"><i></i><i></i><i></i><i></i>' +
-        '<div class="xray-tag"><span class="spec-label">' + Cipher.esc(el.getAttribute("data-spec")) +
-        "&nbsp;&nbsp;" + Math.round(r.width) + "×" + Math.round(r.height) + "</span>" +
-        (note ? '<span class="xray-note">' + Cipher.esc(note) + "</span>" : "") +
-        "</div></div>";
+      var box = document.createElement("div");
+      box.className = "xray-box";
+      box.innerHTML = "<i></i><i></i><i></i><i></i>" +
+        '<div class="xray-tag"><span class="spec-label"></span>' +
+        (note ? '<span class="xray-note">' + Cipher.esc(note) + "</span>" : "") + "</div>";
+      xrayLayer.appendChild(box);
+      specs.push({ el: el, box: box, label: box.querySelector(".spec-label"), name: el.getAttribute("data-spec"), w: -1, h: -1 });
     });
-    xrayLayer.innerHTML = html;
+    placeSpecs();
   }
+
+  function placeSpecs() {
+    specRaf = 0;
+    var vh = window.innerHeight;
+    for (var i = 0; i < specs.length; i++) {
+      var s = specs[i];
+      var r = s.el.getBoundingClientRect();
+      var off = r.width < 2 || r.height < 2 || r.bottom < -40 || r.top > vh + 40;
+      s.box.style.display = off ? "none" : "";
+      if (off) continue;
+      s.box.style.transform = "translate3d(" + r.left + "px," + r.top + "px,0)";
+      var w = Math.round(r.width), h = Math.round(r.height);
+      if (w !== s.w || h !== s.h) {
+        s.w = w;
+        s.h = h;
+        s.box.style.width = r.width + "px";
+        s.box.style.height = r.height + "px";
+        s.label.textContent = s.name + "\u00a0\u00a0" + w + "\u00d7" + h;
+      }
+    }
+  }
+
+  function queuePlace() {
+    if (specs.length && !specRaf) specRaf = requestAnimationFrame(placeSpecs);
+  }
+
+  // listen after the section scripts, so their scroll-driven transforms are
+  // applied earlier in the same frame than the boxes are measured
+  function listenScroll() {
+    window.addEventListener("scroll", queuePlace, { passive: true });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", listenScroll);
+  else listenScroll();
+  // reveal and hover motion moves elements without a scroll, so re-place when it settles
+  document.addEventListener("transitionend", queuePlace, true);
+  document.addEventListener("animationend", queuePlace, true);
 
   function queueSpecs() {
     if (Cipher.theme() !== "xray") return;

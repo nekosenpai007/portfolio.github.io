@@ -24,12 +24,6 @@
     }
   },
   {
-    "name": "Networking Essentials",
-    "desc": "Completed the Computer Networking course by Cisco.",
-    "image": "network",
-    "links": {}
-  },
-  {
     "name": "High Performance Computing",
     "desc": "Completed the High Performance Computing workshop at IUAC.",
     "image": "hpc",

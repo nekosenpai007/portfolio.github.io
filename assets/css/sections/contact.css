@@ -128,6 +128,14 @@
   border-bottom-color: #ff8a8a;
 }
 
+.sec--contact .cf-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .sec--contact .cf-foot {
   display: flex;
   flex-wrap: wrap;

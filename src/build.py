@@ -21,7 +21,7 @@ import os
 import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ORDER = ["hero", "process", "about", "skills", "path", "cert", "work", "journal", "hobbies", "contact"]
+ORDER = ["hero", "process", "about", "experience", "skills", "path", "cert", "work", "journal", "hobbies", "contact"]
 FX = ["loader", "fluid", "scramble", "ripple"]
 DIST = os.path.join(ROOT, "assets", "dist")
 
