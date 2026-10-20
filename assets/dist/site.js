@@ -68,7 +68,7 @@ revealObserver.observe(el);
 var FLAGS = [
 { id: "deep_scan", hint: "Hold the globe to run a deep scan." },
 { id: "xray", hint: "See how this page is built." },
-{ id: "case_closed", hint: "Follow the investigation to the very end." },
+{ id: "case_closed", hint: "Take the hint at the end of the investigation." },
 { id: "console", hint: "Developers know where to look." },
 { id: "konami", hint: "Old cheat codes still work." }
 ];
@@ -166,30 +166,56 @@ if (next === "xray") Cipher.flags.capture("xray");
 });
 }
 var specTimer = 0;
+var specs = [];
+var specRaf = 0;
 function drawSpecs() {
 if (!xrayLayer) return;
 xrayLayer.innerHTML = "";
-xrayLayer.style.height = "0";
+specs = [];
 if (Cipher.theme() !== "xray") return;
-xrayLayer.style.height = document.documentElement.scrollHeight + "px";
-var html = "";
-var sx = window.scrollX;
-var sy = window.scrollY;
 document.querySelectorAll("[data-spec]").forEach(function (el) {
 if (el.closest("[hidden]")) return;
-var r = el.getBoundingClientRect();
-if (r.width < 2 || r.height < 2) return;
 var note = el.getAttribute("data-spec-note");
-html +=
-'<div class="xray-box" style="left:' + (r.left + sx) + "px;top:" + (r.top + sy) +
-"px;width:" + r.width + "px;height:" + r.height + 'px"><i></i><i></i><i></i><i></i>' +
-'<div class="xray-tag"><span class="spec-label">' + Cipher.esc(el.getAttribute("data-spec")) +
-"&nbsp;&nbsp;" + Math.round(r.width) + "×" + Math.round(r.height) + "</span>" +
-(note ? '<span class="xray-note">' + Cipher.esc(note) + "</span>" : "") +
-"</div></div>";
+var box = document.createElement("div");
+box.className = "xray-box";
+box.innerHTML = "<i></i><i></i><i></i><i></i>" +
+'<div class="xray-tag"><span class="spec-label"></span>' +
+(note ? '<span class="xray-note">' + Cipher.esc(note) + "</span>" : "") + "</div>";
+xrayLayer.appendChild(box);
+specs.push({ el: el, box: box, label: box.querySelector(".spec-label"), name: el.getAttribute("data-spec"), w: -1, h: -1 });
 });
-xrayLayer.innerHTML = html;
+placeSpecs();
 }
+function placeSpecs() {
+specRaf = 0;
+var vh = window.innerHeight;
+for (var i = 0; i < specs.length; i++) {
+var s = specs[i];
+var r = s.el.getBoundingClientRect();
+var off = r.width < 2 || r.height < 2 || r.bottom < -40 || r.top > vh + 40;
+s.box.style.display = off ? "none" : "";
+if (off) continue;
+s.box.style.transform = "translate3d(" + r.left + "px," + r.top + "px,0)";
+var w = Math.round(r.width), h = Math.round(r.height);
+if (w !== s.w || h !== s.h) {
+s.w = w;
+s.h = h;
+s.box.style.width = r.width + "px";
+s.box.style.height = r.height + "px";
+s.label.textContent = s.name + "\u00a0\u00a0" + w + "\u00d7" + h;
+}
+}
+}
+function queuePlace() {
+if (specs.length && !specRaf) specRaf = requestAnimationFrame(placeSpecs);
+}
+function listenScroll() {
+window.addEventListener("scroll", queuePlace, { passive: true });
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", listenScroll);
+else listenScroll();
+document.addEventListener("transitionend", queuePlace, true);
+document.addEventListener("animationend", queuePlace, true);
 function queueSpecs() {
 if (Cipher.theme() !== "xray") return;
 clearTimeout(specTimer);
@@ -1813,7 +1839,6 @@ var progress = -1;
 var active = -1;
 var shownPct = -1;
 var isFinal = false;
-var seenOpen = false;
 var t = [];
 for (var s = 0; s < N; s++) t.push(-1);
 function clamp(v, a, b) {
@@ -1939,13 +1964,10 @@ var r = root.getBoundingClientRect();
 var dist = r.height - stageH;
 var f = dist > 0 ? clamp(-r.top / dist, 0, 1) : 0;
 var p = clamp(f / HOLD, 0, 1);
-var inView = r.top < window.innerHeight && r.bottom > 0;
-if (inView && p < 1) seenOpen = true;
 if (p !== progress) {
 progress = p;
 render();
 }
-if (p >= 1 && inView && seenOpen && C.flags) C.flags.capture("case_closed");
 }
 function onScroll() {
 if (!pinned || ticking) return;
@@ -2058,13 +2080,10 @@ var dist = root.offsetHeight - stageH;
 window.scrollTo({ top: Math.round(top + dist * (HOLD + (1 - HOLD) / 2)), behavior: "instant" });
 });
 }
-if (cta && "IntersectionObserver" in window) {
-var io = new IntersectionObserver(function (entries) {
-entries.forEach(function (entry) {
-if (entry.isIntersecting && !pinned && C.flags) C.flags.capture("case_closed");
+if (cta) {
+cta.addEventListener("click", function () {
+if (C.flags) C.flags.capture("case_closed");
 });
-}, { threshold: 0.6 });
-io.observe(cta);
 }
 })();
 ;(function () {
@@ -2451,12 +2470,16 @@ var form = document.getElementById("contact-form");
 if (!form) return;
 var status = form.querySelector(".cf-status");
 var button = form.querySelector('button[type="submit"]');
+var trap = form.querySelector("#cf-website");
 var FALLBACK = "Couldn't send. Email me directly at ciphersensei@proton.me.";
+var COOLDOWN = 60000;
+var SENT_KEY = "cipher-contact-sent";
+var openedAt = Date.now();
 var inited = false;
 function ready() {
 if (!window.emailjs) return false;
 if (!inited) {
-window.emailjs.init({ publicKey: "7CjxO3yjXAz6geZFb" });
+window.emailjs.init({ publicKey: "7CjxO3yjXAz6geZFb", blockHeadless: true });
 inited = true;
 }
 return true;
@@ -2465,10 +2488,28 @@ function say(text, kind) {
 status.textContent = text;
 status.className = "cf-status mono" + (kind ? " is-" + kind : "");
 }
+function sent() {
+form.reset();
+say("Message sent. I'll get back to you.", "ok");
+}
+function lastSent() {
+try { return Number(localStorage.getItem(SENT_KEY)) || 0; } catch (e) { return 0; }
+}
+function markSent() {
+try { localStorage.setItem(SENT_KEY, String(Date.now())); } catch (e) {}
+}
 window.addEventListener("load", ready);
 form.addEventListener("submit", function (e) {
 e.preventDefault();
 if (!form.reportValidity()) return;
+if ((trap && trap.value) || Date.now() - openedAt < 3000) {
+sent();
+return;
+}
+if (Date.now() - lastSent() < COOLDOWN) {
+say("You just sent one. Give it a minute.", "err");
+return;
+}
 if (!ready()) {
 say(FALLBACK, "err");
 return;
@@ -2476,8 +2517,8 @@ return;
 button.disabled = true;
 say("Sending…");
 window.emailjs.sendForm("service_3cv5ga3", "template_r4fp27a", form).then(function () {
-form.reset();
-say("Message sent. I'll get back to you.", "ok");
+markSent();
+sent();
 }, function () {
 say(FALLBACK, "err");
 }).then(function () {

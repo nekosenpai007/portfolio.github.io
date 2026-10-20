@@ -23,6 +23,9 @@ updates right away). Never edit `assets/dist/` by hand: it is rebuilt from the s
 | Fonts (self-hosted, Latin only) | `assets/fonts/` |
 | Images | `assets/images/` (WebP, sized for how they are shown) |
 | Skills and certificates (data) | `skills.json`, `projects.json` |
+| Link preview shown when the site is shared (1200×630) | `assets/images/og.jpg` |
+| Contact form library (EmailJS 4.4.1, pinned, served from this site) | `assets/vendor/` |
+| Search engines | `sitemap.xml` (update `lastmod` after big changes), `robots.txt` |
 
 Change the accent colour in one place: `--accent` (and `--accent-ink` for small text) in `assets/css/main.css`.
 

@@ -1,0 +1,153 @@
+/* ==========================================================
+   Experience — four cards (card style after axiom-power-template)
+   ========================================================== */
+
+.sec--experience .ex-head {
+  margin-bottom: clamp(32px, 5vh, 56px);
+}
+
+.sec--experience .ex-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink-2);
+  letter-spacing: 0.18em;
+}
+
+.sec--experience .ex-sq {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+}
+
+.sec--experience .ex-title {
+  max-width: 20em;
+  margin-top: 22px;
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.2vw, 68px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+
+.sec--experience .ex-title .tone-2 {
+  color: var(--ink-2);
+}
+
+.sec--experience .ex-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.sec--experience .ex-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(22px, 2.2vw, 30px);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-media);
+  background:
+    radial-gradient(120% 90% at 85% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
+    var(--paper-2);
+  transition: border-color 0.4s, transform 0.6s var(--ease);
+}
+
+.sec--experience .ex-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  transform: translateY(-3px);
+}
+
+.sec--experience .ex-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sec--experience .ex-ico {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-field);
+  background: var(--paper);
+  color: var(--accent-ink);
+}
+
+.sec--experience .ex-ico svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sec--experience .ex-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: right;
+}
+
+.sec--experience .ex-name {
+  margin-top: auto;
+  padding-top: 32px;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2vw, 30px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.sec--experience .ex-desc {
+  max-width: 38em;
+  margin-top: 10px;
+  color: var(--ink-2);
+}
+
+.sec--experience .ex-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.sec--experience .ex-tags li {
+  padding: 3px 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.sec--experience .ex-link {
+  align-self: flex-start;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+@media (min-width: 1200px) {
+  .sec--experience .ex-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .sec--experience .ex-card {
+    min-height: min(440px, 52vh);
+  }
+}
+
+@media (max-width: 760px) {
+  .sec--experience .ex-grid {
+    grid-template-columns: 1fr;
+  }
+}

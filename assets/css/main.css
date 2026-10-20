@@ -384,10 +384,6 @@ button {
 
 .btn-pill:hover .btn-icon .i-arrow,
 .link-arrow:hover .i-arrow,
-.icon-link:hover .i-arrow {
-  transform: rotate(45deg);
-}
-
 .btn-pill--outline {
   --btn-bg: transparent;
   --btn-fg: var(--ink);
@@ -398,17 +394,6 @@ button {
 
 .btn-pill--outline:hover {
   border-color: var(--ink);
-}
-
-/* for dark panels (.panel-dark) in both themes */
-.btn-pill--on-dark {
-  --btn-bg: transparent;
-  --btn-fg: var(--on-panel);
-  border-color: rgba(244, 244, 246, 0.24);
-}
-
-.btn-pill--on-dark:hover {
-  border-color: var(--on-panel);
 }
 
 .btn-pill[disabled] {
@@ -457,28 +442,6 @@ button {
   transition: transform 0.45s var(--ease);
 }
 
-/* text + round dark icon, as in "Case study (↗)" */
-.icon-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-.icon-link .btn-icon {
-  width: 32px;
-  height: 32px;
-  --btn-icon-bg: var(--ink);
-  --btn-icon-fg: var(--paper);
-}
-
-.icon-link .i-arrow {
-  width: 14px;
-  height: 14px;
-  transition: transform 0.45s var(--ease);
-}
-
 /* small boxed mono label, as in "The build" */
 .chip {
   display: inline-flex;
@@ -491,19 +454,6 @@ button {
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 1.5;
-  color: var(--ink);
-  white-space: nowrap;
-}
-
-/* rounded tag, as in "Concept · Web design" */
-.tag-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 12px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-pill);
-  font-size: 13px;
-  line-height: 1.4;
   color: var(--ink);
   white-space: nowrap;
 }
@@ -916,6 +866,7 @@ button {
   border-radius: var(--radius-pill);
   font-size: 15px;
   font-weight: 500;
+  white-space: nowrap;
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -1497,11 +1448,8 @@ button {
 /* ---------- X-ray mode: spec annotations + HUD ---------- */
 
 .xray-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0;
+  position: fixed;
+  inset: 0;
   overflow: hidden;   /* labels near the right edge must not widen the page */
   z-index: 80;
   pointer-events: none;
@@ -1509,8 +1457,11 @@ button {
 
 .xray-box {
   position: absolute;
+  left: 0;
+  top: 0;
   border: 1px solid var(--accent);
   animation: xray-in 0.5s var(--ease) both;
+  will-change: transform;
 }
 
 .xray-box i {
@@ -1683,127 +1634,6 @@ a.sec-head-aside {
   }
 }
 
-/* ---------- work cards (certifications, work, journal) ----------
-   <a class="wcard" href>
-     <span class="wcard-media" data-ripple data-cursor="View certificate"> <img> <span class="wcard-tags">…</span> </span>
-     <span class="wcard-body"> meta · title · desc · round arrow </span>
-   </a> */
-
-.wcard {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  color: var(--ink);
-}
-
-.wcard-media {
-  position: relative;
-  display: block;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: var(--radius-media);
-  background: var(--paper-2);
-  isolation: isolate;
-}
-
-.wcard-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.9s var(--ease), opacity 0.3s;
-}
-
-.wcard:hover .wcard-media img {
-  transform: scale(1.03);
-}
-
-/* while the ripple canvas shows, it replaces the image underneath */
-.wcard-media.is-rippling img {
-  opacity: 0;
-}
-
-.wcard-tags {
-  position: absolute;
-  left: 16px;
-  bottom: 16px;
-  z-index: 2;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.tag-box {
-  display: inline-block;
-  padding: 5px 10px;
-  border: 1px solid rgba(244, 244, 246, 0.55);
-  border-radius: 3px;
-  background: rgba(9, 9, 11, 0.45);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 1.4;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #f4f4f6;
-}
-
-.wcard-body {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 6px 16px;
-  align-items: start;
-}
-
-.wcard-meta {
-  grid-column: 1 / -1;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.wcard-title {
-  font-family: var(--font-display);
-  font-size: clamp(20px, 1.7vw, 26px);
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-}
-
-.wcard-desc {
-  grid-column: 1;
-  font-size: 15px;
-  color: var(--ink-2);
-}
-
-.wcard-go {
-  grid-column: 2;
-  grid-row: 2 / span 2;
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--on-accent);
-  transition: transform 0.5s var(--ease);
-}
-
-.wcard-go .i-arrow {
-  transition: transform 0.45s var(--ease);
-}
-
-.wcard:hover .wcard-go .i-arrow {
-  transform: rotate(45deg);
-}
-
-.wcard--muted .wcard-go {
-  background: var(--paper-3);
-  color: var(--muted);
-}
-
 /* ---------- ripple + view cursor (assets/js/fx/ripple.js) ---------- */
 
 .ripple-canvas {
@@ -1955,6 +1785,17 @@ a.sec-head-aside {
 
 @media (min-width: 1024px) {
   .site-header .menu-btn {
+    display: none;
+  }
+}
+
+/* seven nav links leave no room for the X-ray label until the bar is wider */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .xray-toggle {
+    padding: 0 10px;
+  }
+
+  .xray-toggle span {
     display: none;
   }
 }
