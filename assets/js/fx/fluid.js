@@ -23,6 +23,13 @@
     IDLE_MS: 3500
   };
 
+  // weaker machines (≤4 cores or ≤4 GB memory): a lighter simulation that still looks the same
+  if ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4) {
+    config.SIM_RESOLUTION = 96;
+    config.DYE_RESOLUTION = 512;
+    config.PRESSURE_ITERATIONS = 10;
+  }
+
   var canvas = document.createElement("canvas");
   canvas.className = "fluid-canvas";
   canvas.setAttribute("aria-hidden", "true");

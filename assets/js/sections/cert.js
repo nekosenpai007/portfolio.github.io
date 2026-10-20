@@ -26,7 +26,7 @@
         '<span class="cert-card-top"><span class="cert-ico">' + pad(i + 1) + "</span>" +
           '<span class="cert-label">Certificate</span></span>' +
         '<span class="cert-media"' + (link ? ' data-ripple data-cursor="View certificate"' : "") + ">" +
-          '<img src="assets/images/projects/' + C.esc(cert.image) + '.png" alt="" width="1080" height="1080" loading="lazy">' +
+          '<img src="assets/images/projects/' + C.esc(cert.image) + '.webp" alt="" width="800" height="800" decoding="async" loading="lazy">' +
         "</span>" +
         '<span class="cert-card-title">' + C.esc(cert.name) + "</span>" +
         '<span class="cert-card-desc">' + C.esc(cert.desc) + "</span>" +

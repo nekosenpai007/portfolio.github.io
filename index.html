@@ -29,22 +29,10 @@
       } catch (e) {}
     })();
   </script>
+  <link rel="preload" href="assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-display.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Caveat:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap">
-
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/sections/hero.css">
-  <link rel="stylesheet" href="assets/css/sections/process.css">
-  <link rel="stylesheet" href="assets/css/sections/about.css">
-  <link rel="stylesheet" href="assets/css/sections/skills.css">
-  <link rel="stylesheet" href="assets/css/sections/path.css">
-  <link rel="stylesheet" href="assets/css/sections/cert.css">
-  <link rel="stylesheet" href="assets/css/sections/work.css">
-  <link rel="stylesheet" href="assets/css/sections/journal.css">
-  <link rel="stylesheet" href="assets/css/sections/hobbies.css">
-  <link rel="stylesheet" href="assets/css/sections/contact.css">
+  <link rel="stylesheet" href="assets/dist/site.css?v=f083ceb569">
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
@@ -381,7 +369,7 @@
 
       <figure class="ab-fig reveal">
         <div class="ab-media crop" data-spec="Fig. 1" data-spec-note="Portrait, shown at its native 1064 × 1500 ratio.">
-          <img src="assets/images/11.jpg" width="1064" height="1500" alt="Illustration of a tabby cat in a headset at a desk, keyboard and mouse in front of a glowing monitor, shelves of books and cans behind." loading="lazy" decoding="async">
+          <img src="assets/images/11.webp" width="760" height="1071" alt="Illustration of a tabby cat in a headset at a desk, keyboard and mouse in front of a glowing monitor, shelves of books and cans behind." loading="lazy" decoding="async">
           <span class="chip ab-chip">The IT Guy</span>
         </div>
         <figcaption class="mono ab-caption"><span class="ab-caption-tag">fig. 1</span><span aria-hidden="true">—</span><span>the IT guy at work</span></figcaption>
@@ -432,9 +420,9 @@
 <section class="sec sec--path" id="path" data-chapter="Path" aria-labelledby="path-title">
   <div class="path-pin">
     <div class="path-bgs" aria-hidden="true">
-      <img class="path-bg is-on" src="assets/images/educat/school2.jpg" alt="" width="960" height="720" loading="lazy">
-      <img class="path-bg" src="assets/images/educat/college2.jpg" alt="" width="960" height="720" loading="lazy">
-      <img class="path-bg" src="assets/images/educat/mtech.jpg" alt="" width="971" height="670" loading="lazy">
+      <img class="path-bg is-on" src="assets/images/educat/school2.webp" alt="" width="960" height="720" loading="lazy">
+      <img class="path-bg" src="assets/images/educat/college2.webp" alt="" width="960" height="720" loading="lazy">
+      <img class="path-bg" src="assets/images/educat/mtech.webp" alt="" width="971" height="670" loading="lazy">
       <svg class="path-lines" viewBox="0 0 1200 800" preserveAspectRatio="none">
         <path d="M0 130 C 200 128, 260 120, 330 126 S 420 90, 470 128 S 620 132, 1200 120"/>
         <path d="M0 260 C 180 258, 300 262, 380 256 S 450 214, 500 258 S 700 262, 1200 252"/>
@@ -526,7 +514,7 @@
     <div class="work-track">
       <a class="work-card" href="https://github.com/nekosenpai007" target="_blank" rel="noopener">
         <span class="work-media" data-ripple data-cursor="View on GitHub" data-spec="Media" data-spec-note="Hover: water ripple, RGB split.">
-          <img src="assets/images/covers/work-network.png" alt="" width="1200" height="780" loading="lazy">
+          <img src="assets/images/covers/work-network.webp" alt="" width="1200" height="780" loading="lazy">
           <span class="work-tag mono">WK-01</span>
         </span>
         <span class="work-title">Projects,<br>compiling.</span>
@@ -538,7 +526,7 @@
 
       <a class="work-card" href="https://nekos-organization.gitbook.io/cyber" target="_blank" rel="noopener">
         <span class="work-media" data-ripple data-cursor="Read write-ups">
-          <img src="assets/images/covers/work-orbits.png" alt="" width="1200" height="780" loading="lazy">
+          <img src="assets/images/covers/work-orbits.webp" alt="" width="1200" height="780" loading="lazy">
           <span class="work-tag mono">WK-02</span>
         </span>
         <span class="work-title">Write-ups<br>on GitBook.</span>
@@ -550,7 +538,7 @@
 
       <a class="work-card" href="https://dev.to/neko_senpai" target="_blank" rel="noopener">
         <span class="work-media" data-ripple data-cursor="Open DEV">
-          <img src="assets/images/covers/work-field.png" alt="" width="1200" height="780" loading="lazy">
+          <img src="assets/images/covers/work-field.webp" alt="" width="1200" height="780" loading="lazy">
           <span class="work-tag mono">WK-03</span>
         </span>
         <span class="work-title">Posts<br>on DEV.</span>
@@ -783,18 +771,6 @@
 </div>
 <div class="xray-layer" aria-hidden="true"></div>
 
-<script src="assets/js/main.js"></script>
-<script src="assets/js/fx/loader.js"></script>
-<script src="assets/js/fx/fluid.js"></script>
-<script src="assets/js/fx/scramble.js"></script>
-<script src="assets/js/fx/ripple.js"></script>
-<script src="assets/js/sections/hero.js"></script>
-<script src="assets/js/sections/process.js"></script>
-<script src="assets/js/sections/skills.js"></script>
-<script src="assets/js/sections/path.js"></script>
-<script src="assets/js/sections/cert.js"></script>
-<script src="assets/js/sections/work.js"></script>
-<script src="assets/js/sections/journal.js"></script>
-<script src="assets/js/sections/contact.js"></script>
+<script src="assets/dist/site.js?v=0e57ce93c6"></script>
 </body>
 </html>
