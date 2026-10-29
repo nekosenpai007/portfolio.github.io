@@ -220,7 +220,10 @@
 
   function begin() {
     size();
+    // no viewport yet (background tab, hidden frame, preview bot): skip the intro
+    if (W < 1 || H < 1) { clearTimeout(failsafe); finish(); return; }
     sampleGlyph();
+    if (!targets.length) { clearTimeout(failsafe); finish(); return; }
     makeParticles();
     requestAnimationFrame(draw);
   }
