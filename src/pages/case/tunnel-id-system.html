@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tunnel ID System | cipher.</title>
+  <meta name="description" content="Case study: a fingerprint and UHF RFID system that tracks who is inside a tunnel construction site, plus the admin console that ties the sites together.">
+  <meta name="theme-color" content="#09090b">
+  <meta property="og:title" content="Tunnel ID System | cipher.">
+  <meta property="og:description" content="Who is inside the tunnel, right now. A case study.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://itsnetamji.in/case/tunnel-id-system.html">
+  <meta property="og:site_name" content="cipher.">
+  <meta property="og:image" content="https://itsnetamji.in/assets/images/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://itsnetamji.in/case/tunnel-id-system.html">
+  <link rel="icon" href="../assets/images/eagle.png" type="image/png">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("cipher-theme"); } catch (e) {}
+      if (t !== "xray") t = "default";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="preload" href="../assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/bricolage-grotesque-display.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- @css -->
+</head>
+<body class="page-case">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="case-bar">
+  <div class="container case-bar-in">
+    <a href="../" class="wordmark" aria-label="cipher. Home">cipher<span class="dot">.</span></a>
+    <a class="link-arrow" href="../#work">All work <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container case">
+
+    <header class="case-hero">
+      <p class="mono-caps case-kicker"><span class="case-sq" aria-hidden="true"></span>Case study &middot; Sentri Systems</p>
+      <h1 class="display-xl">Tunnel ID System<span class="dot">.</span><br><span class="tone-2">Who is inside, right now.</span></h1>
+      <p class="lead">A personnel and vehicle tracking system for tunnel construction sites. Workers scan a fingerprint or a UHF RFID tag at the portal, and the site always knows who is inside.</p>
+    </header>
+
+    <dl class="case-facts">
+      <div><dt class="mono-caps">Role</dt><dd>Developer. I took over a colleague's first version and upgraded it.</dd></div>
+      <div><dt class="mono-caps">Status</dt><dd>In production at client tunnel sites. A newer dashboard version is in testing.</dd></div>
+      <div><dt class="mono-caps">Client</dt><dd>Sushee Infra &amp; Mining: access control across four tunnels, as listed on <a href="https://sentrisystems.co.in/" target="_blank" rel="noopener">sentrisystems.co.in</a>.</dd></div>
+      <div><dt class="mono-caps">Stack</dt><dd>Python, Flask, SQLite, Raspberry Pi and Linux kiosks, ZKTeco fingerprint readers, TimeWatch UHF RFID readers, systemd, Tailscale, Cloudflare.</dd></div>
+    </dl>
+
+    <section class="case-sec" aria-labelledby="problem">
+      <h2 class="display-m" id="problem">The problem</h2>
+      <div class="case-body">
+        <p>On a tunnel site the safety question is simple: who is inside right now? A paper register at the portal answers it slowly, and in an emergency the answer has to be immediate and trustworthy.</p>
+        <p>The sites are remote, some run on a cellular uplink, and the hardware has to keep working with nobody technical on hand.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="how">
+      <h2 class="display-m" id="how">How it works</h2>
+      <div class="case-body">
+        <p>Each scan toggles a person's state: the first scan is an entry, the next an exit. The site machine collects scans from every reader, keeps the record in SQLite and serves the dashboard on the local network.</p>
+      </div>
+      <figure class="case-arch" aria-label="Architecture">
+        <div class="arch-col">
+          <p class="mono-caps">On site</p>
+          <div class="arch-box"><b>Readers at each portal</b><span>ZKTeco fingerprint, TimeWatch UHF RFID</span></div>
+          <div class="arch-box"><b>Site machine</b><span>Raspberry Pi or Linux kiosk: Flask, SQLite, device pollers</span></div>
+          <div class="arch-box"><b>Kiosk screen and LED board</b><span>Live headcount at the portal</span></div>
+        </div>
+        <div class="arch-link mono" aria-hidden="true">Tailscale</div>
+        <div class="arch-col">
+          <p class="mono-caps">Sentri server</p>
+          <div class="arch-box"><b>Admin console</b><span>One login for every site, admin and viewer roles</span></div>
+          <div class="arch-box"><b>Demo dashboards</b><span>Seeded with sample data, login required</span></div>
+        </div>
+        <div class="arch-link mono" aria-hidden="true">Cloudflare</div>
+        <div class="arch-col">
+          <p class="mono-caps">People</p>
+          <div class="arch-box"><b>Site staff</b><span>The kiosk at the site</span></div>
+          <div class="arch-box"><b>Managers and clients</b><span>Through the console, behind Cloudflare Access</span></div>
+        </div>
+        <figcaption class="mono">No site machine opens a port to the internet. Sites reach the server over a private Tailscale network.</figcaption>
+      </figure>
+    </section>
+
+    <section class="case-sec" aria-labelledby="built">
+      <h2 class="display-m" id="built">What I built</h2>
+      <div class="case-grid">
+        <div class="case-card">
+          <h3>Tracking</h3>
+          <ul>
+            <li>Workers and employees tracked separately, down to the entrance they used.</li>
+            <li>A vehicle module: tag registration, routing per reader, long-stay alerts and cycle times.</li>
+            <li>Long-stay alerts in the dashboard, with optional email.</li>
+          </ul>
+        </div>
+        <div class="case-card">
+          <h3>Safety</h3>
+          <ul>
+            <li>Emergency mode: declare an emergency, freeze the roll call, and account for each person by scan or by hand.</li>
+            <li>Headcount confidence and peak-of-the-day figures, so the count says how much to trust it.</li>
+            <li>A health and safety reports tab, a fatigue watch and device-offline alerts.</li>
+          </ul>
+        </div>
+        <div class="case-card">
+          <h3>Reliability</h3>
+          <ul>
+            <li>Automated daily database backups.</li>
+            <li>Fixed RFID readers stuck as "unknown", a fingerprint-reader deletion bug and a reconnect loop that never stopped.</li>
+            <li>Split one large dashboard file into separate route modules.</li>
+          </ul>
+        </div>
+        <div class="case-card">
+          <h3>Dashboard and docs</h3>
+          <ul>
+            <li>Rebuilt the dashboard: navigation, check-out flow, reports, analytics, per-person profiles, search and a print layout.</li>
+            <li>Worked out the protocol of a Huidu LED board from captured traffic, so the portal shows live counts.</li>
+            <li>User manuals in English and Hindi for the dashboard and the fingerprint readers.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-sec" id="console" aria-labelledby="console-title">
+      <h2 class="display-m" id="console-title">The admin console</h2>
+      <div class="case-body">
+        <p>Every site had its own dashboard and its own password. The console puts them all behind one login, on a separate server.</p>
+        <ul class="case-list">
+          <li>Two roles. Admins reach each site. Viewers get a read-only overview and never see or use a site password.</li>
+          <li>CSRF protection on every form, login throttling and session expiry.</li>
+          <li>Remote access goes through Cloudflare Tunnel, with Cloudflare Access email codes in front of the console. Tailscale access rules let invited viewers reach the console and nothing else.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="hard">
+      <h2 class="display-m" id="hard">The hard parts</h2>
+      <div class="case-grid">
+        <div class="case-card">
+          <h3>SD cards that rot</h3>
+          <p>Site machines run from SD cards, and they silently corrupt files. I check packages against their checksums to find damaged files, keep backups off the machines, and once rebuilt a dead site machine the same day without losing data.</p>
+        </div>
+        <div class="case-card">
+          <h3>A reader that ignores you</h3>
+          <p>The UHF readers accept several connections but send tags down only one. A second connection looked healthy while receiving nothing, which explained "online" readers that never produced a scan.</p>
+        </div>
+        <div class="case-card">
+          <h3>An undocumented display</h3>
+          <p>The LED board's protocol isn't published. I rebuilt it from captured traffic until the generated frames matched the vendor software byte for byte.</p>
+        </div>
+        <div class="case-card">
+          <h3>Remote, fragile links</h3>
+          <p>Some sites sit on a cellular uplink. Tailscale gives each machine a stable private address, and I traced an SSH hang that ping didn't show to a packet-size (MTU) limit on the tunnel.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="security">
+      <h2 class="display-m" id="security">Security, by design</h2>
+      <div class="case-body">
+        <ul class="case-list">
+          <li>Site machines are never exposed to the internet. The only public entry points sit behind a login.</li>
+          <li>Viewers are read-only and never handle site credentials.</li>
+          <li>Login throttling uses the real client address from Cloudflare, so one attacker can't lock everyone out.</li>
+        </ul>
+        <p class="case-note mono">This page has no screenshots. The live dashboards hold real people's names and movements, so the diagram above is what I can share.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="lessons">
+      <h2 class="display-m" id="lessons">What I took from it</h2>
+      <div class="case-body">
+        <ul class="case-list">
+          <li>On site hardware, assume the disk is lying until a checksum says otherwise.</li>
+          <li>"Connected" is not "working". Watch for the data, not just the socket.</li>
+          <li>Access control is easier to get right in one place than on every site.</li>
+        </ul>
+      </div>
+    </section>
+
+    <nav class="case-next" aria-label="More">
+      <a class="btn-pill" href="../#work">Back to all work <span class="btn-icon"><svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></span></a>
+      <a class="link-arrow" href="../#contact">Get in touch <svg class="i-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+    </nav>
+  </div>
+</main>
+
+</body>
+</html>

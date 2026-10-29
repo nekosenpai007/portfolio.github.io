@@ -1,5 +1,5 @@
 /* ==========================================================
-   Experience — four cards (card style after axiom-power-template)
+   Experience — two role cards, then four hands-on cards (card style after axiom-power-template)
    ========================================================== */
 
 .sec--experience .ex-head {
@@ -148,6 +148,87 @@
 
 @media (max-width: 760px) {
   .sec--experience .ex-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- roles: wider cards above the hands-on grid ---------- */
+
+.sec--experience .ex-roles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.sec--experience .ex-role {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(22px, 2.6vw, 36px);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-media);
+  background:
+    radial-gradient(120% 90% at 85% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    var(--paper-2);
+  transition: border-color 0.4s;
+}
+
+.sec--experience .ex-role:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.sec--experience .ex-role .ex-name {
+  margin-top: 28px;
+  padding-top: 0;
+  font-size: clamp(28px, 2.6vw, 40px);
+}
+
+.sec--experience .ex-org {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.sec--experience .ex-role .ex-desc {
+  margin-top: 18px;
+}
+
+.sec--experience .ex-points {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+  color: var(--ink-2);
+}
+
+.sec--experience .ex-points li {
+  position: relative;
+  padding-left: 18px;
+  line-height: 1.5;
+}
+
+.sec--experience .ex-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+}
+
+.sec--experience .ex-role .ex-tags {
+  margin-top: auto;
+  padding-top: 22px;
+}
+
+.sec--experience .ex-sub {
+  margin: clamp(40px, 6vh, 64px) 0 18px;
+}
+
+@media (max-width: 1000px) {
+  .sec--experience .ex-roles {
     grid-template-columns: 1fr;
   }
 }

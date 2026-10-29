@@ -93,7 +93,7 @@
 .sec--work .work-card {
   flex: none;
   display: grid;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto 1fr auto;
   width: min(56vw, 900px);
   padding: 14px;
   background: #f1f1f2;
@@ -156,6 +156,52 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #3a3a42;
+}
+
+/* status, then the stack: one quiet line under the columns */
+.sec--work .work-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin: 0 14px 6px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(11, 11, 14, 0.12);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #3a3a42;
+}
+
+.sec--work .work-meta b {
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: #0b0b0e;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e2d4ff;
+}
+
+/* short screens: a slimmer cover keeps the whole card in view */
+@media (max-height: 820px) {
+  .sec--work.is-pinned .work-media {
+    aspect-ratio: 1200 / 500;
+  }
+
+  .sec--work.is-pinned .work-cols {
+    margin-top: 24px;
+  }
+}
+
+@media (max-height: 680px) {
+  .sec--work.is-pinned .work-media {
+    aspect-ratio: 1200 / 400;
+  }
+
+  .sec--work.is-pinned .work-title {
+    margin-top: 18px;
+  }
 }
 
 /* ---------- not pinned (phones, reduced motion): swipe the row ---------- */

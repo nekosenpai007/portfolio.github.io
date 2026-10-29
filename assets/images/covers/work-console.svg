@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780"><defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity=".05"/></pattern><radialGradient id="glow" cx=".72" cy=".2" r=".9"><stop offset="0" stop-color="#8b3dff" stop-opacity=".35"/><stop offset=".6" stop-color="#8b3dff" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="780" fill="#0d0c11"/><rect width="1200" height="780" fill="url(#g)"/><rect width="1200" height="780" fill="url(#glow)"/>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M600 390L300 240M600 390L300 540M600 390L900 240M600 390L900 540" stroke="#8b3dff" stroke-width="2.5" stroke-dasharray="2 10"/>
+<circle cx="600" cy="390" r="120" stroke="#8b3dff" stroke-opacity=".35" stroke-width="2"/>
+<circle cx="600" cy="390" r="78" stroke="#b794ff" stroke-width="3" fill="#0d0c11"/>
+<rect x="576" y="384" width="48" height="38" rx="6" stroke="#e2d4ff" stroke-width="2.5"/>
+<path d="M584 384v-12a16 16 0 0 1 32 0v12" stroke="#e2d4ff" stroke-width="2.5"/>
+<g stroke="#e2d4ff" stroke-width="2.5" fill="#0d0c11"><rect x="230" y="200" width="140" height="80" rx="10"/><rect x="230" y="500" width="140" height="80" rx="10"/><rect x="830" y="200" width="140" height="80" rx="10"/><rect x="830" y="500" width="140" height="80" rx="10"/></g>
+<g fill="#b794ff"><circle cx="352" cy="218" r="5"/><circle cx="352" cy="518" r="5"/><circle cx="952" cy="218" r="5"/><circle cx="952" cy="518" r="5"/></g>
+</g>
+<g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="15" fill="#8e8e99" letter-spacing="2" text-anchor="middle"><text x="300" y="246">SITE A</text><text x="300" y="546">SITE B</text><text x="900" y="246">SITE C</text><text x="900" y="546">SITE D</text><text x="600" y="540">ONE LOGIN</text></g>
+<g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="14" fill="#b794ff" letter-spacing="3"><text x="120" y="150">ADMIN CONSOLE / FIG. 02</text><text x="1080" y="680" text-anchor="end" fill="#8e8e99">ADMIN  ·  VIEWER (READ-ONLY)</text></g>
+</svg>

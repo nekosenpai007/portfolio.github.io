@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780"><defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity=".05"/></pattern><radialGradient id="glow" cx=".72" cy=".2" r=".9"><stop offset="0" stop-color="#8b3dff" stop-opacity=".35"/><stop offset=".6" stop-color="#8b3dff" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="780" fill="#0d0c11"/><rect width="1200" height="780" fill="url(#g)"/><rect width="1200" height="780" fill="url(#glow)"/>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<rect x="250" y="150" width="380" height="480" rx="10" stroke="#e2d4ff" stroke-width="2.5" fill="#121118"/>
+<path d="M290 220h190M290 252h120" stroke="#ffffff" stroke-opacity=".5" stroke-width="3"/>
+<path d="M290 310h300M290 350h300M290 390h300M290 430h300" stroke="#ffffff" stroke-opacity=".14" stroke-width="2"/>
+<path d="M290 330h220M290 370h250M290 410h180" stroke="#ffffff" stroke-opacity=".3" stroke-width="2"/>
+<path d="M300 560c20-24 40 16 60-6s30-20 46 0" stroke="#b794ff" stroke-width="2.5"/>
+<rect x="500" y="500" width="96" height="96" stroke="#b794ff" stroke-width="2.5"/>
+<path d="M630 548h160" stroke="#8b3dff" stroke-width="2.5" stroke-dasharray="2 10"/>
+<circle cx="880" cy="390" r="110" stroke="#8b3dff" stroke-opacity=".4" stroke-width="2"/>
+<path d="M880 300l70 26v52c0 46-30 78-70 94-40-16-70-48-70-94v-52z" stroke="#e2d4ff" stroke-width="3" fill="#0d0c11"/>
+<path d="M848 388l22 22 42-44" stroke="#b794ff" stroke-width="4"/>
+</g>
+<g fill="#e2d4ff"><rect x="512" y="512" width="20" height="20"/><rect x="564" y="512" width="20" height="20"/><rect x="512" y="564" width="20" height="20"/><rect x="544" y="544" width="10" height="10"/><rect x="566" y="560" width="10" height="24"/><rect x="540" y="520" width="10" height="10"/></g>
+<g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="15" fill="#8e8e99" letter-spacing="2"><text x="290" y="200">MARKSHEET · SIGNED</text><text x="880" y="540" text-anchor="middle">VERIFIED</text></g>
+<g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="14" fill="#b794ff" letter-spacing="3"><text x="120" y="110">CREDENTIAL REGISTRY / FIG. 03</text><text x="1080" y="690" text-anchor="end" fill="#8e8e99">FICTIONAL DATA</text></g>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780"><defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity=".05"/></pattern><radialGradient id="glow" cx=".72" cy=".2" r=".9"><stop offset="0" stop-color="#8b3dff" stop-opacity=".35"/><stop offset=".6" stop-color="#8b3dff" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="780" fill="#0d0c11"/><rect width="1200" height="780" fill="url(#g)"/><rect width="1200" height="780" fill="url(#glow)"/>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M120 560V380a170 170 0 0 1 340 0v180" stroke="#b794ff" stroke-width="3"/>
+<path d="M170 560V385a120 120 0 0 1 240 0v175" stroke="#8b3dff" stroke-opacity=".5" stroke-width="2" stroke-dasharray="6 10"/>
+<path d="M90 560h420" stroke="#ffffff" stroke-opacity=".25" stroke-width="2"/>
+<rect x="480" y="410" width="34" height="56" rx="6" stroke="#e2d4ff" stroke-width="2.5"/>
+<circle cx="497" cy="430" r="7" stroke="#e2d4ff" stroke-width="2"/>
+<path d="M540 438h150" stroke="#8b3dff" stroke-width="2.5" stroke-dasharray="2 10"/>
+<rect x="700" y="372" width="170" height="132" rx="14" stroke="#b794ff" stroke-width="2.5"/>
+<path d="M730 410h110M730 438h80M730 466h96" stroke="#ffffff" stroke-opacity=".35" stroke-width="2"/>
+<path d="M880 438h90" stroke="#8b3dff" stroke-width="2.5" stroke-dasharray="2 10"/>
+<rect x="980" y="300" width="150" height="276" rx="12" stroke="#e2d4ff" stroke-width="2.5"/>
+</g>
+<g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e2d4ff"><text x="1055" y="410" font-size="84" text-anchor="middle" fill="#ffffff">42</text><text x="1055" y="452" font-size="16" text-anchor="middle" letter-spacing="3">INSIDE</text>
+<text x="1000" y="530" font-size="15" fill="#8e8e99">IN  31  OUT 27</text></g>
+<g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="15" fill="#8e8e99" letter-spacing="2"><text x="290" y="600" text-anchor="middle">PORTAL</text><text x="497" y="500" text-anchor="middle">SCAN</text><text x="785" y="534" text-anchor="middle">SITE NODE</text><text x="1055" y="606" text-anchor="middle">LIVE COUNT</text></g>
+<g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="14" fill="#b794ff" letter-spacing="3"><text x="120" y="150">TUNNEL ID SYSTEM / FIG. 01</text></g>
+</svg>
