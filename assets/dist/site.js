@@ -2393,8 +2393,11 @@ if (!sec) return;
 var track = sec.querySelector(".work-track");
 var cards = Array.prototype.slice.call(sec.querySelectorAll(".work-card"));
 var now = sec.querySelector("[data-work-now]");
+var total = sec.querySelector("[data-work-total]");
 var distance = 0;
 var ticking = false;
+function pad(n) { return n < 10 ? "0" + n : String(n); }
+if (total) total.textContent = pad(cards.length);
 function canPin() {
 return !C.reducedMotion && window.innerWidth > 900 && window.innerHeight >= 560;
 }
@@ -2418,7 +2421,7 @@ var span = sec.offsetHeight - window.innerHeight;
 var p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
 track.style.setProperty("--work-x", (-p * distance).toFixed(1) + "px");
 sec.style.setProperty("--work-p", p.toFixed(4));
-if (now) now.textContent = "0" + (Math.min(cards.length - 1, Math.round(p * (cards.length - 1))) + 1);
+if (now) now.textContent = pad(Math.min(cards.length - 1, Math.round(p * (cards.length - 1))) + 1);
 }
 window.addEventListener("scroll", function () {
 if (!ticking) { ticking = true; requestAnimationFrame(update); }

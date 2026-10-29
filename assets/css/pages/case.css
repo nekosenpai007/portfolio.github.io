@@ -1,0 +1,282 @@
+/* ==========================================================
+   Case study pages (src/pages/case/*.html): one long column,
+   no scripts, same tokens as the home page
+   ========================================================== */
+
+.page-case .case-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.page-case .case-bar-in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 64px;
+}
+
+.page-case .case {
+  max-width: 1180px;
+  padding-block: clamp(48px, 9vh, 112px) clamp(64px, 10vh, 120px);
+}
+
+.page-case .case-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 0.18em;
+}
+
+.page-case .case-sq {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+}
+
+.page-case .case-hero h1 {
+  margin-top: 22px;
+  font-size: clamp(44px, 6.4vw, 104px);
+}
+
+.page-case .case-hero .lead {
+  max-width: 34em;
+  margin-top: 28px;
+}
+
+/* ---------- facts row ---------- */
+
+.page-case .case-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: clamp(40px, 6vh, 64px);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-media);
+  overflow: hidden;
+  background: var(--line-strong);
+}
+
+.page-case .case-facts > div {
+  padding: 20px 22px;
+  background: var(--paper-2);
+}
+
+.page-case .case-facts dd {
+  margin: 8px 0 0;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+.page-case .case-facts a {
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- sections ---------- */
+
+.page-case .case-sec {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+  gap: 20px 48px;
+  padding-top: clamp(48px, 8vh, 88px);
+  scroll-margin-top: 80px;
+}
+
+.page-case .case-sec > h2 {
+  font-size: clamp(26px, 2.4vw, 36px);
+}
+
+.page-case .case-body,
+.page-case .case-grid {
+  grid-column: 2;
+}
+
+.page-case .case-arch {
+  grid-column: 1 / -1;
+}
+
+.page-case .case-body p + p,
+.page-case .case-body p + .case-list,
+.page-case .case-list + p {
+  margin-top: 14px;
+}
+
+.page-case .case-body p {
+  max-width: 40em;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+.page-case .case-list,
+.page-case .case-card ul {
+  display: grid;
+  gap: 10px;
+  color: var(--ink-2);
+}
+
+.page-case .case-list li,
+.page-case .case-card li {
+  position: relative;
+  padding-left: 18px;
+  line-height: 1.55;
+}
+
+.page-case .case-list li::before,
+.page-case .case-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+}
+
+.page-case .case-note {
+  padding: 14px 16px;
+  border-left: 2px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--ink-2);
+}
+
+/* ---------- cards ---------- */
+
+.page-case .case-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.page-case .case-card {
+  padding: 22px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-media);
+  background: var(--paper-2);
+}
+
+.page-case .case-card h3 {
+  margin-bottom: 12px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.page-case .case-card p {
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+
+/* ---------- architecture ---------- */
+
+.page-case .case-arch {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.page-case .arch-col {
+  display: grid;
+  gap: 10px;
+}
+
+.page-case .arch-col > p {
+  margin-bottom: 2px;
+}
+
+.page-case .arch-box {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-field);
+  background: var(--paper-2);
+}
+
+.page-case .arch-box b {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.page-case .arch-box span {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.page-case .arch-link {
+  padding: 6px 10px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 60%, transparent);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  color: var(--accent-ink);
+  white-space: nowrap;
+}
+
+.page-case .arch-link::after {
+  content: " \2192";
+}
+
+.page-case .case-arch figcaption {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+/* ---------- footer links ---------- */
+
+.page-case .case-next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 32px;
+  margin-top: clamp(56px, 9vh, 96px);
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 1100px) {
+  .page-case .case-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-case .case-arch {
+    grid-template-columns: 1fr;
+  }
+
+  .page-case .arch-link {
+    justify-self: start;
+  }
+
+  .page-case .arch-link::after {
+    content: " \2193";
+  }
+}
+
+@media (max-width: 860px) {
+  .page-case .case-sec {
+    grid-template-columns: 1fr;
+  }
+
+  .page-case .case-body,
+  .page-case .case-grid {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-case .case-facts,
+  .page-case .case-grid {
+    grid-template-columns: 1fr;
+  }
+}

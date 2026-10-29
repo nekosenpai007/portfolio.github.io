@@ -7,7 +7,7 @@ Cipher's portfolio, served by GitHub Pages at [itsnetamji.in](https://itsnetamji
 `index.html` is assembled from parts — edit the parts, then rebuild:
 
 ```bash
-python3 src/build.py        # writes index.html + assets/dist/site.css + assets/dist/site.js
+python3 src/build.py        # writes index.html, case pages + assets/dist/site.css + assets/dist/site.js
 ```
 
 The page loads one CSS and one JS bundle (`assets/dist/`, versioned so visitors get
@@ -17,6 +17,7 @@ updates right away). Never edit `assets/dist/` by hand: it is rebuilt from the s
 |---|---|
 | Page shell: header, menu, footer, flag hunt | `src/index.template.html` |
 | One file per section (hero, process, about, …) | `src/partials/*.html` |
+| Case-study pages (written to the same path at the root, e.g. `case/…`) | `src/pages/**/*.html`, styles in `assets/css/pages/case.css` |
 | Colours, fonts, buttons, shared components | `assets/css/main.css` (tokens at the top) |
 | Section styles / scripts | `assets/css/sections/*.css`, `assets/js/sections/*.js` |
 | Effects: loader, fluid cursor, scramble text, card ripple | `assets/js/fx/*.js` |
